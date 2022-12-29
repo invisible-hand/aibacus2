@@ -68,7 +68,7 @@ const Login = () => {
             </div>
             <div className='mt-2 text-grey-dark'>
               <Link
-                to='/password-reset'
+                to={ROUTE.RESET_PASSWORD}
                 className='text-blue-600 hover:underline ml-2'
               >
                 Forgot Password?
@@ -77,7 +77,7 @@ const Login = () => {
             <div className='mt-2 text-grey-dark'>
               Don't have an account?
               <Link
-                to='/register'
+                to={ROUTE.REGISTER}
                 className='text-blue-600 hover:underline ml-2'
               >
                 Register

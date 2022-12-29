@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { ROUTE } from './Route';
 
-const Signup = () => {
+const Register = () => {
   const [isFetching, setIsFetching] = useState(false);
 
   const handleSubmit = async (event) => {
@@ -64,7 +65,10 @@ const Signup = () => {
             </div>
             <div className='mt-2 text-grey-dark'>
               Already have an account?
-              <Link to='/login' className='text-blue-600 hover:underline ml-2'>
+              <Link
+                to={ROUTE.LOGIN}
+                className='text-blue-600 hover:underline ml-2'
+              >
                 Log in
               </Link>
             </div>
@@ -75,4 +79,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Register;
