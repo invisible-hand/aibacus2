@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { ROUTE } from './Route';
 
 const Login = () => {
   const [isFetching, setIsFetching] = useState(false);
@@ -16,10 +17,16 @@ const Login = () => {
 
     try {
       setIsFetching(true);
-      await await supabase.auth.signInWithPassword({ email, password });
-      navigate('/');
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) {
+        throw new Error(error);
+      }
+      navigate(ROUTE.INDEX);
     } catch (error) {
-      alert.error('connection problem.', toastConfig);
+      alert('connection problem');
     } finally {
       setIsFetching(false);
     }
