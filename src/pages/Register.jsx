@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { ROUTE } from './Route';
 
 const Register = () => {
   const [isFetching, setIsFetching] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -22,6 +24,7 @@ const Register = () => {
       if (error) {
         throw new Error(error);
       }
+      navigate(ROUTE.INDEX);
     } catch (error) {
       alert('connection problem');
     } finally {
