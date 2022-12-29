@@ -1,4 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ROUTE } from '../pages/Route';
 import { supabase } from '../supabaseClient';
 
 export const AuthContext = createContext();
@@ -6,12 +8,19 @@ export const AuthContext = createContext();
 const AuthContextProvider = ({ children }) => {
   const [session, setSession] = useState(null);
 
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
     });
-
-    supabase.auth.onAuthStateChange((_event, session) => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        if (!pathname.startsWith(ROUTE.SET_NEW_PASSWORD)) {
+          navigate(ROUTE.SET_NEW_PASSWORD);
+        }
+      }
       setSession(session);
     });
   }, []);

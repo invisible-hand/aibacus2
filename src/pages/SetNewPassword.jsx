@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { ROUTE } from './Route';
 
-const ResetPassword = () => {
+const SetNewPassword = () => {
   const [isFetching, setIsFetching] = useState(false);
   const navigate = useNavigate();
 
@@ -12,19 +12,18 @@ const ResetPassword = () => {
 
     const form = event.currentTarget;
     const formElements = form.elements;
-    const email = formElements.email.value;
+    const newPassword = formElements.newPassword.value;
 
     try {
       setIsFetching(true);
-
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.protocol}://${window.location.host}${ROUTE.SET_NEW_PASSWORD}`,
-        // * for some reason incoming link doesn't have path to set-new-password path.
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword,
       });
       if (error) {
         throw new Error(error);
       }
-      navigate(ROUTE.SET_NEW_PASSWORD);
+      alert('new password is set');
+      navigate(ROUTE.INDEX);
     } catch (error) {
       alert('connection problem');
     } finally {
@@ -39,32 +38,26 @@ const ResetPassword = () => {
         <form onSubmit={handleSubmit}>
           <div className='mt-4'>
             <div className='mt-4'>
-              <label className='block' htmlFor='email'>
-                Email
+              <label className='block' htmlFor='newPassword'>
+                New Password
               </label>
               <input
-                id='email'
-                type='text'
-                placeholder='Email'
+                id='newPassword'
+                type='password'
+                placeholder='enter new password...'
                 className='w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600'
               />
+              <p className='text-sm text-blue-500 ml-2 mt-1'>
+                *please check your email.
+              </p>
             </div>
             <div className='flex'>
               <button
                 className='w-full px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900'
                 disabled={isFetching}
               >
-                Send recovery link
+                Set new password
               </button>
-            </div>
-            <div className='mt-2 text-grey-dark'>
-              Don't have an account?
-              <Link
-                to={ROUTE.REGISTER}
-                className='text-blue-600 hover:underline ml-2'
-              >
-                Register
-              </Link>
             </div>
           </div>
         </form>
@@ -73,4 +66,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default SetNewPassword;

@@ -6,7 +6,7 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Register from './pages/Register';
 import ResetPassword from './pages/ResetPassword';
-import ResetPasswordFinish from './pages/ResetPasswordFinish';
+import SetNewPassword from './pages/SetNewPassword';
 
 const App = () => {
   return (
@@ -17,7 +17,7 @@ const App = () => {
       <Route path={ROUTE.PROFILE} element={<Profile />} />
       <Route path={ROUTE.REGISTER} element={<Register />} />
       <Route path={ROUTE.RESET_PASSWORD} element={<ResetPassword />} />
-      <Route path={ROUTE.SET_NEW_PASSWORD} element={<ResetPasswordFinish />} />
+      <Route path={ROUTE.SET_NEW_PASSWORD} element={<SetNewPassword />} />
     </Routes>
   );
 };
