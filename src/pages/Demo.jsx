@@ -4,9 +4,10 @@ import { jsPDF } from 'jspdf';
 import { generateDemo } from '../api/generateDemo.js';
 import { ROUTE } from './Route.js';
 import { NavLink } from 'react-router-dom';
+import Logo from '../components/Logo.jsx';
+import NavBar from '../components/NavBar.jsx';
 
 const operations = ['Addition', 'Subtraction', 'Multiplication', 'Division'];
-const generates = ['Arithmetics', 'Math', 'Writing'];
 
 const Demo = () => {
   const [apiOutput, setApiOutput] = useState('');
@@ -35,42 +36,13 @@ const Demo = () => {
   };
 
   return (
-    <div className='isolate bg-white'>
-      <div className='px-6 pt-6 lg:px-8'>
-        <nav
-          className='flex h-9 items-center justify-between'
-          aria-label='Global'
-        >
-          <div className='flex lg:min-w-0 lg:flex-1' aria-label='Global'>
-            <Link to={ROUTE.INDEX} className='-m-1.5 p-1.5'>
-              <span className='sr-only'>Aibacus</span>
-              <img className='h-8' src='grid-outline.svg' alt='' />
-            </Link>
-          </div>
-          <div className='hidden lg:flex lg:min-w-0 lg:flex-1 lg:justify-center lg:gap-x-12'>
-            {generates.map((gen) => (
-              <NavLink
-                key={gen}
-                to={`/${gen}`}
-                className='font-semibold text-gray-900 hover:text-gray-400 mr-2'
-              >
-                {gen}
-              </NavLink>
-            ))}
-          </div>
-          <Link
-            to={ROUTE.REGISTER}
-            className='inline-block rounded-lg ml-2 px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20'
-          >
-            Sign up
-          </Link>
-        </nav>
-      </div>
+    <div className='bg-white'>
+      <NavBar />
       <main className='relative px-6'>
         <div className='mx-auto max-w-3xl pt-16'>
-          <div className='text-2xl font-semibold'>
-            <h1> Arithmetics assignment generator </h1>
-          </div>
+          <h1 className='text-2xl font-semibold'>
+            Arithmetics assignment generator
+          </h1>
 
           <div className='text-l mt-6'>
             <p>Select operations to include in assignments</p>
