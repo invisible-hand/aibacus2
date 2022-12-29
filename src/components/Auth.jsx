@@ -1,15 +1,17 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTE } from '../pages/Route';
 import { AuthContext } from '../store/AuthContext';
+import { supabase } from '../supabaseClient';
 
 const Auth = () => {
+  const [isFetching, setIsFetching] = useState(false);
   const { session } = useContext(AuthContext);
 
   const logout = async (_) => {
     try {
       setIsFetching(true);
-      const { error } = await await supabase.auth.signOut();
+      const { error } = await supabase.auth.signOut();
       if (error) {
         throw new Error(error);
       }
