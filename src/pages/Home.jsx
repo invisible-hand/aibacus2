@@ -1,6 +1,12 @@
-import React from 'react';
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../store/AuthContext';
+import { ROUTE } from './Route';
 
 const Home = () => {
+  const { session } = useContext(AuthContext);
+  console.log(session);
+  console.log(session?.user);
   return (
     <div className='isolate bg-white'>
       <div className='px-6 pt-6 lg:px-8'>
@@ -39,12 +45,16 @@ const Home = () => {
               </a>
             </div>
             <div className='lg:flex lg:min-w-0 lg:flex-1 lg:justify-end'>
-              <a
-                href='#'
-                className='inline-block rounded-lg px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20'
-              >
-                Sign up
-              </a>
+              {!session ? (
+                <Link
+                  to={ROUTE.REGISTER}
+                  className='inline-block rounded-lg px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20'
+                >
+                  Sign up
+                </Link>
+              ) : (
+                <p>{session?.user.email}</p>
+              )}
             </div>
           </nav>
           <div role='dialog' aria-modal='true'></div>
@@ -67,16 +77,15 @@ const Home = () => {
                   parents.
                 </p>
                 <div className='mt-8 flex gap-x-4 sm:justify-center'>
-                  <a
-                    href='/demo'
+                  <Link
+                    to={ROUTE.DEMO}
                     className='inline-block rounded-lg bg-indigo-600 px-4 py-1.5 text-base font-semibold text-white shadow-lg ring-1 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700'
                   >
                     Demo
                     <span className='text-indigo-200' aria-hidden='true'>
-                      {' '}
                       &rarr;
                     </span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
