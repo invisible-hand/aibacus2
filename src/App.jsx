@@ -3,7 +3,7 @@ import Demo from './pages/Demo';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
-import Signup from './pages/Signup';
+import Register from './pages/Register';
 
 const App = () => {
   return (
@@ -13,7 +13,7 @@ const App = () => {
         <Route path='demo' element={<Demo />} />
         <Route path='login' element={<Login />} />
         <Route path='profile' element={<Profile />} />
-        <Route path='signup' element={<Signup />} />
+        <Route path='signup' element={<Register />} />
       </Route>
     </Routes>
   );
