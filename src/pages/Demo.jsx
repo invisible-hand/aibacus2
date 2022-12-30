@@ -1,33 +1,20 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { jsPDF } from 'jspdf';
-import { generateDemo } from '../api/generateDemo.js';
-import { ROUTE } from './Route.js';
-import { NavLink } from 'react-router-dom';
-import Logo from '../components/Logo.jsx';
+// import { jsPDF } from 'jspdf';
+import { makeDemoRequest } from '../api/demoRequest.js';
 import NavBar from '../components/NavBar.jsx';
 
 const operations = ['Addition', 'Subtraction', 'Multiplication', 'Division'];
 
 const Demo = () => {
-  const [apiOutput, setApiOutput] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [response, setResponse] = useState('');
 
-  const doc = new jsPDF();
+  console.log(`Demo> response: ${response}`);
 
-  const callGenerateEndpoint = async () => {
+  const responseHandler = async (_event) => {
     setIsGenerating(true);
-
     try {
-      const result = await generateDemo();
-      setApiOutput(result);
-
-      doc.text(
-        `Student: Mike \nGrade: First to second\n` + `${result}`,
-        15,
-        15
-      );
-      doc.save('arithmetics.pdf');
+      setResponse(await makeDemoRequest());
     } catch (error) {
       alert(error);
     } finally {
@@ -70,24 +57,15 @@ const Demo = () => {
             </select>
           </div>
 
+          {response !== '' && <p>{response}</p>}
+
           <button
             className='px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900'
             disabled={isGenerating}
-            onClick={callGenerateEndpoint}
+            onClick={responseHandler}
           >
             {!isGenerating ? 'Generate' : 'Generating...'}
           </button>
-
-          {apiOutput && (
-            <div className='text-l m-4'>
-              <div className='text-2xl font-medium m-2'>
-                <h3>Output</h3>
-              </div>
-              <div className='text-m'>
-                <pre>{apiOutput}</pre>
-              </div>
-            </div>
-          )}
         </div>
       </main>
     </div>
