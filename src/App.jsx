@@ -7,6 +7,7 @@ import Profile from './pages/Profile';
 import Register from './pages/Register';
 import ResetPassword from './pages/ResetPassword';
 import SetNewPassword from './pages/SetNewPassword';
+import Math from './pages/Math';
 // import Layout from './components/layout/Layout';
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
       <Route path={ROUTE.REGISTER} element={<Register />} />
       <Route path={ROUTE.RESET_PASSWORD} element={<ResetPassword />} />
       <Route path={ROUTE.SET_NEW_PASSWORD} element={<SetNewPassword />} />
+      <Route path={ROUTE.MATH} element={<Math />} />
     </Routes>
   );
 };

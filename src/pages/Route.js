@@ -6,4 +6,6 @@ export const ROUTE = Object.freeze({
   REGISTER: '/register',
   RESET_PASSWORD: '/reset-password',
   SET_NEW_PASSWORD: '/set-new-password',
+
+  MATH: '/Math',
 });
