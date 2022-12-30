@@ -1,9 +1,12 @@
 import { useState } from 'react';
-// import { jsPDF } from 'jspdf';
 import { makeDemoRequest } from '../api/demoRequest.js';
+import { pdfSave } from '../pdf/pdfSave';
 import NavBar from '../components/NavBar.jsx';
 
 const operations = ['Addition', 'Subtraction', 'Multiplication', 'Division'];
+
+const name = 'Mike';
+const grade = '2nd';
 
 const Demo = () => {
   const [isGenerating, setIsGenerating] = useState(false);
@@ -19,6 +22,10 @@ const Demo = () => {
     } finally {
       setIsGenerating(false);
     }
+  };
+
+  const handleDownload = () => {
+    pdfSave(name, grade, response);
   };
 
   return (
@@ -56,11 +63,19 @@ const Demo = () => {
             </select>
           </div>
 
-          {response?.length > 0 && (
+          {response.length > 0 && (
             <>
+              <p> pdf file:</p>
               {response.map((line, index) => (
                 <p key={`${line}_${index}`}>{line}</p>
               ))}
+
+              <button
+                className='px-6 py-2 mt-4 text-white bg-orange-600 rounded-lg hover:bg-orange-900 block'
+                onClick={handleDownload}
+              >
+                Download PDF
+              </button>
             </>
           )}
 
