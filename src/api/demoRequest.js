@@ -21,6 +21,7 @@ const requestConfig = {
 
 export const makeDemoRequest = async () => {
   const response = await axios.post(OPEN_AI_URL, requestData, requestConfig);
-  console.log(response);
-  return response.data.choices[0].text;
+  return response.data.choices[0].text
+    .split('\n')
+    .filter((str) => str.length > 6);
 };

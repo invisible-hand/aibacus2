@@ -7,14 +7,13 @@ const operations = ['Addition', 'Subtraction', 'Multiplication', 'Division'];
 
 const Demo = () => {
   const [isGenerating, setIsGenerating] = useState(false);
-  const [response, setResponse] = useState('');
-
-  console.log(`Demo> response: ${response}`);
+  const [response, setResponse] = useState([]);
 
   const responseHandler = async (_event) => {
     setIsGenerating(true);
     try {
-      setResponse(await makeDemoRequest());
+      const aiResponse = await makeDemoRequest();
+      setResponse(aiResponse);
     } catch (error) {
       alert(error);
     } finally {
@@ -57,7 +56,13 @@ const Demo = () => {
             </select>
           </div>
 
-          {response !== '' && <p>{response}</p>}
+          {response?.length > 0 && (
+            <>
+              {response.map((line, index) => (
+                <p key={`${line}_${index}`}>{line}</p>
+              ))}
+            </>
+          )}
 
           <button
             className='px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900'
