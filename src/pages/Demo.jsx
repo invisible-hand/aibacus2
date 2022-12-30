@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { makeDemoRequest } from '../api/demoRequest.js';
+import { aiRequest } from '../api/aiRequest.js';
 import { pdfSave } from '../pdf/pdfSave';
 import NavBar from '../components/NavBar.jsx';
 
@@ -7,6 +7,8 @@ const operations = ['Addition', 'Subtraction', 'Multiplication', 'Division'];
 
 const name = 'Mike';
 const grade = '2nd';
+const prompt =
+  'create a math assignment for a 3rd grader, involving multiplication, division, addition and subtraction of numbers in the range of 1 to 20. create 15 tasks in the format: `{number} {operation} {number} = `, each on new line';
 
 const Demo = () => {
   const [isGenerating, setIsGenerating] = useState(false);
@@ -15,7 +17,7 @@ const Demo = () => {
   const responseHandler = async (_event) => {
     setIsGenerating(true);
     try {
-      const aiResponse = await makeDemoRequest();
+      const aiResponse = await aiRequest(prompt);
       setResponse(aiResponse);
     } catch (error) {
       alert(error);
