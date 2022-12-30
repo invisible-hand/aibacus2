@@ -42,7 +42,7 @@ const Demo = () => {
           <div className='text-l mt-6'>
             <p>Select operations to include in assignments</p>
             {operations.map((operation) => (
-              <label key={operation} htmlFor='addition' className='block'>
+              <label key={operation} htmlFor={operation} className='block'>
                 <input
                   className='mr-1'
                   type='checkbox'
