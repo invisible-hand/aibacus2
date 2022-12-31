@@ -1,3 +1,5 @@
+import { SUBJECT } from './Subject';
+
 export const ROUTE = Object.freeze({
   INDEX: '/',
   DEMO: '/demo',
@@ -7,6 +9,6 @@ export const ROUTE = Object.freeze({
   RESET_PASSWORD: '/reset-password',
   SET_NEW_PASSWORD: '/set-new-password',
 
-  MATH: '/Math',
-  READING: '/Reading',
+  MATH: `/${SUBJECT.MATH}`,
+  READING: `/${SUBJECT.READING}`,
 });
