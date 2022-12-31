@@ -8,13 +8,13 @@ const subjects = Object.values(SUBJECT);
 
 const NavBar = () => {
   return (
-    <div className='px-6 pt-6 lg:px-8'>
+    <div className='px-6 pt-6'>
       <nav
-        className='flex h-9 items-center justify-between'
+        className='flex h-9 items-center gap-12'
         aria-label='Global'
       >
         <Logo />
-        <div className='hidden lg:flex lg:min-w-0 lg:flex-1 lg:justify-center lg:gap-x-12'>
+        <div className='flex min-w-0 flex-1 gap-12 '>
           {subjects.map((gen) => (
             <NavLink
               key={gen}
