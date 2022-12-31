@@ -7,7 +7,7 @@ export const OPEN_AI_URL = `${ORIGIN}/${API_VERSION}/completions`;
 const requestData = {
   model: 'text-davinci-003',
   temperature: 0.1,
-  max_tokens: 250,
+  max_tokens: 2000,
 };
 
 const requestConfig = {

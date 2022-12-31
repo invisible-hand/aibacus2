@@ -4,7 +4,6 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../store/AuthContext';
 import DownloadPDF from '../components/DownloadPDF';
 import GradePicker from '../components/GradePicker';
-import MathOperations from '../components/MathOperations';
 import NavBar from '../components/NavBar';
 import NumberOfTasks from '../components/NumberOfTasks';
 import PDFDocument from '../components/PDFDocument';
@@ -13,27 +12,17 @@ import { aiRequest } from '../api/aiRequest';
 import { supabase } from '../supabaseClient';
 
 const basePrompt =
-  'create a math assignment for a %grade% grader, involving %operations%. create %task_amount% in the format: `{n}.{number} {operation} {number} = `, each on new line.';
+  'write a reading assignment for a %grade% grader: first, write three paragraphs of text on a random topic, then, ask %task_amount% (questions) on reading comprehension about the text above';
 
-const subject = SUBJECT.MATH;
+const subject = SUBJECT.READING;
 
-const Math = () => {
+const Reading = () => {
   const { session } = useContext(AuthContext);
 
   const [grade, setGrade] = useState('3'); //* ideally should come from profile context
   const [name, setName] = useState('Mike'); //* ideally should come from profile context
   const [isGenerating, setIsGenerating] = useState(false);
   const [response, setResponse] = useState([]);
-  const [operationState, setOperationState] = useState({
-    Addition: true,
-    Subtraction: false,
-    Multiplication: false,
-    Division: false,
-  });
-  const ops = Object.keys(operationState)
-    .filter((key) => operationState[key])
-    .map((key) => key.toLowerCase())
-    .join(', ');
   const [numberOfTasks, setNumberOfTasks] = useState('15');
 
   const handleChange = (event) => {
@@ -48,16 +37,13 @@ const Math = () => {
     setIsGenerating(true);
     const prompt = basePrompt
       .replace('%grade%', GRADE[+grade])
-      .replace('%task_amount%', NUMBER_OF_TASKS[+numberOfTasks])
-      .replace('%operations%', ops)
-      .replace('division', 'division(÷)')
-      .replace('multiplication', 'multiplication(×)');
+      .replace('%task_amount%', NUMBER_OF_TASKS[+numberOfTasks]);
     try {
       const aiResponse = await aiRequest(prompt);
       setResponse(aiResponse);
 
       await supabase.from('assignments').insert({
-        subject: 'math',
+        subject: 'read',
         name,
         grade,
         assignment: aiResponse.join('\n'),
@@ -84,14 +70,10 @@ const Math = () => {
                 defaultValue={numberOfTasks}
                 onChange={setNumberOfTasks}
               />
-              <MathOperations
-                operationState={operationState}
-                handleChange={handleChange}
-              />
               <GradePicker defaultValue={grade} onChange={setGrade} />
               <button
                 className='px-6 py-2 my-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900 disabled:bg-blue-200 hover:disabled:bg-blue-200'
-                disabled={isGenerating || ops.length === 0}
+                disabled={isGenerating}
                 onClick={responseHandler}
               >
                 {!isGenerating ? 'Generate' : 'Generating...'}
@@ -117,4 +99,4 @@ const Math = () => {
   );
 };
 
-export default Math;
+export default Reading;

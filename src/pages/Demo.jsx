@@ -6,6 +6,7 @@ import MathOperations from '../components/MathOperations.jsx';
 import NavBar from '../components/NavBar.jsx';
 import NumberOfTasks from '../components/NumberOfTasks.jsx';
 import PDFDocument from '../components/PDFDocument.jsx';
+import { SUBJECT } from '../constants/Subject.js';
 import { aiRequest } from '../api/aiRequest.js';
 import { useState } from 'react';
 
@@ -14,6 +15,7 @@ const grade = '3';
 const numberOfTasks = '10';
 const basePrompt = `create a math assignment for a %grade% grader, involving %operations%. create ${numberOfTasks} tasks in the format: \`{n}.{number} {operation} {number} = \`, each on new line.`;
 
+const subject = SUBJECT.MATH;
 const Demo = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [response, setResponse] = useState([]);
@@ -59,7 +61,9 @@ const Demo = () => {
       <NavBar />
       <main className='relative px-6'>
         <div className='mx-auto max-w-3xl pt-16'>
-          <h1 className='text-2xl font-semibold'>Math assignment generator</h1>
+          <h1 className='text-2xl font-semibold'>
+            {subject} assignment generator
+          </h1>
           <div className='flex gap-20'>
             <div className='mt-6'>
               <NumberOfTasks defaultValue={numberOfTasks} disabled={true} />
@@ -80,7 +84,12 @@ const Demo = () => {
               {response.length > 0 && (
                 <>
                   <PDFDocument data={response} name={name} grade={grade} />
-                  <DownloadPDF name={name} grade={grade} data={response} />
+                  <DownloadPDF
+                    name={name}
+                    grade={grade}
+                    subject={subject}
+                    data={response}
+                  />
                 </>
               )}
             </div>
