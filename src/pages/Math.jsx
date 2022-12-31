@@ -62,24 +62,28 @@ const Math = () => {
       <main className='relative px-6'>
         <div className='mx-auto max-w-3xl pt-16'>
           <h1 className='text-2xl font-semibold'>Math assignment generator</h1>
-          <div className='mt-6'>
-            <NumberOfTasks change_tasks={setNumberOfTasks} />
-            <MathOperations
-              operationState={operationState}
-              handleChange={handleChange}
-            />
-            <GradePicker onChange={setGrade} />
+          <div className='flex gap-20'>
+            <div className='mt-6'>
+              <NumberOfTasks change_tasks={setNumberOfTasks} />
+              <MathOperations
+                operationState={operationState}
+                handleChange={handleChange}
+              />
+              <GradePicker onChange={setGrade} />
+              <button
+                className='px-6 py-2 my-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900 disabled:bg-blue-200 hover:disabled:bg-blue-200'
+                disabled={isGenerating || ops.length === 0}
+                onClick={responseHandler}
+              >
+                {!isGenerating ? 'Generate' : 'Generating...'}
+              </button>
+            </div>
+            <div>
+              {response.length > 0 && (
+                <PDFDocument data={response} name={name} grade={grade} />
+              )}
+            </div>
           </div>
-          {response.length > 0 && (
-            <PDFDocument data={response} name={name} grade={grade} />
-          )}
-          <button
-            className='px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900 disabled:bg-blue-200 hover:disabled:bg-blue-200'
-            disabled={isGenerating || ops.length === 0}
-            onClick={responseHandler}
-          >
-            {!isGenerating ? 'Generate' : 'Generating...'}
-          </button>
         </div>
       </main>
     </div>

@@ -14,7 +14,7 @@ const PDFDocument = ({ data, name, grade }) => {
       ))}
 
       <button
-        className='px-6 py-2 mt-4 text-white bg-orange-600 rounded-lg hover:bg-orange-900 block'
+        className='px-6 py-2 my-4 text-white bg-orange-600 rounded-lg hover:bg-orange-900 block'
         onClick={handleDownload}
       >
         Download PDF
