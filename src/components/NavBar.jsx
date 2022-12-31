@@ -2,8 +2,9 @@ import Auth from './Auth';
 import Logo from './Logo';
 import { NavLink } from 'react-router-dom';
 import React from 'react';
+import { SUBJECT } from '../constants/Subject';
 
-const generates = ['Arithmetics', 'Math', 'Writing'];
+const subjects = Object.values(SUBJECT);
 
 const NavBar = () => {
   return (
@@ -14,7 +15,7 @@ const NavBar = () => {
       >
         <Logo />
         <div className='hidden lg:flex lg:min-w-0 lg:flex-1 lg:justify-center lg:gap-x-12'>
-          {generates.map((gen) => (
+          {subjects.map((gen) => (
             <NavLink
               key={gen}
               to={`/${gen}`}
@@ -24,8 +25,8 @@ const NavBar = () => {
             </NavLink>
           ))}
         </div>
-        <Auth />
       </nav>
+      <Auth />
     </div>
   );
 };
