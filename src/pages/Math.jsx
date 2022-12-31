@@ -12,7 +12,7 @@ const basePrompt =
   'create a math assignment for a %grade% grader, involving %operations%. create %task_amount% in the format: `{n}.{number} {operation} {number} = `, each on new line.';
 
 const Math = () => {
-  const [grade, setGrade] = useState(2); //* ideally should come from profile context
+  const [grade, setGrade] = useState('3'); //* ideally should come from profile context
   const [name, setName] = useState('Mike'); //* ideally should come from profile context
   const [isGenerating, setIsGenerating] = useState(false);
   const [response, setResponse] = useState([]);
@@ -26,7 +26,7 @@ const Math = () => {
     .filter((key) => operationState[key])
     .map((key) => key.toLowerCase())
     .join(', ');
-  const [numberOfTasks, setNumberOfTasks] = useState(15);
+  const [numberOfTasks, setNumberOfTasks] = useState('15');
 
   const handleChange = (event) => {
     const { name, checked } = event.target;
@@ -38,11 +38,9 @@ const Math = () => {
 
   const responseHandler = async (_event) => {
     setIsGenerating(true);
-
     const prompt = basePrompt
-      .replace('%name%', name)
-      .replace('%grade%', GRADE[grade])
-      .replace('%task_amount%', NUMBER_OF_TASKS[numberOfTasks])
+      .replace('%grade%', GRADE[+grade])
+      .replace('%task_amount%', NUMBER_OF_TASKS[+numberOfTasks])
       .replace('%operations%', ops)
       .replace('division', 'division(÷)')
       .replace('multiplication', 'multiplication(×)');
@@ -64,12 +62,15 @@ const Math = () => {
           <h1 className='text-2xl font-semibold'>Math assignment generator</h1>
           <div className='flex gap-20'>
             <div className='mt-6'>
-              <NumberOfTasks change_tasks={setNumberOfTasks} />
+              <NumberOfTasks
+                defaultValue={numberOfTasks}
+                onChange={setNumberOfTasks}
+              />
               <MathOperations
                 operationState={operationState}
                 handleChange={handleChange}
               />
-              <GradePicker onChange={setGrade} />
+              <GradePicker defaultValue={grade} onChange={setGrade} />
               <button
                 className='px-6 py-2 my-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900 disabled:bg-blue-200 hover:disabled:bg-blue-200'
                 disabled={isGenerating || ops.length === 0}

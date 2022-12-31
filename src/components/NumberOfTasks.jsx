@@ -4,19 +4,24 @@ const options = [...new Array(30)]
   .map((_, index) => index)
   .filter((index) => index > 0);
 
-const NumberOfTasks = ({ change_tasks }) => {
-  const [selected, setSelected] = useState('15');
+const NumberOfTasks = ({ defaultValue, onChange, disabled }) => {
+  const [selected, setSelected] = useState(defaultValue);
 
   const handleChange = (event) => {
-    const value = event.target.value === '0' ? '1' : event.target.value;
+    const value = event.target.value;
     setSelected(value);
-    change_tasks(+value);
+    onChange && onChange(value);
   };
 
   return (
     <div>
       <label htmlFor='tasks'>Number of tasks:</label>
-      <select value={selected} onChange={handleChange} id='tasks'>
+      <select
+        value={selected}
+        onChange={handleChange}
+        id='tasks'
+        disabled={disabled || false}
+      >
         {options.map((option) => (
           <option key={option} value={option}>
             {option}
