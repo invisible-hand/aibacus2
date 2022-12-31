@@ -1,5 +1,8 @@
 import { GRADE, NUMBER_OF_TASKS } from '../api/promptChunks';
+import { useContext, useState } from 'react';
 
+import { AuthContext } from '../store/AuthContext';
+import { AuthSessionMissingError } from '@supabase/supabase-js';
 import DownloadPDF from '../components/DownloadPDF';
 import GradePicker from '../components/GradePicker';
 import MathOperations from '../components/MathOperations';
@@ -7,12 +10,14 @@ import NavBar from '../components/NavBar';
 import NumberOfTasks from '../components/NumberOfTasks';
 import PDFDocument from '../components/PDFDocument';
 import { aiRequest } from '../api/aiRequest';
-import { useState } from 'react';
+import { supabase } from '../supabaseClient';
 
 const basePrompt =
   'create a math assignment for a %grade% grader, involving %operations%. create %task_amount% in the format: `{n}.{number} {operation} {number} = `, each on new line.';
 
 const Math = () => {
+  const { session } = useContext(AuthContext);
+
   const [grade, setGrade] = useState('3'); //* ideally should come from profile context
   const [name, setName] = useState('Mike'); //* ideally should come from profile context
   const [isGenerating, setIsGenerating] = useState(false);
@@ -48,6 +53,14 @@ const Math = () => {
     try {
       const aiResponse = await aiRequest(prompt);
       setResponse(aiResponse);
+
+      await supabase.from('assignments').insert({
+        subject: 'math',
+        name,
+        grade,
+        assignment: aiResponse.join('\n'),
+        user_id: session.user.id,
+      });
     } catch (error) {
       alert(error);
     } finally {
