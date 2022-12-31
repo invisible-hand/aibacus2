@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
-const options = [...new Array(30)].map((_, index) => index);
+const options = [...new Array(30)]
+  .map((_, index) => index)
+  .filter((index) => index > 0);
 
 const NumberOfTasks = ({ change_tasks }) => {
   const [selected, setSelected] = useState('15');
@@ -8,7 +10,7 @@ const NumberOfTasks = ({ change_tasks }) => {
   const handleChange = (event) => {
     const value = event.target.value === '0' ? '1' : event.target.value;
     setSelected(value);
-    change_tasks(value);
+    change_tasks(+value);
   };
 
   return (
