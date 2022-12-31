@@ -59,6 +59,7 @@ export const NUMBER_OF_TASKS = [
 
 export const GRADE = [
   '1st',
+  '1st',
   '2nd',
   '3rd',
   '4th',

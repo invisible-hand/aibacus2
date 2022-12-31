@@ -1,10 +1,12 @@
-import { useState } from 'react';
-import { aiRequest } from '../api/aiRequest';
+import { GRADE, NUMBER_OF_TASKS } from '../api/promptChunks';
+
+import GradePicker from '../components/GradePicker';
+import MathOperations from '../components/MathOperations';
 import NavBar from '../components/NavBar';
 import NumberOfTasks from '../components/NumberOfTasks';
-import { GRADE, NUMBER_OF_TASKS } from '../api/promptChunks';
-import MathOperations from '../components/MathOperations';
 import PDFDocument from '../components/PDFDocument';
+import { aiRequest } from '../api/aiRequest';
+import { useState } from 'react';
 
 const basePrompt =
   'create a math assignment for a %grade% grader, involving %operations%. create %task_amount% in the format: `{n}.{number} {operation} {number} = `, each on new line.';
@@ -59,24 +61,14 @@ const Math = () => {
       <NavBar />
       <main className='relative px-6'>
         <div className='mx-auto max-w-3xl pt-16'>
-          <h1 className='text-2xl font-semibold'>
-            Arithmetics assignment generator
-          </h1>
+          <h1 className='text-2xl font-semibold'>Math assignment generator</h1>
           <div className='mt-6'>
             <NumberOfTasks change_tasks={setNumberOfTasks} />
             <MathOperations
               operationState={operationState}
               handleChange={handleChange}
             />
-            <select
-              id='s1'
-              size='1'
-              className='rounded-md p-2 mt-2 bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none'
-            >
-              <option>First to second grade</option>
-              <option>Third to fourth grade</option>
-              <option>Fifth to sixth grade</option>
-            </select>
+            <GradePicker onChange={setGrade} />
           </div>
           {response.length > 0 && (
             <PDFDocument data={response} name={name} grade={grade} />
