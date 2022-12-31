@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { supabase } from '../supabaseClient';
 import { ROUTE } from './Route';
+import { supabase } from '../supabaseClient';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const SetNewPassword = () => {
   const [isFetching, setIsFetching] = useState(false);

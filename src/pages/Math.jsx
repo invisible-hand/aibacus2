@@ -2,7 +2,6 @@ import { GRADE, NUMBER_OF_TASKS } from '../api/promptChunks';
 import { useContext, useState } from 'react';
 
 import { AuthContext } from '../store/AuthContext';
-import { AuthSessionMissingError } from '@supabase/supabase-js';
 import DownloadPDF from '../components/DownloadPDF';
 import GradePicker from '../components/GradePicker';
 import MathOperations from '../components/MathOperations';

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { ROUTE } from './Route';
 import NavBar from '../components/NavBar';
+import { ROUTE } from './Route';
 
 const Home = () => {
   return (

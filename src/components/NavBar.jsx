@@ -1,7 +1,7 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
 import Auth from './Auth';
 import Logo from './Logo';
+import { NavLink } from 'react-router-dom';
+import React from 'react';
 
 const generates = ['Arithmetics', 'Math', 'Writing'];
 

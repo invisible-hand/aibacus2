@@ -1,7 +1,8 @@
 import { useContext, useState } from 'react';
+
+import { AuthContext } from '../store/AuthContext';
 import { Link } from 'react-router-dom';
 import { ROUTE } from '../pages/Route';
-import { AuthContext } from '../store/AuthContext';
 import { supabase } from '../supabaseClient';
 
 const Auth = () => {
