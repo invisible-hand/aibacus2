@@ -4,8 +4,7 @@ import { pdfSave } from '../pdf/pdfSave';
 import NavBar from '../components/NavBar';
 import NumberOfTasks from '../components/NumberOfTasks';
 import { GRADE, NUMBER_OF_TASKS } from '../api/promptChunks';
-
-const operations = ['Addition', 'Subtraction', 'Multiplication', 'Division'];
+import MathOperations from '../components/MathOperations';
 
 const basePrompt =
   'create a math assignment for a %grade% grader, involving %operations%. create %task_amount% in the format: `{n}.{number} {operation} {number} = `, each on new line.';
@@ -25,7 +24,7 @@ const Math = () => {
     .filter((key) => operationState[key])
     .map((key) => key.toLowerCase())
     .join(', ');
-  const [numberOfTasks, setNumberOfTasks] = useState('15');
+  const [numberOfTasks, setNumberOfTasks] = useState(15);
 
   const handleChange = (event) => {
     const { name, checked } = event.target;
@@ -67,26 +66,12 @@ const Math = () => {
           <h1 className='text-2xl font-semibold'>
             Arithmetics assignment generator
           </h1>
-
-          <NumberOfTasks change_tasks={setNumberOfTasks} />
-
-          <div className='text-l mt-6'>
-            <p>Select operations to include in assignments</p>
-            {operations.map((operation) => (
-              <label key={operation} htmlFor={operation} className='block'>
-                <input
-                  className='mr-1'
-                  type='checkbox'
-                  id={operation}
-                  name={operation}
-                  value={operation}
-                  checked={operationState[operation]}
-                  onChange={handleChange}
-                />
-                {operation}
-              </label>
-            ))}
-
+          <div className='mt-6'>
+            <NumberOfTasks change_tasks={setNumberOfTasks} />
+            <MathOperations
+              operationState={operationState}
+              handleChange={handleChange}
+            />
             <select
               id='s1'
               size='1'
@@ -97,6 +82,7 @@ const Math = () => {
               <option>Fifth to sixth grade</option>
             </select>
           </div>
+
           {response.length > 0 && (
             <>
               <p>PDF file:</p>
