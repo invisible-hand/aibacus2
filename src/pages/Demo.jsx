@@ -1,5 +1,6 @@
 import { GRADE, NUMBER_OF_TASKS } from '../api/promptChunks.js';
 
+import DownloadPDF from '../components/DownloadPDF';
 import GradePicker from '../components/GradePicker.jsx';
 import MathOperations from '../components/MathOperations.jsx';
 import NavBar from '../components/NavBar.jsx';
@@ -77,7 +78,10 @@ const Demo = () => {
             </div>
             <div>
               {response.length > 0 && (
-                <PDFDocument data={response} name={name} grade={grade} />
+                <>
+                  <PDFDocument data={response} name={name} grade={grade} />
+                  <DownloadPDF name={name} grade={grade} data={response} />
+                </>
               )}
             </div>
           </div>
