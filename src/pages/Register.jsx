@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 
-import { ROUTE } from './Route';
+import { ROUTE } from '../constants/Route';
 import { supabase } from '../supabaseClient';
 import { useState } from 'react';
 

@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 
 import { AuthContext } from '../store/AuthContext';
 import { Link } from 'react-router-dom';
-import { ROUTE } from '../pages/Route';
+import { ROUTE } from '../constants/Route';
 import { supabase } from '../supabaseClient';
 
 const Auth = () => {

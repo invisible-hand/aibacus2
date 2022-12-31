@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ROUTE } from '../pages/Route';
+import { ROUTE } from '../constants/Route';
 
 const Logo = () => {
   return (

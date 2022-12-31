@@ -8,4 +8,5 @@ export const ROUTE = Object.freeze({
   SET_NEW_PASSWORD: '/set-new-password',
 
   MATH: '/Math',
+  READING: '/Reading',
 });

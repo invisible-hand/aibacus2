@@ -1,4 +1,4 @@
-import { ROUTE } from './Route';
+import { ROUTE } from '../constants/Route';
 import { supabase } from '../supabaseClient';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';

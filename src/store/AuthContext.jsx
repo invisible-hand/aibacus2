@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { ROUTE } from '../pages/Route';
+import { ROUTE } from '../constants/Route';
 import { supabase } from '../supabaseClient';
 
 export const AuthContext = createContext();
