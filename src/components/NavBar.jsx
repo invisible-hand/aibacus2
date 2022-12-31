@@ -25,8 +25,9 @@ const NavBar = () => {
             </NavLink>
           ))}
         </div>
+        <Auth />
       </nav>
-      <Auth />
+      
     </div>
   );
 };
