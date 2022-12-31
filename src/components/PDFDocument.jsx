@@ -1,4 +1,4 @@
-const PDFDocument = ({ data, name, grade }) => {
+const PDFDocument = ({ data }) => {
   return (
     <>
       <p>PDF file:</p>

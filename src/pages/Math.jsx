@@ -100,7 +100,7 @@ const Math = () => {
             <div>
               {response.length > 0 && (
                 <>
-                  <PDFDocument data={response} name={name} grade={grade} />
+                  <PDFDocument data={response} />
                   <DownloadPDF
                     name={name}
                     grade={grade}
