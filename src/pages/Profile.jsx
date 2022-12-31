@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 
 import { AuthContext } from '../store/AuthContext';
+import DeleteAssignment from '../components/DeleteAssignment';
 import DownloadPDF from '../components/DownloadPDF';
 import { GRADE } from '../api/promptChunks';
 import { supabase } from '../supabaseClient';
@@ -50,6 +51,8 @@ const Profile = () => {
               </span>
               {' | '}
               <span>{assignment.date_added}</span>
+              {' | '}
+              <DeleteAssignment assignmentId={assignment.id} />
               {' | '}
               <DownloadPDF
                 className='px-6 py-1 ml-1 my-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900 disabled:bg-blue-200 hover:disabled:bg-blue-200'
