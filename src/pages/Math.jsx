@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { aiRequest } from '../api/aiRequest';
-import { pdfSave } from '../pdf/pdfSave';
 import NavBar from '../components/NavBar';
 import NumberOfTasks from '../components/NumberOfTasks';
 import { GRADE, NUMBER_OF_TASKS } from '../api/promptChunks';
 import MathOperations from '../components/MathOperations';
+import PDFDocument from '../components/PDFDocument';
 
 const basePrompt =
   'create a math assignment for a %grade% grader, involving %operations%. create %task_amount% in the format: `{n}.{number} {operation} {number} = `, each on new line.';
@@ -54,10 +54,6 @@ const Math = () => {
     }
   };
 
-  const handleDownload = () => {
-    pdfSave(name, grade, response);
-  };
-
   return (
     <div className='bg-white'>
       <NavBar />
@@ -82,21 +78,8 @@ const Math = () => {
               <option>Fifth to sixth grade</option>
             </select>
           </div>
-
           {response.length > 0 && (
-            <>
-              <p>PDF file:</p>
-              {response.map((line, index) => (
-                <p key={`${line}_${index}`}>{line}</p>
-              ))}
-
-              <button
-                className='px-6 py-2 mt-4 text-white bg-orange-600 rounded-lg hover:bg-orange-900 block'
-                onClick={handleDownload}
-              >
-                Download PDF
-              </button>
-            </>
+            <PDFDocument data={response} name={name} grade={grade} />
           )}
           <button
             className='px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900 disabled:bg-blue-200 hover:disabled:bg-blue-200'
