@@ -1,13 +1,13 @@
 import AssignmentList from '../components/AssignmentList';
+import ChildrenList from '../components/ChildrenList';
 
 const Profile = () => {
   return (
-    <>
+    <div className='flex flex-col md:flex-row'>
+      <ChildrenList />
       <AssignmentList />
-    </>
+    </div>
   );
 };
 
 export default Profile;
-
-// supabase.from('assignments').insert({user_id: session.user.id, subject: 'math', name: 'Mark', grade: '3', assignment: '1. 1 + 1 =\n2. 2 + 2 =\n3. 3 + 3\n'})
