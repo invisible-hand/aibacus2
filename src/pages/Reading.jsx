@@ -4,7 +4,7 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../store/AuthContext';
 import DownloadPDF from '../components/DownloadPDF';
 import GradePicker from '../components/GradePicker';
-import NavBar from '../components/NavBar';
+import NavBar from '../components/layout/NavBar';
 import NumberOfTasks from '../components/NumberOfTasks';
 import PDFDocument from '../components/PDFDocument';
 import { SUBJECT } from '../constants/Subject';

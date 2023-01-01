@@ -1,18 +1,15 @@
-import Auth from './Auth';
-import Logo from './Logo';
+import Auth from '../Auth';
+import Logo from '../Logo';
 import { NavLink } from 'react-router-dom';
 import React from 'react';
-import { SUBJECT } from '../constants/Subject';
+import { SUBJECT } from '../../constants/Subject';
 
 const subjects = Object.values(SUBJECT);
 
 const NavBar = () => {
   return (
     <div className='px-6 pt-6'>
-      <nav
-        className='flex h-9 items-center gap-12'
-        aria-label='Global'
-      >
+      <nav className='flex h-9 items-center gap-12' aria-label='Global'>
         <Logo />
         <div className='flex min-w-0 flex-1 gap-12 '>
           {subjects.map((gen) => (
@@ -27,7 +24,6 @@ const NavBar = () => {
         </div>
         <Auth />
       </nav>
-      
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { AuthContext } from '../store/AuthContext';
 import DownloadPDF from '../components/DownloadPDF';
 import GradePicker from '../components/GradePicker';
 import MathOperations from '../components/MathOperations';
-import NavBar from '../components/NavBar';
+import NavBar from '../components/layout/NavBar';
 import NumberOfTasks from '../components/NumberOfTasks';
 import PDFDocument from '../components/PDFDocument';
 import { SUBJECT } from '../constants/Subject';
