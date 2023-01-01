@@ -10,6 +10,7 @@ import NumberOfTasks from '../components/NumberOfTasks';
 import PDFDocument from '../components/PDFDocument';
 import { SUBJECT } from '../constants/Subject';
 import { aiRequest } from '../api/aiRequest';
+import { saveAssignment } from '../database/saveAssignment';
 import { supabase } from '../supabaseClient';
 
 const basePrompt =
@@ -56,13 +57,14 @@ const Math = () => {
       const aiResponse = await aiRequest(prompt);
       setResponse(aiResponse);
 
-      await supabase.from('assignments').insert({
-        subject: 'math',
+      await saveAssignment(
+        'assignments',
+        subject,
         name,
         grade,
-        assignment: aiResponse.join('\n'),
-        user_id: session.user.id,
-      });
+        aiResponse.data,
+        session.user.id
+      );
     } catch (error) {
       alert(error);
     } finally {
