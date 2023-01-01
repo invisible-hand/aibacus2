@@ -28,7 +28,7 @@ const AssignmentList = () => {
   }, [userId, setAssignmentList]);
 
   return (
-    <>
+    <div>
       {assignmentList && (
         <>
           {assignmentList.map((assignment) => (
@@ -65,7 +65,7 @@ const AssignmentList = () => {
           ))}
         </>
       )}
-    </>
+    </div>
   );
 };
 
