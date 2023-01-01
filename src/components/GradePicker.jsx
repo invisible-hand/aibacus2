@@ -14,7 +14,7 @@ const GradePicker = ({ defaultValue, onChange, disabled }) => {
   };
 
   return (
-    <div>
+    <>
       <label htmlFor='grade'>
         Pick a grade:
         <select
@@ -31,7 +31,7 @@ const GradePicker = ({ defaultValue, onChange, disabled }) => {
           grade.
         </select>
       </label>
-    </div>
+    </>
   );
 };
 
