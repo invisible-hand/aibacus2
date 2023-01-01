@@ -18,6 +18,8 @@ const ChildrenContextProvider = ({ children }) => {
   const [childrenLoading, setChildrenLoading] = useState(false);
   const [childrenError, setChildrenError] = useState(null);
 
+  const hasChildren = childrenDB?.length > 0;
+
   const addChild = async (name, grade) => {
     setChildrenError(false);
     if (userId) {
@@ -91,6 +93,7 @@ const ChildrenContextProvider = ({ children }) => {
         childrenDB,
         childrenLoading,
         childrenError,
+        hasChildren,
         addChild,
         updateChildren,
         updateChildData,
