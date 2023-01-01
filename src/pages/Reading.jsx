@@ -42,13 +42,14 @@ const Reading = () => {
       const aiResponse = await aiRequest(prompt);
       setResponse(aiResponse);
 
-      await supabase.from('assignments').insert({
-        subject: 'read',
+      await saveAssignment(
+        'assignments',
+        subject,
         name,
         grade,
-        assignment: aiResponse.join('\n'),
-        user_id: session.user.id,
-      });
+        aiResponse.join('\n'),
+        session.user.id
+      );
     } catch (error) {
       alert(error);
     } finally {
