@@ -9,7 +9,7 @@ import NumberOfTasks from '../components/NumberOfTasks';
 import PDFDocument from '../components/PDFDocument';
 import { SUBJECT } from '../constants/Subject';
 import { aiRequest } from '../api/aiRequest';
-import { supabase } from '../supabaseClient';
+import { saveAssignment } from '../database/saveAssignment';
 
 const basePrompt =
   'write a reading assignment for a %grade% grader: first, write three paragraphs of text on a random topic, then, ask %task_amount% (questions) on reading comprehension about the text above';
@@ -24,14 +24,6 @@ const Reading = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [response, setResponse] = useState([]);
   const [numberOfTasks, setNumberOfTasks] = useState('15');
-
-  const handleChange = (event) => {
-    const { name, checked } = event.target;
-    setOperationState((prevState) => ({
-      ...prevState,
-      [name]: checked,
-    }));
-  };
 
   const responseHandler = async (_event) => {
     setIsGenerating(true);
