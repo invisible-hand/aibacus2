@@ -1,17 +1,6 @@
 import { useState } from 'react';
 
-const defaultOptions = [...new Array(13)]
-  .map((_, index) => index)
-  .filter((index) => index > 0);
-
-const GradePicker = ({
-  defaultOption,
-  options,
-  onChange,
-  disabled,
-  before,
-  after,
-}) => {
+const Name = ({ defaultOption, options, onChange, disabled }) => {
   const [selected, setSelected] = useState(defaultOption);
 
   const handleChange = (event) => {
@@ -19,29 +8,25 @@ const GradePicker = ({
     setSelected(value);
     onChange && onChange(value);
   };
-
-  const realOptions = options || defaultOptions;
-
   return (
     <>
       <label htmlFor='grade'>
-        {before}
+        Name
         <select
           value={selected}
           onChange={handleChange}
           id='grade'
           disabled={disabled || false}
         >
-          {realOptions.map((option) => (
+          {options.map((option) => (
             <option key={option} value={option}>
               {option}
             </option>
           ))}
         </select>
-        {after}
       </label>
     </>
   );
 };
 
-export default GradePicker;
+export default Name;

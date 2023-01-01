@@ -23,7 +23,7 @@ const Child = ({ id, name, grade, onClick, disabled }) => {
       />
 
       <GradePicker
-        defaultValue={gradeState}
+        defaultOption={gradeState}
         onChange={setGradeState}
         after={'grade'}
       />
