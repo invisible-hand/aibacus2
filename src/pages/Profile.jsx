@@ -4,6 +4,7 @@ import { AuthContext } from '../store/AuthContext';
 import DeleteAssignment from '../components/DeleteAssignment';
 import DownloadPDF from '../components/DownloadPDF';
 import { GRADE } from '../api/promptChunks';
+import { getAssignments } from '../database/getAssignments';
 import { supabase } from '../supabaseClient';
 
 const Profile = () => {
@@ -22,21 +23,15 @@ const Profile = () => {
   const userId = session?.user.id;
   useEffect(() => {
     if (userId) {
-      const getAssignments = async () => {
+      const handleGetAssignments = async () => {
         try {
-          const { data, error } = await supabase
-            .from('assignments')
-            .select('id, subject, name, grade, assignment, date_added')
-            .eq('user_id', userId);
-          if (error) {
-            throw new Error(error);
-          }
+          const data = await getAssignments(userId);
           setAssignmentList(data);
         } catch (error) {
           alert(error.message);
         }
       };
-      getAssignments();
+      handleGetAssignments();
     }
   }, [userId, setAssignmentList]);
 
