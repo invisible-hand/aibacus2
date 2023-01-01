@@ -9,7 +9,7 @@ import NumberOfTasks from '../components/NumberOfTasks';
 import PDFDocument from '../components/PDFDocument';
 import { SUBJECT } from '../constants/Subject';
 import { aiRequest } from '../api/aiRequest';
-import { saveAssignment } from '../database/saveAssignment';
+import { saveAssignment } from '../database/assignments';
 
 const basePrompt =
   'write a reading assignment for a %grade% grader: first, write three paragraphs of text on a random topic, then, ask %task_amount% (questions) on reading comprehension about the text above';
@@ -35,7 +35,6 @@ const Reading = () => {
       setResponse(aiResponse);
 
       await saveAssignment(
-        'assignments',
         subject,
         name,
         grade,

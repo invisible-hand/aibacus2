@@ -10,7 +10,7 @@ import NumberOfTasks from '../components/NumberOfTasks';
 import PDFDocument from '../components/PDFDocument';
 import { SUBJECT } from '../constants/Subject';
 import { aiRequest } from '../api/aiRequest';
-import { saveAssignment } from '../database/saveAssignment';
+import { saveAssignment } from '../database/assignments';
 
 const basePrompt =
   'create a math assignment for a %grade% grader, involving %operations%. create %task_amount% in the format: `{n}.{number} {operation} {number} = `, each on new line.';
@@ -57,7 +57,6 @@ const Math = () => {
       setResponse(aiResponse);
 
       await saveAssignment(
-        'assignments',
         subject,
         name,
         grade,

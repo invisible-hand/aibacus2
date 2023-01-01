@@ -1,8 +1,7 @@
+import { deleteAssignment, getAssignments } from '../database/assignments';
 import { useContext, useState } from 'react';
 
 import { AuthContext } from '../store/AuthContext';
-import { deleteAssignment } from '../database/deleteAssignment';
-import { getAssignments } from '../database/getAssignments';
 
 const DeleteAssignment = ({ assignmentId, setAssignmentList, isDeleting }) => {
   const [loading, setLoading] = useState(false);

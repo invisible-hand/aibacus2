@@ -4,7 +4,7 @@ import { AuthContext } from '../store/AuthContext';
 import DeleteAssignment from './DeleteAssignment';
 import DownloadPDF from './DownloadPDF';
 import { GRADE } from '../api/promptChunks';
-import { getAssignments } from '../database/getAssignments';
+import { getAssignments } from '../database/assignments';
 
 const AssignmentList = () => {
   const { session } = useContext(AuthContext);
