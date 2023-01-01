@@ -70,5 +70,3 @@ const AssignmentList = () => {
 };
 
 export default AssignmentList;
-
-// supabase.from('assignments').insert({user_id: session.user.id, subject: 'math', name: 'Mark', grade: '3', assignment: '1. 1 + 1 =\n2. 2 + 2 =\n3. 3 + 3\n'})
