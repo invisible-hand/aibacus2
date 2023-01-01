@@ -24,7 +24,6 @@ const ChildrenContextProvider = ({ children }) => {
       setChildrenLoading(true);
       try {
         await addChildToDB(name, grade, userId);
-        console.log(`addChild to DB ended`);
         await updateChildren();
       } catch (error) {
         setChildrenError(error);
