@@ -62,7 +62,7 @@ const Math = () => {
         subject,
         name,
         grade,
-        aiResponse.data,
+        aiResponse.join('\n'),
         session.user.id
       );
     } catch (error) {
