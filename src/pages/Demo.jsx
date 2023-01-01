@@ -1,5 +1,6 @@
 import { GRADE, NUMBER_OF_TASKS } from '../api/promptChunks';
 
+import AssignmentHeading from '../components/AssignmentHeading';
 import DownloadPDF from '../components/DownloadPDF';
 import GradePicker from '../components/GradePicker';
 import MathOperations from '../components/MathOperations';
@@ -57,7 +58,7 @@ const Demo = () => {
 
   return (
     <>
-      <h1 className='text-2xl font-semibold'>{subject} assignment generator</h1>
+      <AssignmentHeading subject={subject} />
       <div className='flex gap-20'>
         <div className='mt-6'>
           <NumberOfTasks defaultValue={numberOfTasks} disabled={true} />

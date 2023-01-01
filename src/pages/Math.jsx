@@ -1,6 +1,7 @@
 import { GRADE, NUMBER_OF_TASKS } from '../api/promptChunks';
 import { useContext, useState } from 'react';
 
+import AssignmentHeading from '../components/AssignmentHeading';
 import { AuthContext } from '../store/AuthContext';
 import DownloadPDF from '../components/DownloadPDF';
 import GradePicker from '../components/GradePicker';
@@ -72,9 +73,7 @@ const Math = () => {
 
   return (
     <>
-      <h1 className='text-2xl font-semibold mx-auto mt-4'>
-        {subject} assignment generator
-      </h1>
+      <AssignmentHeading subject={subject} />
       <div className='flex gap-20'>
         <div className='mt-6'>
           <NumberOfTasks
