@@ -1,4 +1,4 @@
-import AssignmentList from './AssignmentList';
+import AssignmentList from '../components/AssignmentList';
 
 const Profile = () => {
   return (

@@ -76,7 +76,9 @@ const Reading = () => {
                 grade={grade}
                 subject={subject}
                 data={response}
-              />
+              >
+                Download PDF
+              </DownloadPDF>
             </>
           )}
         </div>

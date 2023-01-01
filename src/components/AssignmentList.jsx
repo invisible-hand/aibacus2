@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 
 import { AuthContext } from '../store/AuthContext';
-import DeleteAssignment from '../components/DeleteAssignment';
-import DownloadPDF from '../components/DownloadPDF';
+import DeleteAssignment from './DeleteAssignment';
+import DownloadPDF from './DownloadPDF';
 import { GRADE } from '../api/promptChunks';
 import { getAssignments } from '../database/getAssignments';
 
@@ -58,7 +58,9 @@ const AssignmentList = () => {
                 subject={assignment.subject}
                 data={assignment.assignment.split('\\n')}
                 disabled={isDeleting === assignment.id}
-              />
+              >
+                Download PDF
+              </DownloadPDF>
             </div>
           ))}
         </>

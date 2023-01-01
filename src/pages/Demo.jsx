@@ -84,7 +84,9 @@ const Demo = () => {
                 grade={grade}
                 subject={subject}
                 data={response}
-              />
+              >
+                Download PDF
+              </DownloadPDF>
             </>
           )}
         </div>

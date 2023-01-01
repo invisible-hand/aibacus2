@@ -1,6 +1,7 @@
 import { pdfSave } from '../pdf/pdfSave';
 
-const DownloadPDF = ({ name, grade, data, subject, ...args }) => {
+const DownloadPDF = ({ children, name, grade, data, subject, ...args }) => {
+  console.log(children);
   return (
     <button
       className={
@@ -12,7 +13,7 @@ const DownloadPDF = ({ name, grade, data, subject, ...args }) => {
       }}
       disabled={args.disabled || false}
     >
-      Download PDF
+      {children}
     </button>
   );
 };
