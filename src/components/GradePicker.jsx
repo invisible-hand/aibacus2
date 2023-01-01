@@ -4,7 +4,7 @@ const options = [...new Array(13)]
   .map((_, index) => index)
   .filter((index) => index > 0);
 
-const GradePicker = ({ defaultValue, onChange, disabled }) => {
+const GradePicker = ({ defaultValue, onChange, disabled, before, after }) => {
   const [selected, setSelected] = useState(defaultValue);
 
   const handleChange = (event) => {
@@ -16,7 +16,7 @@ const GradePicker = ({ defaultValue, onChange, disabled }) => {
   return (
     <>
       <label htmlFor='grade'>
-        Pick a grade:
+        {before}
         <select
           value={selected}
           onChange={handleChange}
@@ -28,8 +28,8 @@ const GradePicker = ({ defaultValue, onChange, disabled }) => {
               {option}
             </option>
           ))}
-          grade.
         </select>
+        {after}
       </label>
     </>
   );
