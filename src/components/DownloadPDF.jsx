@@ -1,7 +1,6 @@
 import { pdfSave } from '../pdf/pdfSave';
 
 const DownloadPDF = ({ children, name, grade, data, subject, ...args }) => {
-  console.log(children);
   return (
     <button
       className={
