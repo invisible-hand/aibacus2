@@ -1,12 +1,27 @@
-import { deleteAssignment } from '../database/deleteAssignment';
+import { useContext, useState } from 'react';
 
-const DeleteAssignment = ({ assignmentId }) => {
-  const handleDelete = async (id) => {
-    //TODO! update list after delete
+import { AuthContext } from '../store/AuthContext';
+import { deleteAssignment } from '../database/deleteAssignment';
+import { getAssignments } from '../database/getAssignments';
+
+const DeleteAssignment = ({ assignmentId, setAssignmentList, isDeleting }) => {
+  const [loading, setLoading] = useState(false);
+
+  const { session } = useContext(AuthContext);
+
+  const userId = session?.user.id;
+  const handleDelete = async (assignmentId) => {
+    setLoading(true);
+    isDeleting(assignmentId);
     try {
       await deleteAssignment(assignmentId);
+      const data = await getAssignments(userId);
+      setAssignmentList(data);
     } catch (error) {
       alert(error.message);
+    } finally {
+      setLoading(false);
+      isDeleting(false);
     }
   };
   return (
@@ -15,6 +30,7 @@ const DeleteAssignment = ({ assignmentId }) => {
       onClick={(_) => {
         handleDelete(assignmentId);
       }}
+      disabled={loading}
     >
       Delete
     </button>
