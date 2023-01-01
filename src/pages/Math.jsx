@@ -11,7 +11,6 @@ import PDFDocument from '../components/PDFDocument';
 import { SUBJECT } from '../constants/Subject';
 import { aiRequest } from '../api/aiRequest';
 import { saveAssignment } from '../database/saveAssignment';
-import { supabase } from '../supabaseClient';
 
 const basePrompt =
   'create a math assignment for a %grade% grader, involving %operations%. create %task_amount% in the format: `{n}.{number} {operation} {number} = `, each on new line.';
