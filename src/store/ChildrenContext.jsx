@@ -1,10 +1,12 @@
+import {
+  addChildToDB,
+  getChildrenFromDB,
+  removeChildFromDB,
+  updateChildInDB,
+} from '../database/children';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 import { AuthContext } from './AuthContext';
-import { addChildToDB } from '../database/addChildToDB';
-import { getChildrenFromDB } from '../database/getChildrenFromDB';
-import { removeChildFromDB } from '../database/removeChildFromDB';
-import { updateChildInDB } from '../database/updateChildInDB';
 
 export const ChildrenContext = createContext();
 
