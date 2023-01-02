@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
+import AdminPromptTest from './pages/AdminPromptTest';
 import Demo from './pages/Demo';
 import Home from './pages/Home';
 import Layout from './components/layout/Layout';
@@ -94,6 +95,17 @@ const App = () => {
           <ProtectedRoute>
             <Layout>
               <Reading />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path={ROUTE.PROMPT_TEST}
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <AdminPromptTest />
             </Layout>
           </ProtectedRoute>
         }

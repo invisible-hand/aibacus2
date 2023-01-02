@@ -11,4 +11,6 @@ export const ROUTE = Object.freeze({
 
   MATH: `/${SUBJECT.MATH}`,
   READING: `/${SUBJECT.READING}`,
+
+  PROMPT_TEST: `/prompt-test`,
 });
