@@ -1,4 +1,4 @@
-import { GRADE, NUMBER_OF_TASKS } from '../api/promptChunks';
+import { ARITHMETICS, GRADE, NUMBER_OF_TASKS } from '../api/promptChunks';
 import { useContext, useState } from 'react';
 
 import AssignmentHeading from '../components/AssignmentHeading';
@@ -12,14 +12,8 @@ import NamePicker from '../components/NamePicker';
 import NumberOfTasks from '../components/NumberOfTasks';
 import PDFDocument from '../components/PDFDocument';
 import { ROUTE } from '../constants/Route';
-import { SUBJECT } from '../constants/Subject';
 import { aiRequest } from '../api/aiRequest';
 import { saveAssignment } from '../database/assignments';
-
-const basePrompt =
-  'create a math assignment for a %grade% grader, involving %operations%. create %task_amount% in the format: `{n}.{number} {operation} {number} = `, each on new line.';
-
-const subject = SUBJECT.ARITHMETICS;
 
 const Arithmetics = () => {
   const { session } = useContext(AuthContext);
@@ -51,7 +45,7 @@ const Arithmetics = () => {
 
   const responseHandler = async (_event) => {
     setIsGenerating(true);
-    const prompt = basePrompt
+    const prompt = ARITHMETICS.basePrompt
       .replace('%grade%', GRADE[+grade])
       .replace('%task_amount%', NUMBER_OF_TASKS[+numberOfTasks])
       .replace('%operations%', ops)
@@ -62,7 +56,7 @@ const Arithmetics = () => {
       setResponse(aiResponse);
 
       await saveAssignment(
-        subject,
+        ARITHMETICS.name,
         name,
         grade,
         aiResponse.join('\n'),
@@ -77,7 +71,7 @@ const Arithmetics = () => {
 
   return (
     <>
-      <AssignmentHeading subject={subject} />
+      <AssignmentHeading subject={ARITHMETICS.name} />
       <div className='flex gap-20'>
         <div className='mt-6'>
           {hasChildren ? (
@@ -91,6 +85,7 @@ const Arithmetics = () => {
               />
               <GradePicker
                 defaultOption={grade}
+                options={ARITHMETICS.grades}
                 onChange={setGrade}
                 after={' grade'}
               />
@@ -129,7 +124,7 @@ const Arithmetics = () => {
               <DownloadPDF
                 name={name}
                 grade={grade}
-                subject={subject}
+                subject={ARITHMETICS.name}
                 data={response}
               >
                 Download PDF
