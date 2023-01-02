@@ -15,7 +15,7 @@ const ChildrenContextProvider = ({ children }) => {
   const userId = session?.user.id;
 
   const [childrenDB, setChildrenDB] = useState(null);
-  const [childrenLoading, setChildrenLoading] = useState(false);
+  const [childrenLoading, setChildrenLoading] = useState(true);
   const [childrenError, setChildrenError] = useState(null);
 
   const hasChildren = childrenDB?.length > 0;
