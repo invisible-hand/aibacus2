@@ -6,7 +6,7 @@
 
 export const ARITHMETICS = Object.freeze({
   name: 'Arithmetics',
-  grades: [1, 2, 3, 4],
+  grades: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
   skills: {
     addition: 'addition',
     subtraction: 'subtraction',
@@ -14,7 +14,7 @@ export const ARITHMETICS = Object.freeze({
     division: 'division',
   },
   basePrompt:
-    'create a math assignment for a %grade% grader, involving %operations%. create %task_amount% in the format: `{n}.{number} {operation} {number} = `, each on new line.',
+    'create a math assignment for a %grade% grader of %difficulty% difficulty, involving %operations% with numbers %numbers%. create %task_amount% in the format: `{n}.{number} {operation} {number} = `, each on new line.',
 });
 
 const TEMP = Object.freeze({

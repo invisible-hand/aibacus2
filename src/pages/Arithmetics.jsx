@@ -4,10 +4,10 @@ import { useContext, useState } from 'react';
 import AssignmentHeading from '../components/AssignmentHeading';
 import { AuthContext } from '../store/AuthContext';
 import { ChildrenContext } from '../store/ChildrenContext';
+import DifficultyRadioPicker from '../components/DifficultyRadioPicker';
 import DownloadPDF from '../components/DownloadPDF';
 import GradePicker from '../components/GradePicker';
 import { Link } from 'react-router-dom';
-import MathOperations from '../components/MathOperations';
 import NamePicker from '../components/NamePicker';
 import NumberOfTasks from '../components/NumberOfTasks';
 import PDFDocument from '../components/PDFDocument';
@@ -21,34 +21,41 @@ const Arithmetics = () => {
 
   const [name, setName] = useState(hasChildren ? childrenDB[0].name : '');
   const [grade, setGrade] = useState(hasChildren ? childrenDB[0].grade : '1');
+
+  const [difficulty, setDifficulty] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [response, setResponse] = useState([]);
-  const [operationState, setOperationState] = useState({
-    Addition: true,
-    Subtraction: false,
-    Multiplication: false,
-    Division: false,
-  });
-  const ops = Object.keys(operationState)
-    .filter((key) => operationState[key])
-    .map((key) => key.toLowerCase())
-    .join(', ');
   const [numberOfTasks, setNumberOfTasks] = useState('15');
-
-  const handleChange = (event) => {
-    const { name, checked } = event.target;
-    setOperationState((prevState) => ({
-      ...prevState,
-      [name]: checked,
-    }));
-  };
 
   const responseHandler = async (_event) => {
     setIsGenerating(true);
+
+    const numbers = () => {
+      if (difficulty === 'easy') {
+        return 'from 1 to 10';
+      } else if (difficulty === 'medium') {
+        return 'from 1 to 12';
+      } else if (difficulty === 'hard') {
+        return 'from 5 to 20';
+      }
+    };
+
+    const operations = () => {
+      if (difficulty === 'easy') {
+        return 'addition, subtraction';
+      } else if (difficulty === 'medium') {
+        return 'addition, subtraction ,multiplication, division';
+      } else if (difficulty === 'hard') {
+        return 'addition, subtraction ,multiplication, division';
+      }
+    };
+
     const prompt = ARITHMETICS.basePrompt
       .replace('%grade%', GRADE[+grade])
       .replace('%task_amount%', NUMBER_OF_TASKS[+numberOfTasks])
-      .replace('%operations%', ops)
+      .replace('%numbers%', numbers())
+      .replace('%operations%', operations())
+      .replace('%difficulty%', difficulty)
       .replace('division', 'division(÷)')
       .replace('multiplication', 'multiplication(×)');
     try {
@@ -105,13 +112,10 @@ const Arithmetics = () => {
             defaultValue={numberOfTasks}
             onChange={setNumberOfTasks}
           />
-          <MathOperations
-            operationState={operationState}
-            handleChange={handleChange}
-          />
+          <DifficultyRadioPicker onChange={setDifficulty} />
           <button
             className='block px-6 py-2 my-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900 disabled:bg-blue-200 hover:disabled:bg-blue-200'
-            disabled={isGenerating || ops.length === 0 || !hasChildren}
+            disabled={isGenerating || !hasChildren}
             onClick={responseHandler}
           >
             {!isGenerating ? 'Generate' : 'Generating...'}
