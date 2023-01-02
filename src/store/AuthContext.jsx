@@ -2,20 +2,22 @@ import { createContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { ROUTE } from '../constants/Route';
-import { isAuth } from '../database/auth';
 import { supabase } from '../supabaseClient';
 
 export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
   const [session, setSession] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   useEffect(() => {
+    setAuthLoading(true);
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
+      setAuthLoading(false);
     });
     supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY') {
@@ -23,18 +25,14 @@ const AuthContextProvider = ({ children }) => {
           navigate(ROUTE.SET_NEW_PASSWORD);
         }
       }
-      if (event === 'SIGNED_IN') {
-        isAuth.auth = true;
-      }
-      if (event === 'SIGNED_OUT') {
-        isAuth.auth = false;
-      }
       setSession(session);
     });
   }, []);
 
   return (
-    <AuthContext.Provider value={{ session }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ session, authLoading }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 
