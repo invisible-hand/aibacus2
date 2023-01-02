@@ -14,8 +14,6 @@ import Register from './pages/Register';
 import ResetPassword from './pages/ResetPassword';
 import SetNewPassword from './pages/SetNewPassword';
 
-// import Layout from './components/layout/Layout';
-
 const App = () => {
   return (
     <Routes>
