@@ -1,4 +1,4 @@
-import { GRADE, NUMBER_OF_TASKS } from '../api/promptChunks';
+import { GRADE, NUMBER_OF_TASKS, READING } from '../api/promptChunks';
 import { useContext, useState } from 'react';
 
 import AssignmentHeading from '../components/AssignmentHeading';
@@ -11,14 +11,8 @@ import NamePicker from '../components/NamePicker';
 import NumberOfTasks from '../components/NumberOfTasks';
 import PDFDocument from '../components/PDFDocument';
 import { ROUTE } from '../constants/Route';
-import { SUBJECT } from '../constants/Subject';
 import { aiRequest } from '../api/aiRequest';
 import { saveAssignment } from '../database/assignments';
-
-const basePrompt =
-  'write a reading assignment for a %grade% grader: first, write three paragraphs of text on a random topic, then, ask %task_amount% (questions) on reading comprehension about the text above';
-
-const subject = SUBJECT.READING;
 
 const Reading = () => {
   const { session } = useContext(AuthContext);
@@ -32,7 +26,7 @@ const Reading = () => {
 
   const responseHandler = async (_event) => {
     setIsGenerating(true);
-    const prompt = basePrompt
+    const prompt = READING.basePrompt
       .replace('%grade%', GRADE[+grade])
       .replace('%task_amount%', NUMBER_OF_TASKS[+numberOfTasks]);
     try {
@@ -40,7 +34,7 @@ const Reading = () => {
       setResponse(aiResponse);
 
       await saveAssignment(
-        subject,
+        READING.name,
         name,
         grade,
         aiResponse.join('\n'),
@@ -55,7 +49,7 @@ const Reading = () => {
 
   return (
     <>
-      <AssignmentHeading subject={subject} />
+      <AssignmentHeading subject={READING.name} />
       <div className='flex gap-20'>
         <div className='mt-6'>
           {hasChildren ? (
@@ -69,6 +63,7 @@ const Reading = () => {
               />
               <GradePicker
                 defaultOption={grade}
+                options={READING.grades}
                 onChange={setGrade}
                 after={' grade'}
               />
@@ -103,7 +98,7 @@ const Reading = () => {
               <DownloadPDF
                 name={name}
                 grade={grade}
-                subject={subject}
+                subject={READING.name}
                 data={response}
               >
                 Download PDF
