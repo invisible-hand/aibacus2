@@ -27,11 +27,15 @@ const Math = () => {
 
   const responseHandler = async (_event) => {
     setIsGenerating(true);
-    const prompt = MATH.basePrompt
+    const math = MATH.grade.get(+grade);
+    const basePrompt = math.basePrompt;
+    const temp = math.temp;
+    const maxTokens = math.maxTokens;
+    const prompt = basePrompt
       .replace('/%grade%/g', GRADE[+grade])
       .replace('%task_amount%', NUMBER_OF_TASKS[+numberOfTasks]);
     try {
-      const aiResponse = await aiRequest(prompt);
+      const aiResponse = await aiRequest(prompt, temp, maxTokens);
       setResponse(aiResponse);
 
       await saveAssignment(
@@ -81,7 +85,7 @@ const Math = () => {
             </>
           )}
           <NumberOfTasks
-            defaultValue={numberOfTasks}
+            defaultValue={MATH.grade.get(+grade).defaultTasks}
             onChange={setNumberOfTasks}
           />
           <button
