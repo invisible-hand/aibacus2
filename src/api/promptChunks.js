@@ -1,30 +1,32 @@
-const MATH = Object.freeze({
-  name: 'math',
+export const ARITHMETICS = Object.freeze({
+  name: 'Arithmetics',
+  grades: [1, 2, 3, 4],
   skills: {
     addition: 'addition',
     subtraction: 'subtraction',
     multiplication: 'multiplication',
     division: 'division',
   },
+  basePrompt:
+    'create a math assignment for a %grade% grader, involving %operations%. create %task_amount% in the format: `{n}.{number} {operation} {number} = `, each on new line.',
 });
 
-const READING = Object.freeze({
-  name: 'reading',
-  skills: {
-    addition: '...',
-    subtraction: '...',
-    multiplication: '...',
-    division: '...',
-  },
+export const MATH = Object.freeze({
+  name: 'Math',
+  grades: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+  basePrompt:
+    'create a math assignment for a %grade% grader, word problems. without answers. create %task_amount% in the format: `# of task, new line, task`. Important! make sure tasks are advanced enough for a %grade% grade student',
 });
 
-const SUBJECT = Object.freeze({
-  MATH,
-  READING: 'reading',
+export const READING = Object.freeze({
+  name: 'Reading',
+  grades: [1, 2, 3, 4],
+  basePrompt:
+    'create a reading assignment for a %grade% grader: first, write three paragraphs of text on a random topic, then, ask %task_amount% (questions) on reading comprehension about the text above',
 });
 
 export const NUMBER_OF_TASKS = [
-  'single task',
+  'single task', //instead of 0
   'single task',
   'two tasks',
   'three tasks',
@@ -58,7 +60,7 @@ export const NUMBER_OF_TASKS = [
 ];
 
 export const GRADE = [
-  '1st',
+  '1st', //instead of 0
   '1st',
   '2nd',
   '3rd',
