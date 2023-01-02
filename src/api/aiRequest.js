@@ -17,8 +17,15 @@ const requestConfig = {
   },
 };
 
-export const aiRequest = async (prompt) => {
-  const data = { ...requestData, prompt };
+export const aiRequest = async (prompt, temp, maxTokens) => {
+  const temperature = temp || requestData.temperature;
+  const max_tokens = maxTokens || requestData.max_tokens;
+  const data = {
+    model: requestData.model,
+    temperature,
+    max_tokens,
+    prompt,
+  };
   const response = await axios.post(OPEN_AI_URL, data, requestConfig);
   return response.data.choices[0].text
     .split('\n')
