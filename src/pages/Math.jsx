@@ -1,4 +1,4 @@
-import { GRADE, NUMBER_OF_TASKS } from '../api/promptChunks';
+import { GRADE, MATH, NUMBER_OF_TASKS } from '../api/promptChunks';
 import { useContext, useState } from 'react';
 
 import AssignmentHeading from '../components/AssignmentHeading';
@@ -7,19 +7,12 @@ import { ChildrenContext } from '../store/ChildrenContext';
 import DownloadPDF from '../components/DownloadPDF';
 import GradePicker from '../components/GradePicker';
 import { Link } from 'react-router-dom';
-import MathOperations from '../components/MathOperations';
 import NamePicker from '../components/NamePicker';
 import NumberOfTasks from '../components/NumberOfTasks';
 import PDFDocument from '../components/PDFDocument';
 import { ROUTE } from '../constants/Route';
-import { SUBJECT } from '../constants/Subject';
 import { aiRequest } from '../api/aiRequest';
 import { saveAssignment } from '../database/assignments';
-
-const basePrompt =
-  'create a math assignment for a %grade% grader, word problems. create %task_amount% in the format: `# of task, new line, task`. Important! make sure tasks are advanced enough for a %grade% grade student';
-
-const subject = SUBJECT.MATH;
 
 const Math = () => {
   const { session } = useContext(AuthContext);
@@ -32,17 +25,9 @@ const Math = () => {
 
   const [numberOfTasks, setNumberOfTasks] = useState('15');
 
-  const handleChange = (event) => {
-    const { name, checked } = event.target;
-    setOperationState((prevState) => ({
-      ...prevState,
-      [name]: checked,
-    }));
-  };
-
   const responseHandler = async (_event) => {
     setIsGenerating(true);
-    const prompt = basePrompt
+    const prompt = MATH.basePrompt
       .replace('/%grade%/g', GRADE[+grade])
       .replace('%task_amount%', NUMBER_OF_TASKS[+numberOfTasks]);
     try {
@@ -50,7 +35,7 @@ const Math = () => {
       setResponse(aiResponse);
 
       await saveAssignment(
-        subject,
+        MATH.name,
         name,
         grade,
         aiResponse.join('\n'),
@@ -65,7 +50,7 @@ const Math = () => {
 
   return (
     <>
-      <AssignmentHeading subject={subject} />
+      <AssignmentHeading subject={MATH.name} />
       <div className='flex gap-20'>
         <div className='mt-6'>
           {hasChildren ? (
@@ -79,6 +64,7 @@ const Math = () => {
               />
               <GradePicker
                 defaultOption={grade}
+                options={MATH.grades}
                 onChange={setGrade}
                 after={' grade'}
               />
@@ -113,7 +99,7 @@ const Math = () => {
               <DownloadPDF
                 name={name}
                 grade={grade}
-                subject={subject}
+                subject={MATH.name}
                 data={response}
               >
                 Download PDF
