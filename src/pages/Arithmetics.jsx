@@ -17,11 +17,11 @@ import { aiRequest } from '../api/aiRequest';
 import { saveAssignment } from '../database/assignments';
 
 const basePrompt =
-  'create a math assignment for a %grade% grader, word problems. create %task_amount% in the format: `# of task, new line, task`. Important! make sure tasks are advanced enough for a %grade% grade student';
+  'create a math assignment for a %grade% grader, involving %operations%. create %task_amount% in the format: `{n}.{number} {operation} {number} = `, each on new line.';
 
-const subject = SUBJECT.MATH;
+const subject = SUBJECT.ARITHMETICS;
 
-const Math = () => {
+const Arithmetics = () => {
   const { session } = useContext(AuthContext);
   const { childrenDB, hasChildren } = useContext(ChildrenContext);
 
@@ -29,7 +29,16 @@ const Math = () => {
   const [grade, setGrade] = useState(hasChildren ? childrenDB[0].grade : '1');
   const [isGenerating, setIsGenerating] = useState(false);
   const [response, setResponse] = useState([]);
-
+  const [operationState, setOperationState] = useState({
+    Addition: true,
+    Subtraction: false,
+    Multiplication: false,
+    Division: false,
+  });
+  const ops = Object.keys(operationState)
+    .filter((key) => operationState[key])
+    .map((key) => key.toLowerCase())
+    .join(', ');
   const [numberOfTasks, setNumberOfTasks] = useState('15');
 
   const handleChange = (event) => {
@@ -43,8 +52,11 @@ const Math = () => {
   const responseHandler = async (_event) => {
     setIsGenerating(true);
     const prompt = basePrompt
-      .replace('/%grade%/g', GRADE[+grade])
-      .replace('%task_amount%', NUMBER_OF_TASKS[+numberOfTasks]);
+      .replace('%grade%', GRADE[+grade])
+      .replace('%task_amount%', NUMBER_OF_TASKS[+numberOfTasks])
+      .replace('%operations%', ops)
+      .replace('division', 'division(÷)')
+      .replace('multiplication', 'multiplication(×)');
     try {
       const aiResponse = await aiRequest(prompt);
       setResponse(aiResponse);
@@ -98,9 +110,13 @@ const Math = () => {
             defaultValue={numberOfTasks}
             onChange={setNumberOfTasks}
           />
+          <MathOperations
+            operationState={operationState}
+            handleChange={handleChange}
+          />
           <button
             className='block px-6 py-2 my-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900 disabled:bg-blue-200 hover:disabled:bg-blue-200'
-            disabled={isGenerating || !hasChildren}
+            disabled={isGenerating || ops.length === 0 || !hasChildren}
             onClick={responseHandler}
           >
             {!isGenerating ? 'Generate' : 'Generating...'}
@@ -126,4 +142,4 @@ const Math = () => {
   );
 };
 
-export default Math;
+export default Arithmetics;

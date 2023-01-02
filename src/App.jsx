@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import AdminPromptTest from './pages/AdminPromptTest';
+import Arithmetics from './pages/Arithmetics';
 import Demo from './pages/Demo';
 import Home from './pages/Home';
 import Layout from './components/layout/Layout';
@@ -73,6 +74,16 @@ const App = () => {
           <ProtectedRoute>
             <Layout>
               <SetNewPassword />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path={ROUTE.ARITHMETICS}
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <Arithmetics />
             </Layout>
           </ProtectedRoute>
         }

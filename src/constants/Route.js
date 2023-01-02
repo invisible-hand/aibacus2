@@ -9,6 +9,7 @@ export const ROUTE = Object.freeze({
   RESET_PASSWORD: '/reset-password',
   SET_NEW_PASSWORD: '/set-new-password',
 
+  ARITHMETICS: `/${SUBJECT.ARITHMETICS}`,
   MATH: `/${SUBJECT.MATH}`,
   READING: `/${SUBJECT.READING}`,
 
