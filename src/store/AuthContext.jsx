@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { ROUTE } from '../constants/Route';
+import { isAuth } from '../database/auth';
 import { supabase } from '../supabaseClient';
 
 export const AuthContext = createContext();
@@ -21,6 +22,12 @@ const AuthContextProvider = ({ children }) => {
         if (!pathname.startsWith(ROUTE.SET_NEW_PASSWORD)) {
           navigate(ROUTE.SET_NEW_PASSWORD);
         }
+      }
+      if (event === 'SIGNED_IN') {
+        isAuth.auth = true;
+      }
+      if (event === 'SIGNED_OUT') {
+        isAuth.auth = false;
       }
       setSession(session);
     });
