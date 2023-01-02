@@ -1,3 +1,9 @@
+// export const SUBJECTS = new Map();
+
+// SUBJECTS.set('Arithmetics', ARITHMETICS);
+// SUBJECTS.set('Math', MATH);
+// SUBJECTS.set('Reading', READING);
+
 export const ARITHMETICS = Object.freeze({
   name: 'Arithmetics',
   grades: [1, 2, 3, 4],
@@ -11,12 +17,142 @@ export const ARITHMETICS = Object.freeze({
     'create a math assignment for a %grade% grader, involving %operations%. create %task_amount% in the format: `{n}.{number} {operation} {number} = `, each on new line.',
 });
 
-export const MATH = Object.freeze({
-  name: 'Math',
-  grades: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-  basePrompt:
-    'create a math assignment for a %grade% grader, word problems. without answers. create %task_amount% in the format: `# of task, new line, task`. Important! make sure tasks are advanced enough for a %grade% grade student',
+const TEMP = Object.freeze({
+  0.0: 0.0,
+  0.1: 0.1,
+  0.2: 0.2,
+  0.3: 0.3,
+  0.4: 0.4,
+  0.5: 0.5,
+  0.6: 0.6,
+  0.7: 0.7,
+  0.8: 0.8,
+  0.9: 0.9,
+  1.0: 1.0,
 });
+
+const defT = TEMP[0.1];
+
+const notice = `Important! make sure tasks are advanced enough for a %grade% grade student`;
+
+const MATH_ = {
+  name: 'Math',
+  basePrompt: `create a math assignment for a %grade% grader, word problems. without answers. create %task_amount% in the format: # of task, new line, task,. ${notice}`,
+  grades: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+};
+
+MATH_.grade = new Map([
+  [
+    1,
+    {
+      temp: defT,
+      max_tokens: 2500,
+      basePrompt: MATH_.basePrompt,
+      defaultTasks: 10,
+    },
+  ],
+  [
+    2,
+    {
+      temp: defT,
+      max_tokens: 2500,
+      basePrompt: MATH_.basePrompt,
+      defaultTasks: 10,
+    },
+  ],
+  [
+    3,
+    {
+      temp: defT,
+      max_tokens: 2500,
+      basePrompt: MATH_.basePrompt,
+      defaultTasks: 10,
+    },
+  ],
+  [
+    4,
+    {
+      temp: defT,
+      max_tokens: 2500,
+      basePrompt: MATH_.basePrompt,
+      defaultTasks: 10,
+    },
+  ],
+  [
+    5,
+    {
+      temp: defT,
+      max_tokens: 2500,
+      basePrompt: MATH_.basePrompt,
+      defaultTasks: 10,
+    },
+  ],
+  [
+    6,
+    {
+      temp: defT,
+      max_tokens: 2500,
+      basePrompt: MATH_.basePrompt,
+      defaultTasks: 10,
+    },
+  ],
+  [
+    7,
+    {
+      temp: defT,
+      max_tokens: 2500,
+      basePrompt: MATH_.basePrompt,
+      defaultTasks: 10,
+    },
+  ],
+  [
+    8,
+    {
+      temp: defT,
+      max_tokens: 2500,
+      basePrompt: MATH_.basePrompt,
+      defaultTasks: 10,
+    },
+  ],
+  [
+    9,
+    {
+      temp: defT,
+      max_tokens: 2500,
+      basePrompt: MATH_.basePrompt,
+      defaultTasks: 10,
+    },
+  ],
+  [
+    10,
+    {
+      temp: defT,
+      max_tokens: 2500,
+      basePrompt: MATH_.basePrompt,
+      defaultTasks: 10,
+    },
+  ],
+  [
+    11,
+    {
+      temp: defT,
+      max_tokens: 2500,
+      basePrompt: MATH_.basePrompt,
+      defaultTasks: 10,
+    },
+  ],
+  [
+    12,
+    {
+      temp: defT,
+      max_tokens: 2500,
+      basePrompt: MATH_.basePrompt,
+      defaultTasks: 10,
+    },
+  ],
+]);
+
+export const MATH = MATH_;
 
 export const READING = Object.freeze({
   name: 'Reading',
