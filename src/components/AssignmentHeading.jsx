@@ -1,11 +1,7 @@
-import React from 'react';
+import { Heading } from '@chakra-ui/react';
 
 const AssignmentHeading = ({ subject }) => {
-  return (
-    <h1 className='text-2xl font-semibold mx-auto mt-4'>
-      {subject} assignment generator
-    </h1>
-  );
+  return <Heading fontSize={'3xl'}>{subject} assignment generator</Heading>;
 };
 
 export default AssignmentHeading;
