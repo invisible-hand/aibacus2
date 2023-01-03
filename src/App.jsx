@@ -10,14 +10,11 @@ import Math from './pages/Math';
 import Profile from './pages/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
 import { ROUTE } from './constants/Route';
-import ReactGA from 'react-ga';
 import Reading from './pages/Reading';
 import Register from './pages/Register';
 import ResetPassword from './pages/ResetPassword';
 import SetNewPassword from './pages/SetNewPassword';
 import useGAPageView from './components/hooks/useGAPageView';
-
-ReactGA.initialize('G-Y09KX781K6');
 
 const App = () => {
   useGAPageView();

@@ -7,6 +7,9 @@ import { ChakraProvider } from '@chakra-ui/react';
 import ChildrenContextProvider from './store/ChildrenContext';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import ReactGA from 'react-ga';
+
+ReactGA.initialize(import.meta.env.VITE_GA_KEY);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
