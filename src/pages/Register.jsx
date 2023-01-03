@@ -1,5 +1,15 @@
+import {
+  Box,
+  Button,
+  Heading,
+  Stack,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 
+import Email from '../components/Email';
+import Password from '../components/Password';
 import { ROUTE } from '../constants/Route';
 import { supabase } from '../supabaseClient';
 import { useState } from 'react';
@@ -34,52 +44,55 @@ const Register = () => {
   };
 
   return (
-    <div className='flex items-center justify-center'>
-      <div className='px-8 py-6 mx-4 mt-4 text-left bg-white shadow-lg md:w-1/2 lg:w-1/2 sm:w-1/2'>
-        <h3 className='text-2xl font-bold text-center'>Register</h3>
-        <form onSubmit={handleSubmit}>
-          <div className='mt-4'>
-            <div className='mt-4'>
-              <label className='block' htmlFor='email'>
-                Email
-              </label>
-              <input
-                id='email'
-                type='text'
-                placeholder='Email'
-                className='w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600'
-              />
-            </div>
-            <div className='mt-4'>
-              <label className='block'>Password</label>
-              <input
-                id='password'
-                type='password'
-                placeholder='Password'
-                className='w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600'
-              />
-            </div>
-            <div className='flex'>
-              <button
-                className='w-full px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900'
-                disabled={isFetching}
+    <Stack minW={460} spacing={8} mx={'auto'} maxW={'lg'} px={6} my={5}>
+      <Heading mx={'auto'} fontSize={'4xl'}>
+        Register
+      </Heading>
+      <form onSubmit={handleSubmit}>
+        <Box
+          rounded={'lg'}
+          bg={useColorModeValue('white', 'gray.700')}
+          boxShadow={'lg'}
+          p={8}
+        >
+          <Stack spacing={4}>
+            <Email />
+            <Password />
+            <Stack spacing={10}>
+              <Button
+                bg={'green.400'}
+                color={'white'}
+                _hover={{
+                  bg: 'green.500',
+                }}
+                isDisabled={isFetching}
               >
-                Create Account
-              </button>
-            </div>
-            <div className='mt-2 text-grey-dark'>
-              Already have an account?
-              <Link
-                to={ROUTE.LOGIN}
-                className='text-blue-600 hover:underline ml-2'
+                Sign up
+              </Button>
+              <Stack
+                direction={'column'}
+                align={'start'}
+                justify={'space-between'}
               >
-                Log in
-              </Link>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
+                <Box>
+                  <Text as='span'>Already have an account?</Text>
+                  <Button
+                    ml={1}
+                    variant={'link'}
+                    display={'inline'}
+                    as={Link}
+                    to={ROUTE.LOGIN}
+                    color={'green.400'}
+                  >
+                    Log in
+                  </Button>
+                </Box>
+              </Stack>
+            </Stack>
+          </Stack>
+        </Box>
+      </form>
+    </Stack>
   );
 };
 
