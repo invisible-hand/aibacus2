@@ -14,17 +14,17 @@ import { ROUTE } from '../constants/Route';
 
 const Home = () => {
   return (
-    <Container maxW={'7xl'}>
+    <Container maxW={'7xl'} my={5}>
       <Stack
         align={'center'}
         spacing={{ base: 8, md: 10 }}
         direction={{ base: 'column', md: 'row' }}
       >
-        <Stack flex={1} spacing={{ base: 5, md: 10 }}>
+        <Stack flex={1} spacing={{ base: 5, md: 8 }}>
           <Heading
             lineHeight={1.1}
             fontWeight={600}
-            fontSize={{ base: '3xl', sm: '4xl', lg: '6xl' }}
+            fontSize={{ base: '3xl', sm: '4xl', lg: '5xl' }}
           >
             <Text
               as={'span'}
