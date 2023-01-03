@@ -45,17 +45,17 @@ const Login = () => {
   };
 
   return (
-    <Stack spacing={8} mx={'auto'} maxW={'lg'} px={6}>
+    <Stack minW={460} spacing={8} mx={'auto'} maxW={'lg'} px={6} my={5}>
       <Heading mx={'auto'} fontSize={'4xl'}>
         Log in to your account
       </Heading>
-      <Box
-        rounded={'lg'}
-        bg={useColorModeValue('white', 'gray.700')}
-        boxShadow={'lg'}
-        p={8}
-      >
-        <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
+        <Box
+          rounded={'lg'}
+          bg={useColorModeValue('white', 'gray.700')}
+          boxShadow={'lg'}
+          p={8}
+        >
           <Stack spacing={4}>
             <Email />
             <Password />
@@ -99,8 +99,8 @@ const Login = () => {
               </Stack>
             </Stack>
           </Stack>
-        </form>
-      </Box>
+        </Box>
+      </form>
     </Stack>
   );
 };
