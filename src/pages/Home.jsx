@@ -37,14 +37,14 @@ const Home = () => {
                 position: 'absolute',
                 bottom: 1,
                 left: 0,
-                bg: 'red.400',
+                bg: 'green.400',
                 zIndex: -1,
               }}
             >
               Experience
             </Text>
             <br />
-            <Text as={'span'} color={'red.400'}>
+            <Text as={'span'} color={'green.400'}>
               the AI-powered education
             </Text>
           </Heading>
@@ -57,13 +57,22 @@ const Home = () => {
           <Button
             as={Link}
             to={ROUTE.DEMO}
-            rounded={'full'}
-            size={'lg'}
-            fontWeight={'normal'}
             px={6}
-            colorScheme={'red'}
-            bg={'red.400'}
-            _hover={{ bg: 'red.500' }}
+            fontWeight={'normal'}
+            size={'lg'}
+            rounded={'full'}
+            colorScheme={'green'}
+            bg={'green.400'}
+            color={'white'}
+            boxShadow={
+              '0px 1px 25px -5px rgb(72 187 120 / 48%), 0 10px 10px -5px rgb(72 187 120 / 43%)'
+            }
+            _hover={{
+              bg: 'green.500',
+            }}
+            _focus={{
+              bg: 'green.500',
+            }}
           >
             Demo &rarr;
           </Button>
@@ -77,7 +86,6 @@ const Home = () => {
         >
           <Box
             position={'relative'}
-            // height={'300px'}
             rounded={'2xl'}
             boxShadow={'2xl'}
             width={'full'}
