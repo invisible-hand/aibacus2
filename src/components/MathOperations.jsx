@@ -1,25 +1,24 @@
-import React from 'react';
-
+import { Checkbox, CheckboxGroup, Stack, Text } from '@chakra-ui/react';
 const operations = ['Addition', 'Subtraction', 'Multiplication', 'Division'];
 
 const MathOperations = ({ operationState, handleChange }) => {
   return (
     <>
-      <p className='mt-2'>Select operations to include in assignments</p>
-      {operations.map((operation) => (
-        <label key={operation} htmlFor={operation} className='block'>
-          <input
-            className='mr-1'
-            type='checkbox'
-            id={operation}
-            name={operation}
-            value={operation}
-            checked={operationState[operation]}
-            onChange={handleChange}
-          />
-          {operation}
-        </label>
-      ))}
+      <Text mt={2}>Select operations to include in assignments</Text>
+      <CheckboxGroup colorScheme={'green'} defaultValue={['Addition']}>
+        <Stack spacing={[1, 4]} direction={['column', 'row']}>
+          {operations.map((operation) => (
+            <Checkbox
+              key={operation}
+              value={operation}
+              isChecked={operationState[operation]}
+              onChange={handleChange}
+            >
+              {operation}
+            </Checkbox>
+          ))}
+        </Stack>
+      </CheckboxGroup>
     </>
   );
 };
