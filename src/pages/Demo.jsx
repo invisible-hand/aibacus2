@@ -10,6 +10,7 @@ import { GRADE, NUMBER_OF_TASKS } from '../api/promptChunks';
 
 import AssignmentHeading from '../components/AssignmentHeading';
 import DownloadPDF from '../components/DownloadPDF';
+import Generate from '../components/Generate';
 import GradePicker from '../components/GradePicker';
 import MathOperations from '../components/MathOperations';
 import NumberOfTasks from '../components/NumberOfTasks';
@@ -87,23 +88,11 @@ const Demo = () => {
               disabled={true}
               after={' grade'}
             />
-
-            <Button
-              ml='1'
-              bg={'green.400'}
-              color={'white'}
-              // w='full'
-              size={'md'}
-              _hover={{
-                bg: 'green.500',
-              }}
+            <Generate
               isLoading={isGenerating}
-              loadingText='Generating...'
               onClick={responseHandler}
               disabled={isGenerating || ops.length === 0}
-            >
-              {!isGenerating ? 'Generate' : 'Generating...'}
-            </Button>
+            />
           </VStack>
 
           <VStack align={'start'}>
