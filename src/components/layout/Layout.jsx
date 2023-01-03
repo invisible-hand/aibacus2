@@ -1,15 +1,19 @@
+import { Box, Flex } from '@chakra-ui/react';
+
 import Footer from './Footer';
 import NavBar from './NavBar';
 
 const Layout = ({ children }) => {
   return (
-    <div className='bg-white min-h-screen flex flex-col'>
+    <Flex bg={'white'} minH={'100vh'} direction={'column'}>
       <NavBar />
-      <main className='flex-1 px-1 mt-10 h-full'>
-        <div className='mx-auto max-w-3xl'>{children}</div>
-      </main>
+      <Flex as='main' flex={1} px={1} mt={10} h={'full'}>
+        <Box mx={'auto'} maxW={'3xl'}>
+          {children}
+        </Box>
+      </Flex>
       <Footer />
-    </div>
+    </Flex>
   );
 };
 
