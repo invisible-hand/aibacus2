@@ -1,3 +1,4 @@
+import { Button, Flex } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 
 import { AuthContext } from '../store/AuthContext';
@@ -24,35 +25,54 @@ const Auth = () => {
   };
 
   return (
-    <>
+    <Flex align={'center'}>
       {!session ? (
         <>
-          <Link
+          <Button
+            as={Link}
             to={ROUTE.LOGIN}
-            className='inline-block rounded-lg px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20'
+            bg={'green.400'}
+            color={'white'}
+            w='full'
+            _hover={{
+              bg: 'green.500',
+            }}
           >
             Log in
-          </Link>
-          <Link
+          </Button>
+          <Button
+            as={Link}
             to={ROUTE.REGISTER}
-            className='inline-block rounded-lg ml-2 px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20'
+            ml='1'
+            bg={'green.400'}
+            color={'white'}
+            w='full'
+            _hover={{
+              bg: 'green.500',
+            }}
           >
             Sign up
-          </Link>
+          </Button>
         </>
       ) : (
-        <div className='flex items-center'>
+        <>
           <Link to={ROUTE.PROFILE}>{session?.user.email}</Link>
-          <button
-            className='inline-block rounded-lg ml-2 px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20'
+          <Button
+            ml='1'
+            variant='outline'
+            color={'green.400'}
+            w='full'
+            _hover={{
+              color: 'green.500',
+            }}
             onClick={logout}
             disabled={isFetching}
           >
             Log out
-          </button>
-        </div>
+          </Button>
+        </>
       )}
-    </>
+    </Flex>
   );
 };
 
