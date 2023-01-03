@@ -5,6 +5,7 @@ import AssignmentHeading from '../components/AssignmentHeading';
 import { AuthContext } from '../store/AuthContext';
 import { ChildrenContext } from '../store/ChildrenContext';
 import DownloadPDF from '../components/DownloadPDF';
+import Generate from '../components/Generate';
 import GradePicker from '../components/GradePicker';
 import { Link } from 'react-router-dom';
 import NamePicker from '../components/NamePicker';

@@ -6,6 +6,7 @@ import { AuthContext } from '../store/AuthContext';
 import { ChildrenContext } from '../store/ChildrenContext';
 import DifficultyRadioPicker from '../components/DifficultyRadioPicker';
 import DownloadPDF from '../components/DownloadPDF';
+import Generate from '../components/Generate';
 import GradePicker from '../components/GradePicker';
 import { Link } from 'react-router-dom';
 import NamePicker from '../components/NamePicker';
@@ -113,13 +114,11 @@ const Arithmetics = () => {
             onChange={setNumberOfTasks}
           />
           <DifficultyRadioPicker onChange={setDifficulty} />
-          <button
-            className='block px-6 py-2 my-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900 disabled:bg-blue-200 hover:disabled:bg-blue-200'
-            disabled={isGenerating || !hasChildren}
+          <Generate
+            isLoading={isGenerating}
             onClick={responseHandler}
-          >
-            {!isGenerating ? 'Generate' : 'Generating...'}
-          </button>
+            disabled={isGenerating || !hasChildren}
+          />
         </div>
         <div>
           {response.length > 0 && (
