@@ -1,3 +1,4 @@
+import { Container, SimpleGrid, Stack, Text, VStack } from '@chakra-ui/react';
 import { GRADE, NUMBER_OF_TASKS } from '../api/promptChunks';
 
 import AssignmentHeading from '../components/AssignmentHeading';
@@ -29,7 +30,6 @@ const Demo = () => {
     .filter((key) => operationState[key])
     .map((key) => key.toLowerCase())
     .join(', ');
-
   const handleChange = (event) => {
     const { name, checked } = event.target;
     setOperationState((prevState) => ({
@@ -37,7 +37,6 @@ const Demo = () => {
       [name]: checked,
     }));
   };
-
   const responseHandler = async (_event) => {
     setIsGenerating(true);
     const prompt = basePrompt
@@ -58,39 +57,55 @@ const Demo = () => {
 
   return (
     <>
-      <AssignmentHeading subject={subject} />
-      <div className='flex gap-20'>
-        <div className='mt-6'>
-          <NumberOfTasks defaultValue={numberOfTasks} disabled={true} />
-          <MathOperations
-            operationState={operationState}
-            handleChange={handleChange}
-          />
-          <GradePicker defaultOption={grade} disabled={true} after={' grade'} />
-          <button
-            className='block px-6 py-2 my-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900 disabled:bg-blue-200 hover:disabled:bg-blue-200'
-            disabled={isGenerating || ops.length === 0}
-            onClick={responseHandler}
-          >
-            {!isGenerating ? 'Generate' : 'Generating...'}
-          </button>
-        </div>
-        <div>
-          {response.length > 0 && (
-            <>
-              <PDFDocument data={response} />
-              <DownloadPDF
-                name={name}
-                grade={grade}
-                subject={subject}
-                data={response}
-              >
-                Download PDF
-              </DownloadPDF>
-            </>
-          )}
-        </div>
-      </div>
+      <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
+        <AssignmentHeading subject={subject} />
+        <Text color={'gray.600'} fontSize={'xl'}>
+          Math is a subject that helps us understand the world around us by
+          using numbers. Math is all around us and can be found in things like
+          music, sports, and cooking. It's an important and fun subject to
+          learn!
+        </Text>
+      </Stack>
+
+      <Container maxW={'7xl'} mt={10}>
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
+          <VStack align={'start'}>
+            <NumberOfTasks defaultValue={numberOfTasks} disabled={true} />
+            <MathOperations
+              operationState={operationState}
+              handleChange={handleChange}
+            />
+            <GradePicker
+              defaultOption={grade}
+              disabled={true}
+              after={' grade'}
+            />
+            <button
+              className='block px-6 py-2 my-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900 disabled:bg-blue-200 hover:disabled:bg-blue-200'
+              disabled={isGenerating || ops.length === 0}
+              onClick={responseHandler}
+            >
+              {!isGenerating ? 'Generate' : 'Generating...'}
+            </button>
+          </VStack>
+
+          <VStack align={'start'}>
+            {response.length > 0 && (
+              <>
+                <PDFDocument data={response} />
+                <DownloadPDF
+                  name={name}
+                  grade={grade}
+                  subject={subject}
+                  data={response}
+                >
+                  Download PDF
+                </DownloadPDF>
+              </>
+            )}
+          </VStack>
+        </SimpleGrid>
+      </Container>
     </>
   );
 };
