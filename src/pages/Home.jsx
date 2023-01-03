@@ -7,11 +7,11 @@ const Home = () => {
       <img src='main.png' className='mx-auto rounded-xl mb-6 w-1/2' />
       <div>
         <h1 className='text-lg font-bold tracking-tight sm:text-3xl mb-6 mx-auto text-center'>
-          Experience the power of screen-free education
+          Experience the AI-powered education
         </h1>
 
         <p className='m-6 text-lg leading-8 text-gray-600 sm:text-center'>
-          We help K-12 studens to learn without screens. Instantly generate
+          We help K-12 studens to maximize their learning experience. Instantly generate
           assignments and print them for self-study. Analyze and track student
           progress. Share your ideas with other parents.
         </p>
