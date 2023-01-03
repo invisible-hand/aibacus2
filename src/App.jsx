@@ -23,109 +23,64 @@ const App = () => {
   useGAPageView();
 
   return (
-    <Routes>
-      <Route
-        path={ROUTE.INDEX}
-        element={
-          <Layout>
-            <Home />
-          </Layout>
-        }
-      />
-      <Route
-        path={ROUTE.DEMO}
-        element={
-          <Layout>
-            <Demo />
-          </Layout>
-        }
-      />
-      <Route
-        path={ROUTE.LOGIN}
-        element={
-          <Layout>
-            <Login />
-          </Layout>
-        }
-      />
-      <Route
-        path={ROUTE.PROFILE}
-        element={
-          <ProtectedRoute>
-            <Layout>
+    <Layout>
+      <Routes>
+        <Route path={ROUTE.INDEX} element={<Home />} />
+        <Route path={ROUTE.DEMO} element={<Demo />} />
+        <Route path={ROUTE.LOGIN} element={<Login />} />
+        <Route
+          path={ROUTE.PROFILE}
+          element={
+            <ProtectedRoute>
               <Profile />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path={ROUTE.REGISTER}
-        element={
-          <Layout>
-            <Register />
-          </Layout>
-        }
-      />
-      <Route
-        path={ROUTE.RESET_PASSWORD}
-        element={
-          <Layout>
-            <ResetPassword />
-          </Layout>
-        }
-      />
-      <Route
-        path={ROUTE.SET_NEW_PASSWORD}
-        element={
-          <ProtectedRoute>
-            <Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route path={ROUTE.REGISTER} element={<Register />} />
+        <Route path={ROUTE.RESET_PASSWORD} element={<ResetPassword />} />
+        <Route
+          path={ROUTE.SET_NEW_PASSWORD}
+          element={
+            <ProtectedRoute>
               <SetNewPassword />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path={ROUTE.ARITHMETICS}
-        element={
-          <ProtectedRoute>
-            <Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={ROUTE.ARITHMETICS}
+          element={
+            <ProtectedRoute>
               <Arithmetics />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path={ROUTE.MATH}
-        element={
-          <ProtectedRoute>
-            <Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={ROUTE.MATH}
+          element={
+            <ProtectedRoute>
               <Math />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path={ROUTE.READING}
-        element={
-          <ProtectedRoute>
-            <Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={ROUTE.READING}
+          element={
+            <ProtectedRoute>
               <Reading />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
+            </ProtectedRoute>
+          }
+        />
 
-      <Route
-        path={ROUTE.PROMPT_TEST}
-        element={
-          <ProtectedRoute>
-            <Layout>
+        <Route
+          path={ROUTE.PROMPT_TEST}
+          element={
+            <ProtectedRoute>
               <AdminPromptTest />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-    </Routes>
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </Layout>
   );
 };
 
