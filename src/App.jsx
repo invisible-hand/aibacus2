@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import ReactGA from 'react-ga';
 
 import AdminPromptTest from './pages/AdminPromptTest';
 import Arithmetics from './pages/Arithmetics';
@@ -15,7 +16,13 @@ import Register from './pages/Register';
 import ResetPassword from './pages/ResetPassword';
 import SetNewPassword from './pages/SetNewPassword';
 
+
+ReactGA.initialize('G-Y09KX781K6');
+ReactGA.pageview(window.location.pathname + window.location.search);
+
+
 const App = () => {
+  
   return (
     <Routes>
       <Route
