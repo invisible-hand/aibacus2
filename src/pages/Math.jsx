@@ -88,13 +88,11 @@ const Math = () => {
             defaultValue={MATH.grade.get(+grade).defaultTasks}
             onChange={setNumberOfTasks}
           />
-          <button
-            className='block px-6 py-2 my-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900 disabled:bg-blue-200 hover:disabled:bg-blue-200'
-            disabled={isGenerating || !hasChildren}
+          <Generate
+            isLoading={isGenerating}
             onClick={responseHandler}
-          >
-            {!isGenerating ? 'Generate' : 'Generating...'}
-          </button>
+            disabled={isGenerating || !hasChildren}
+          />
         </div>
         <div>
           {response.length > 0 && (
