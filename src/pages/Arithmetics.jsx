@@ -94,7 +94,7 @@ const Arithmetics = () => {
                 defaultOption={grade}
                 options={ARITHMETICS.grades}
                 onChange={setGrade}
-                after={' grade'}
+                label={'Grade'}
               />
             </>
           ) : (

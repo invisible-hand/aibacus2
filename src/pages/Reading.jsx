@@ -65,7 +65,7 @@ const Reading = () => {
                 defaultOption={grade}
                 options={READING.grades}
                 onChange={setGrade}
-                after={' grade'}
+                label={'Grade'}
               />
             </>
           ) : (

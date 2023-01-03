@@ -1,17 +1,12 @@
+import { FormControl, FormLabel, Select } from '@chakra-ui/react';
+
 import { useState } from 'react';
 
 const defaultOptions = [...new Array(13)]
   .map((_, index) => index)
   .filter((index) => index > 0);
 
-const GradePicker = ({
-  defaultOption,
-  options,
-  onChange,
-  disabled,
-  before,
-  after,
-}) => {
+const GradePicker = ({ defaultOption, options, onChange, disabled, label }) => {
   const [selected, setSelected] = useState(defaultOption);
 
   const handleChange = (event) => {
@@ -23,24 +18,23 @@ const GradePicker = ({
   const realOptions = options || defaultOptions;
 
   return (
-    <>
-      <label htmlFor='grade'>
-        {before}
-        <select
-          value={selected}
-          onChange={handleChange}
-          id='grade'
-          disabled={disabled || false}
-        >
-          {realOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-        {after}
-      </label>
-    </>
+    <FormControl>
+      <FormLabel>{label}</FormLabel>
+      <Select
+        display={'block'}
+        value={selected}
+        onChange={handleChange}
+        disabled={disabled || false}
+        size={{ base: 'lg', md: 'sm' }}
+        w='70px'
+      >
+        {realOptions.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </Select>
+    </FormControl>
   );
 };
 

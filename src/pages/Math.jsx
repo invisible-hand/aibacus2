@@ -70,7 +70,7 @@ const Math = () => {
                 defaultOption={grade}
                 options={MATH.grades}
                 onChange={setGrade}
-                after={' grade'}
+                label={'Grade'}
               />
             </>
           ) : (

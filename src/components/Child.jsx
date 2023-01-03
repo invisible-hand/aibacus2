@@ -25,7 +25,7 @@ const Child = ({ id, name, grade, onClick, disabled }) => {
       <GradePicker
         defaultOption={gradeState}
         onChange={setGradeState}
-        after={'grade'}
+        label={'Grade'}
       />
       <button
         onClick={() => {

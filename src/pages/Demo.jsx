@@ -86,7 +86,7 @@ const Demo = () => {
             <GradePicker
               defaultOption={grade}
               disabled={true}
-              after={' grade'}
+              label={'Grade'}
             />
             <Generate
               isLoading={isGenerating}
