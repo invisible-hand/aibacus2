@@ -5,8 +5,12 @@ const MathOperations = ({ operationState, handleChange }) => {
   return (
     <>
       <Text mt={2}>Select operations to include in assignments</Text>
-      <CheckboxGroup colorScheme={'green'} defaultValue={['Addition']}>
-        <Stack spacing={[1, 4]} direction={['column', 'row']}>
+      <CheckboxGroup
+        colorScheme={'green'}
+        defaultValue={['Addition']}
+        size={{ base: 'lg', md: 'md' }}
+      >
+        <Stack spacing={[1]} direction={['column']}>
           {operations.map((operation) => (
             <Checkbox
               key={operation}
