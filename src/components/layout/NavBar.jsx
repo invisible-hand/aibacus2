@@ -69,26 +69,6 @@ const NavBar = () => {
       </Collapse>
     </Box>
   );
-
-  // return (
-  //   <div className='px-6 pt-6'>
-  //     <nav className='flex h-9 items-center gap-12' aria-label='Global'>
-  //       <Logo />
-  //       <div className='flex min-w-0 flex-1 gap-12 '>
-  //         {subjects.map((gen) => (
-  //           <NavLink
-  //             key={gen}
-  //             to={`/${gen}`}
-  //             className='font-semibold text-gray-900 hover:text-gray-400 mr-2'
-  //           >
-  //             {gen}
-  //           </NavLink>
-  //         ))}
-  //       </div>
-  //       <Auth />
-  //     </nav>
-  //   </div>
-  // );
 };
 
 export default NavBar;
