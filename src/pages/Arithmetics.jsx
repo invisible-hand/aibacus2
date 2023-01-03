@@ -36,7 +36,7 @@ const Arithmetics = () => {
       } else if (difficulty === 'medium') {
         return 'from 1 to 12';
       } else if (difficulty === 'hard') {
-        return 'from 5 to 20';
+        return 'from 1 to 20 ';
       }
     };
 
