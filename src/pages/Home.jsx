@@ -10,7 +10,7 @@ const Home = () => {
           Experience the power of screen-free education
         </h1>
 
-        <p className='mt-6 text-lg leading-8 text-gray-600 sm:text-center'>
+        <p className='m-6 text-lg leading-8 text-gray-600 sm:text-center'>
           We help K-12 studens to learn without screens. Instantly generate
           assignments and print them for self-study. Analyze and track student
           progress. Share your ideas with other parents.
