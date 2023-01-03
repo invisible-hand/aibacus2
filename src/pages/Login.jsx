@@ -1,26 +1,22 @@
 import {
   Box,
   Button,
-  FormControl,
-  FormLabel,
   Heading,
-  Input,
-  InputGroup,
-  InputRightElement,
   Stack,
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
+import Email from '../components/Email';
+import Password from '../components/Password';
 import { ROUTE } from '../constants/Route';
 import { supabase } from '../supabaseClient';
 import { useState } from 'react';
 
 const Login = () => {
   const [isFetching, setIsFetching] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -61,26 +57,8 @@ const Login = () => {
       >
         <form onSubmit={handleSubmit}>
           <Stack spacing={4}>
-            <FormControl id='email' isRequired>
-              <FormLabel>Email address</FormLabel>
-              <Input type='email' />
-            </FormControl>
-            <FormControl id='password' isRequired>
-              <FormLabel>Password</FormLabel>
-              <InputGroup>
-                <Input type={showPassword ? 'text' : 'password'} />
-                <InputRightElement h={'full'}>
-                  <Button
-                    variant={'ghost'}
-                    onClick={() =>
-                      setShowPassword((showPassword) => !showPassword)
-                    }
-                  >
-                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
+            <Email />
+            <Password />
             <Stack spacing={10}>
               <Button
                 bg={'green.400'}
