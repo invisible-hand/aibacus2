@@ -21,6 +21,7 @@ specifiers:
   react: ^18.2.0
   react-dom: ^18.2.0
   react-ga: ^3.3.1
+  react-ga4: ^1.4.1
   react-router-dom: ^6.6.1
   tailwindcss: ^3.2.4
   vite: ^4.0.0
@@ -39,6 +40,7 @@ dependencies:
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-ga: 3.3.1_sh5qlbywuemxd2y3xkrw2y2kr4
+  react-ga4: 1.4.1
   react-router-dom: 6.6.1_biqbaboplfbrettd7655fr4n2y
 
 devDependencies:
@@ -2952,6 +2954,10 @@ packages:
     dependencies:
       prop-types: 15.8.1
       react: 18.2.0
+    dev: false
+
+  /react-ga4/1.4.1:
+    resolution: {integrity: sha512-ioBMEIxd4ePw4YtaloTUgqhQGqz5ebDdC4slEpLgy2sLx1LuZBC9iYCwDymTXzcntw6K1dHX183ulP32nNdG7w==}
     dev: false
 
   /react-is/16.13.1:
