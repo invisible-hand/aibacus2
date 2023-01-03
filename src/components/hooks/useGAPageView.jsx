@@ -10,7 +10,6 @@ const useGAPageView = () => {
       hitType: 'pageview',
       page: 'location.pathname + location.search',
     });
-    console.log('ttt');
   }, [location]);
 };
 
