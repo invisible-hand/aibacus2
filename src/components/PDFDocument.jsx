@@ -1,9 +1,11 @@
+import { Text } from '@chakra-ui/react';
+
 const PDFDocument = ({ data }) => {
   return (
     <>
-      <p>PDF file:</p>
+      <Text>PDF file:</Text>
       {data.map((line, index) => (
-        <p key={`${line}_${index}`}>{line}</p>
+        <Text key={`${line}_${index}`}>{line}</Text>
       ))}
     </>
   );
