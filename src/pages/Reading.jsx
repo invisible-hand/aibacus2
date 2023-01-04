@@ -1,3 +1,4 @@
+import { Container, SimpleGrid, Stack, Text, VStack } from '@chakra-ui/react';
 import { GRADE, NUMBER_OF_TASKS, READING } from '../api/promptChunks';
 import { useContext, useState } from 'react';
 
@@ -50,62 +51,68 @@ const Reading = () => {
 
   return (
     <>
-      <AssignmentHeading subject={READING.name} />
-      <div className='flex gap-20'>
-        <div className='mt-6'>
-          {hasChildren ? (
-            <>
-              <NamePicker
-                defaultOption={name}
-                options={
-                  hasChildren ? childrenDB.map((child) => child.name) : []
-                }
-                onChange={setName}
-              />
-              <GradePicker
-                defaultOption={grade}
-                options={READING.grades}
-                onChange={setGrade}
-                label={'Grade'}
-              />
-            </>
-          ) : (
-            <>
-              <p className='font-bold'>You have no children in your profile</p>
-              <Link
-                className='px-6 py-1 ml-1 my-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900 disabled:bg-blue-200 hover:disabled:bg-blue-200'
-                to={ROUTE.PROFILE}
-              >
-                Add a child
-              </Link>
-            </>
-          )}
-          <NumberOfTasks
-            defaultValue={numberOfTasks}
-            onChange={setNumberOfTasks}
-          />
-          <Generate
-            isLoading={isGenerating}
-            onClick={responseHandler}
-            disabled={isGenerating || !hasChildren}
-          />
-        </div>
-        <div>
-          {response.length > 0 && (
-            <>
-              <PDFDocument data={response} />
-              <DownloadPDF
-                name={name}
-                grade={grade}
-                subject={READING.name}
-                data={response}
-              >
-                Download PDF
-              </DownloadPDF>
-            </>
-          )}
-        </div>
-      </div>
+      <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
+        <AssignmentHeading subject={READING.name} />
+        {/* <Text color={'gray.600'} fontSize={'xl'}>
+          Math is a subject that helps us understand the world around us by
+          using numbers. Math is all around us and can be found in things like
+          music, sports, and cooking. It's an important and fun subject to
+          learn!
+        </Text> */}
+      </Stack>
+
+      <Container maxW={'7xl'} my={5} mx={{ base: 5, md: 0 }}>
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
+          <VStack align={'start'}>
+            {hasChildren ? (
+              <>
+                <NamePicker
+                  defaultOption={name}
+                  options={
+                    hasChildren ? childrenDB.map((child) => child.name) : []
+                  }
+                  onChange={setName}
+                />
+                <GradePicker
+                  defaultOption={grade}
+                  options={READING.grades}
+                  onChange={setGrade}
+                  label={'Grade'}
+                />
+              </>
+            ) : (
+              <>
+                <Text>You have no children in your profile</Text>
+                <Link to={ROUTE.PROFILE}>Add a child</Link>
+              </>
+            )}
+            <NumberOfTasks
+              defaultValue={numberOfTasks}
+              onChange={setNumberOfTasks}
+            />
+            <Generate
+              isLoading={isGenerating}
+              onClick={responseHandler}
+              disabled={isGenerating || !hasChildren}
+            />
+          </VStack>
+          <VStack align={'start'}>
+            {response.length > 0 && (
+              <>
+                <PDFDocument data={response} />
+                <DownloadPDF
+                  name={name}
+                  grade={grade}
+                  subject={READING.name}
+                  data={response}
+                >
+                  Download PDF
+                </DownloadPDF>
+              </>
+            )}
+          </VStack>
+        </SimpleGrid>
+      </Container>
     </>
   );
 };
