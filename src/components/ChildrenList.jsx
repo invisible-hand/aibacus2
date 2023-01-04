@@ -28,7 +28,6 @@ const ChildrenList = () => {
                 disabled={childrenLoading}
               />
               <ChildDelete
-                className='px-6 py-1 ml-1 my-4 text-white bg-red-600 rounded-lg hover:bg-red-900 disabled:bg-red-200 hover:disabled:bg-red-200'
                 id={child.id}
                 onClick={removeChild}
                 disabled={childrenLoading}
