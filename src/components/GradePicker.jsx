@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Select } from '@chakra-ui/react';
+import { FormControl, FormLabel, Select, Stack } from '@chakra-ui/react';
 
 import { useState } from 'react';
 
@@ -19,21 +19,23 @@ const GradePicker = ({ defaultOption, options, onChange, disabled, label }) => {
 
   return (
     <FormControl>
-      <FormLabel>{label}</FormLabel>
-      <Select
-        display={'block'}
-        value={selected}
-        onChange={handleChange}
-        disabled={disabled || false}
-        size={{ base: 'lg', md: 'sm' }}
-        w='70px'
-      >
-        {realOptions.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </Select>
+      <Stack direction={'row'} align={'center'} isInline={true}>
+        <FormLabel m={0}>{label}</FormLabel>
+        <Select
+          display={'block'}
+          value={selected}
+          onChange={handleChange}
+          disabled={disabled || false}
+          size={{ base: 'md', md: 'sm' }}
+          w='70px'
+        >
+          {realOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </Select>
+      </Stack>
     </FormControl>
   );
 };
