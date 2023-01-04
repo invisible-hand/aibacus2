@@ -1,3 +1,5 @@
+import { FormControl, FormLabel, Select, Stack } from '@chakra-ui/react';
+
 import { useState } from 'react';
 
 const Name = ({ defaultOption, options, onChange, disabled }) => {
@@ -8,14 +10,16 @@ const Name = ({ defaultOption, options, onChange, disabled }) => {
     setSelected(value);
     onChange && onChange(value);
   };
+
   return (
-    <>
-      <label htmlFor='grade'>
-        Name
-        <select
+    <FormControl>
+      <Stack direction={'row'} align={'center'} isInline={true}>
+        <FormLabel m={0}>Name</FormLabel>
+        <Select
           value={selected}
           onChange={handleChange}
           id='grade'
+          size={{ base: 'md', md: 'sm' }}
           disabled={disabled || false}
         >
           {options.map((option) => (
@@ -23,9 +27,9 @@ const Name = ({ defaultOption, options, onChange, disabled }) => {
               {option}
             </option>
           ))}
-        </select>
-      </label>
-    </>
+        </Select>
+      </Stack>
+    </FormControl>
   );
 };
 
