@@ -22,7 +22,6 @@ const GradePicker = ({ defaultOption, options, onChange, disabled, label }) => {
       <Stack direction={'row'} align={'center'} isInline={true}>
         <FormLabel m={0}>{label}</FormLabel>
         <Select
-          display={'block'}
           value={selected}
           onChange={handleChange}
           disabled={disabled || false}
