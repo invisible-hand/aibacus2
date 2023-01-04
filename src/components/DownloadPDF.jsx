@@ -1,19 +1,21 @@
+import { Button } from '@chakra-ui/react';
 import { pdfSave } from '../utils/pdf/pdfSave';
 
 const DownloadPDF = ({ children, name, grade, data, subject, ...args }) => {
   return (
-    <button
-      className={
-        args.className ||
-        'px-6 py-2 my-4 text-white bg-orange-600 rounded-lg hover:bg-orange-900 block'
-      }
+    <Button
+      bg={'orange.400'}
+      color={'white'}
+      _hover={{
+        bg: 'orange.500',
+      }}
       onClick={() => {
         pdfSave(name, grade, data, subject);
       }}
-      disabled={args.disabled || false}
+      {...args}
     >
       {children}
-    </button>
+    </Button>
   );
 };
 
