@@ -5,8 +5,9 @@ import {
 import { useContext, useState } from 'react';
 
 import { AuthContext } from '../store/AuthContext';
+import { Button } from '@chakra-ui/react';
 
-const DeleteAssignment = ({ assignmentId, setAssignmentList, isDeleting }) => {
+const AssignmentDelete = ({ assignmentId, setAssignmentList, isDeleting }) => {
   const [loading, setLoading] = useState(false);
 
   const { session } = useContext(AuthContext);
@@ -27,16 +28,20 @@ const DeleteAssignment = ({ assignmentId, setAssignmentList, isDeleting }) => {
     }
   };
   return (
-    <button
-      className='px-6 py-1 ml-1 my-4 text-white bg-red-600 rounded-lg hover:bg-red-900 disabled:bg-red-200 hover:disabled:bg-red-200'
+    <Button
+      bg={'red.400'}
+      color={'white'}
+      _hover={{
+        bg: 'red.500',
+      }}
       onClick={(_) => {
         handleDelete(assignmentId);
       }}
       disabled={loading}
     >
       Delete
-    </button>
+    </Button>
   );
 };
 
-export default DeleteAssignment;
+export default AssignmentDelete;

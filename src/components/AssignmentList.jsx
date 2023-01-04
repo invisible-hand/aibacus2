@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 
+import AssignmentDelete from './AssignmentDelete';
 import { AuthContext } from '../store/AuthContext';
-import DeleteAssignment from './DeleteAssignment';
 import DownloadPDF from './DownloadPDF';
 import { GRADE } from '../utils/ai/promptChunks';
 import { getAssignments } from '../utils/database/assignments';
@@ -45,7 +45,7 @@ const AssignmentList = () => {
                 })}
               </span>
               {' | '}
-              <DeleteAssignment
+              <AssignmentDelete
                 assignmentId={assignment.id}
                 setAssignmentList={setAssignmentList}
                 isDeleting={setIsDeleting}
