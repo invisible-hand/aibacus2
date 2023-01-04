@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import AdminPromptTest from './pages/AdminPromptTest';
 import Arithmetics from './pages/Arithmetics';
 import Demo from './pages/Demo';
+import DevTestPage from './pages/DevTestPage';
 import Home from './pages/Home';
 import Layout from './components/layout/Layout';
 import Login from './pages/Login';
@@ -80,7 +81,7 @@ const App = () => {
           path={ROUTE.DEV_TEST_PAGE}
           element={
             <ProtectedRoute>
-              <AdminPromptTest />
+              <DevTestPage />
             </ProtectedRoute>
           }
         />
