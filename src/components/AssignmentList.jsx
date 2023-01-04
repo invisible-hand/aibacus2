@@ -53,7 +53,6 @@ const AssignmentList = () => {
               />
               {' | '}
               <DownloadPDF
-                className='px-6 py-1 ml-1 my-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900 disabled:bg-blue-200 hover:disabled:bg-blue-200'
                 name={assignment.name}
                 grade={assignment.grade}
                 subject={assignment.subject}
