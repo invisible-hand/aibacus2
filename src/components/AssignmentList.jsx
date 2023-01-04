@@ -1,3 +1,4 @@
+import { Box, Text } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
 
 import AssignmentDelete from './AssignmentDelete';
@@ -28,22 +29,22 @@ const AssignmentList = () => {
   }, [userId, setAssignmentList]);
 
   return (
-    <div>
+    <Box>
       {assignmentList && (
         <>
           {assignmentList.map((assignment) => (
-            <div key={assignment.id}>
-              <span>
+            <Box key={assignment.id}>
+              <Text as='span'>
                 {assignment.subject} - {GRADE[assignment.grade]} grade.
-              </span>
+              </Text>
               {' | '}
-              <span>
+              <Text as='span'>
                 {new Date(assignment.date_added).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: '2-digit',
                   day: '2-digit',
                 })}
-              </span>
+              </Text>
               {' | '}
               <AssignmentDelete
                 assignmentId={assignment.id}
@@ -61,11 +62,11 @@ const AssignmentList = () => {
               >
                 Download PDF
               </DownloadPDF>
-            </div>
+            </Box>
           ))}
         </>
       )}
-    </div>
+    </Box>
   );
 };
 
