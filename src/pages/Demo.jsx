@@ -1,11 +1,4 @@
-import {
-  Button,
-  Container,
-  SimpleGrid,
-  Stack,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Container, SimpleGrid, Stack, Text, VStack } from '@chakra-ui/react';
 import { GRADE, NUMBER_OF_TASKS } from '../api/promptChunks';
 
 import AssignmentHeading from '../components/AssignmentHeading';
