@@ -1,11 +1,11 @@
+import { Box, Text } from '@chakra-ui/react';
+
 const Footer = () => {
   const year = new Date().getFullYear();
   return (
-    <footer className='py-1 bg-gray-100'>
-      <p className='text-center mt-1'>
-        Aibacus - {year} &copy;. All Rights Reserved.
-      </p>
-    </footer>
+    <Box as={'footer'} bg={'gray.100'} py={1} align={'center'}>
+      <Text>Aibacus - {year} &copy;. All Rights Reserved.</Text>
+    </Box>
   );
 };
 
