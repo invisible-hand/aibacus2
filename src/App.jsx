@@ -67,9 +67,17 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-
+        //dev Pages
         <Route
           path={ROUTE.PROMPT_TEST}
+          element={
+            <ProtectedRoute>
+              <AdminPromptTest />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={ROUTE.DEV_TEST_PAGE}
           element={
             <ProtectedRoute>
               <AdminPromptTest />

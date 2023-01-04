@@ -14,4 +14,5 @@ export const ROUTE = Object.freeze({
   READING: `/${SUBJECT.READING}`,
 
   PROMPT_TEST: `/prompt-test`,
+  DEV_TEST_PAGE: `/dev-test-page`,
 });
