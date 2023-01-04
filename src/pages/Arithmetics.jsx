@@ -1,4 +1,5 @@
 import { ARITHMETICS, GRADE, NUMBER_OF_TASKS } from '../api/promptChunks';
+import { Container, SimpleGrid, Stack, Text, VStack } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 
 import AssignmentHeading from '../components/AssignmentHeading';
@@ -79,63 +80,68 @@ const Arithmetics = () => {
 
   return (
     <>
-      <AssignmentHeading subject={ARITHMETICS.name} />
-      <div className='flex gap-20'>
-        <div className='mt-6'>
-          {hasChildren ? (
-            <>
-              <NamePicker
-                defaultOption={name}
-                options={
-                  hasChildren ? childrenDB.map((child) => child.name) : []
-                }
-                onChange={setName}
-              />
-              <GradePicker
-                defaultOption={grade}
-                options={ARITHMETICS.grades}
-                onChange={setGrade}
-                label={'Grade'}
-              />
-            </>
-          ) : (
-            <>
-              <p className='font-bold'>You have no children in your profile</p>
-              <Link
-                className='px-6 py-1 ml-1 my-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900 disabled:bg-blue-200 hover:disabled:bg-blue-200'
-                to={ROUTE.PROFILE}
-              >
-                Add a child
-              </Link>
-            </>
-          )}
-          <NumberOfTasks
-            defaultValue={numberOfTasks}
-            onChange={setNumberOfTasks}
-          />
-          <DifficultyRadioPicker onChange={setDifficulty} />
-          <Generate
-            isLoading={isGenerating}
-            onClick={responseHandler}
-            disabled={isGenerating || !hasChildren}
-          />
-        </div>
-        <div>
-          {response.length > 0 && (
-            <>
-              <PDFDocument data={response} />
-              <DownloadPDF
-                name={name}
-                grade={grade}
-                subject={ARITHMETICS.name}
-                data={response}
-              >
-                Download PDF
-              </DownloadPDF>
-            </>
-          )}
-        </div>
-      </div>
+      <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
+        <AssignmentHeading subject={ARITHMETICS.name} />
+        <Text color={'gray.600'} fontSize={'xl'}>
+          Arithmetic is a branch of math that deals with numbers and
+          calculations. Arithmetic is a very important subject because it helps
+          us understand and solve problems in our everyday lives.
+        </Text>
+      </Stack>
+
+      <Container maxW={'7xl'} my={5} mx={{ base: 5, md: 0 }}>
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
+          <VStack align={'start'}>
+            {hasChildren ? (
+              <>
+                <NamePicker
+                  defaultOption={name}
+                  options={
+                    hasChildren ? childrenDB.map((child) => child.name) : []
+                  }
+                  onChange={setName}
+                />
+                <GradePicker
+                  defaultOption={grade}
+                  options={ARITHMETICS.grades}
+                  onChange={setGrade}
+                  label={'Grade'}
+                />
+              </>
+            ) : (
+              <>
+                <Text>You have no children in your profile</Text>
+                <Link to={ROUTE.PROFILE}>Add a child</Link>
+              </>
+            )}
+            <NumberOfTasks
+              defaultValue={numberOfTasks}
+              onChange={setNumberOfTasks}
+            />
+            <DifficultyRadioPicker onChange={setDifficulty} />
+            <Generate
+              isLoading={isGenerating}
+              onClick={responseHandler}
+              disabled={isGenerating || !hasChildren}
+            />
+          </VStack>
+          <VStack align={'start'}>
+            {response.length > 0 && (
+              <>
+                <PDFDocument data={response} />
+                <DownloadPDF
+                  name={name}
+                  grade={grade}
+                  subject={ARITHMETICS.name}
+                  data={response}
+                >
+                  Download PDF
+                </DownloadPDF>
+              </>
+            )}
+          </VStack>
+        </SimpleGrid>
+      </Container>
     </>
   );
 };
