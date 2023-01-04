@@ -1,3 +1,13 @@
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  Input,
+  Text,
+} from '@chakra-ui/react';
+
 import { aiRequest } from '../utils/ai/aiRequest';
 import { useState } from 'react';
 
@@ -27,64 +37,67 @@ const AdminPromptTest = () => {
   };
 
   return (
-    <div className='flex flex-col'>
-      <div>
+    <Flex direction={'column'}>
+      <Box>
         <form onSubmit={responseHandler}>
-          <label className='block' htmlFor='prompt'>
-            Prompt
-          </label>
-          <input
-            id='prompt'
-            type='text'
-            placeholder='enter prompt'
-            className='w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600'
-            disabled={isGenerating}
-          />
-          <div>
-            <label htmlFor='temperature'>Temperature (0.1...1.0)</label>
-            <input
-              id='temperature'
+          <FormControl id='prompt' isRequired>
+            <FormLabel>Prompt</FormLabel>
+            <Input
               type='text'
-              placeholder='enter temperature'
-              className='px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600'
-              disabled={isGenerating}
-              value={temp}
-              onChange={(e) => {
-                const tempTemp = new Number(e.target.value);
-                setTemp(isNaN(tempTemp) ? 0.1 : tempTemp);
-              }}
+              placeholder='enter prompt'
+              isDisabled={isGenerating}
             />
-          </div>
-          <div>
-            <label htmlFor='maxTokens'>Max tokens</label>
-            <input
-              id='maxTokens'
-              type='text'
-              placeholder='enter max tokens'
-              className=' px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600'
-              disabled={isGenerating}
-              value={maxTokens}
-              onChange={(e) => {
-                const tempTokens = new Number(e.target.value);
-                setMaxTokens(isNaN(tempTokens) ? 2500 : tempTokens);
-              }}
-            />
-          </div>
-          <button
-            className='w-full px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900'
+          </FormControl>
+
+          <Box>
+            <FormControl id='temperature' isRequired>
+              <FormLabel>Temperature</FormLabel>
+              <Input
+                type='text'
+                placeholder='enter temperature'
+                isDisabled={isGenerating}
+                value={temp}
+                onChange={(e) => {
+                  const tempTemp = new Number(e.target.value);
+                  setTemp(isNaN(tempTemp) ? 0.1 : tempTemp);
+                }}
+              />
+            </FormControl>
+          </Box>
+          <Box>
+            <FormControl id='maxTokens' isRequired>
+              <FormLabel>Max tokens</FormLabel>
+              <Input
+                type='text'
+                placeholder='enter temperature'
+                isDisabled={isGenerating}
+                value={maxTokens}
+                onChange={(e) => {
+                  const tempTokens = new Number(e.target.value);
+                  setMaxTokens(isNaN(tempTokens) ? 2500 : tempTokens);
+                }}
+              />
+            </FormControl>
+          </Box>
+          <Button
+            bg={'green.400'}
+            color={'white'}
+            _hover={{
+              bg: 'green.500',
+            }}
             type='submit'
-            disabled={isGenerating}
+            isDisabled={isGenerating}
           >
             Test
-          </button>
+          </Button>
         </form>
-      </div>
-      <div>
+      </Box>
+      <Box>
         {response.map((line, index) => (
-          <p key={index}>{line}</p>
+          <Text key={index}>{line}</Text>
         ))}
-      </div>
-    </div>
+      </Box>
+    </Flex>
   );
 };
 
