@@ -1,3 +1,11 @@
+import {
+  FormControl,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  Stack,
+} from '@chakra-ui/react';
+
 import { useState } from 'react';
 
 const options = ['easy', 'medium', 'hard'];
@@ -5,29 +13,28 @@ const options = ['easy', 'medium', 'hard'];
 const DifficultyRadioPicker = ({ onChange }) => {
   const [difficulty, setDifficulty] = useState('medium');
 
-  const handleChange = (event) => {
-    setDifficulty(event.target.value);
-    onChange(event.target.value);
+  const handleChange = (value) => {
+    setDifficulty(value);
+    onChange(value);
   };
 
   return (
-    <>
-      <span>difficulty:</span>
-      {options.map((option) => (
-        <label key={option} htmlFor={option} className='mr-1'>
-          <input
-            name='difficulty'
-            className='ml-1'
-            id={option}
-            type='radio'
-            value={option}
-            checked={difficulty === option}
-            onChange={handleChange}
-          />
-          {option}
-        </label>
-      ))}
-    </>
+    <FormControl>
+      <Stack direction={'row'} align={'center'} isInline={true}>
+        <FormLabel m={0}>Difficulty:</FormLabel>
+        <RadioGroup
+          onChange={handleChange}
+          value={difficulty}
+          colorScheme='green'
+        >
+          {options.map((option) => (
+            <Radio key={option} value={option} ml={3}>
+              {option}
+            </Radio>
+          ))}
+        </RadioGroup>
+      </Stack>
+    </FormControl>
   );
 };
 
