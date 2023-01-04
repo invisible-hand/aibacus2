@@ -1,5 +1,5 @@
 import { Container, SimpleGrid, Stack, Text, VStack } from '@chakra-ui/react';
-import { GRADE, NUMBER_OF_TASKS } from '../api/promptChunks';
+import { GRADE, NUMBER_OF_TASKS } from '../utils/ai/promptChunks';
 
 import AssignmentHeading from '../components/AssignmentHeading';
 import DownloadPDF from '../components/DownloadPDF';
@@ -8,8 +8,8 @@ import GradePicker from '../components/GradePicker';
 import MathOperations from '../components/MathOperations';
 import NumberOfTasks from '../components/NumberOfTasks';
 import PDFDocument from '../components/PDFDocument';
-import { SUBJECT } from '../constants/Subject';
-import { aiRequest } from '../api/aiRequest';
+import { SUBJECT } from '../utils/constants/Subject';
+import { aiRequest } from '../utils/ai/aiRequest';
 import { useState } from 'react';
 
 const name = 'Mike';

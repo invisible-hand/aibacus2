@@ -3,7 +3,7 @@ import {
   getChildrenFromDB,
   removeChildFromDB,
   updateChildInDB,
-} from '../database/children';
+} from '../utils/database/children';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 import { AuthContext } from './AuthContext';

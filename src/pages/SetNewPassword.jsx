@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/react';
 
 import Password from '../components/Password';
-import { ROUTE } from '../constants/Route';
+import { ROUTE } from '../utils/constants/Route';
 import { supabase } from '../supabaseClient';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';

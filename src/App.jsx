@@ -9,7 +9,7 @@ import Login from './pages/Login';
 import Math from './pages/Math';
 import Profile from './pages/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
-import { ROUTE } from './constants/Route';
+import { ROUTE } from './utils/constants/Route';
 import Reading from './pages/Reading';
 import Register from './pages/Register';
 import ResetPassword from './pages/ResetPassword';

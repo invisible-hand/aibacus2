@@ -1,4 +1,4 @@
-import { aiRequest } from '../api/aiRequest';
+import { aiRequest } from '../utils/ai/aiRequest';
 import { useState } from 'react';
 
 const AdminPromptTest = () => {

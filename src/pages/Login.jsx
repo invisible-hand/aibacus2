@@ -10,7 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import Email from '../components/Email';
 import Password from '../components/Password';
-import { ROUTE } from '../constants/Route';
+import { ROUTE } from '../utils/constants/Route';
 import { supabase } from '../supabaseClient';
 import { useState } from 'react';
 

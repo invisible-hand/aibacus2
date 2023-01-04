@@ -1,7 +1,7 @@
 import { Box, Stack, useColorModeValue } from '@chakra-ui/react';
 
 import { NavLink } from 'react-router-dom';
-import { SUBJECT } from '../constants/Subject';
+import { SUBJECT } from '../utils/constants/Subject';
 
 const subjects = Object.values(SUBJECT);
 

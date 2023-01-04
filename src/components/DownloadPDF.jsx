@@ -1,4 +1,4 @@
-import { pdfSave } from '../pdf/pdfSave';
+import { pdfSave } from '../utils/pdf/pdfSave';
 
 const DownloadPDF = ({ children, name, grade, data, subject, ...args }) => {
   return (

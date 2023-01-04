@@ -1,5 +1,5 @@
 import { Container, SimpleGrid, Stack, Text, VStack } from '@chakra-ui/react';
-import { GRADE, NUMBER_OF_TASKS, READING } from '../api/promptChunks';
+import { GRADE, NUMBER_OF_TASKS, READING } from '../utils/ai/promptChunks';
 import { useContext, useState } from 'react';
 
 import AssignmentHeading from '../components/AssignmentHeading';
@@ -12,9 +12,9 @@ import { Link } from 'react-router-dom';
 import NamePicker from '../components/NamePicker';
 import NumberOfTasks from '../components/NumberOfTasks';
 import PDFDocument from '../components/PDFDocument';
-import { ROUTE } from '../constants/Route';
-import { aiRequest } from '../api/aiRequest';
-import { saveAssignment } from '../database/assignments';
+import { ROUTE } from '../utils/constants/Route';
+import { aiRequest } from '../utils/ai/aiRequest';
+import { saveAssignment } from '../utils/database/assignments';
 
 const Reading = () => {
   const { session } = useContext(AuthContext);

@@ -1,6 +1,6 @@
 import { Image } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { ROUTE } from '../constants/Route';
+import { ROUTE } from '../utils/constants/Route';
 
 const Logo = () => {
   return (

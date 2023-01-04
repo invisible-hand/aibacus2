@@ -3,8 +3,8 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../store/AuthContext';
 import DeleteAssignment from './DeleteAssignment';
 import DownloadPDF from './DownloadPDF';
-import { GRADE } from '../api/promptChunks';
-import { getAssignments } from '../database/assignments';
+import { GRADE } from '../utils/ai/promptChunks';
+import { getAssignments } from '../utils/database/assignments';
 
 const AssignmentList = () => {
   const { session } = useContext(AuthContext);

@@ -1,7 +1,7 @@
 import { Stack, useColorModeValue } from '@chakra-ui/react';
 
 import MobileNavItem from './MobileNavItem';
-import { SUBJECT } from '../constants/Subject';
+import { SUBJECT } from '../utils/constants/Subject';
 
 const subjects = Object.values(SUBJECT);
 

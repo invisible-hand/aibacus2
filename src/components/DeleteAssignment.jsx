@@ -1,4 +1,7 @@
-import { deleteAssignment, getAssignments } from '../database/assignments';
+import {
+  deleteAssignment,
+  getAssignments,
+} from '../utils/database/assignments';
 import { useContext, useState } from 'react';
 
 import { AuthContext } from '../store/AuthContext';
