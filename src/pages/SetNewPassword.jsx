@@ -62,6 +62,7 @@ const SetNewPassword = () => {
                   bg: 'green.500',
                 }}
                 isDisabled={isFetching}
+                type='submit'
               >
                 Send recovery link
               </Button>

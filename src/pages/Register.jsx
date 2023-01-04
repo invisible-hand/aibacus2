@@ -66,6 +66,7 @@ const Register = () => {
                   bg: 'green.500',
                 }}
                 isDisabled={isFetching}
+                type='submit'
               >
                 Sign up
               </Button>

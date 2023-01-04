@@ -66,6 +66,7 @@ const Login = () => {
                 _hover={{
                   bg: 'green.500',
                 }}
+                type='submit'
                 isDisabled={isFetching}
               >
                 Log in
