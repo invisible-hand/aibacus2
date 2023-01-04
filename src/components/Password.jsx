@@ -1,6 +1,7 @@
 import {
   Button,
   FormControl,
+  FormHelperText,
   FormLabel,
   Input,
   InputGroup,
@@ -10,12 +11,13 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 import { useState } from 'react';
 
-const Password = () => {
+const Password = ({ set }) => {
   const [showPassword, setShowPassword] = useState(false);
 
+  const text = set ? 'New password' : 'Password';
   return (
     <FormControl id='password' isRequired>
-      <FormLabel>Password</FormLabel>
+      <FormLabel>{text}</FormLabel>
       <InputGroup>
         <Input type={showPassword ? 'text' : 'password'} />
         <InputRightElement h={'full'}>
@@ -27,6 +29,7 @@ const Password = () => {
           </Button>
         </InputRightElement>
       </InputGroup>
+      {set && <FormHelperText>Please, check your email.</FormHelperText>}
     </FormControl>
   );
 };
