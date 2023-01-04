@@ -53,12 +53,11 @@ const Reading = () => {
     <>
       <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
         <AssignmentHeading subject={READING.name} />
-        {/* <Text color={'gray.600'} fontSize={'xl'}>
-          Math is a subject that helps us understand the world around us by
-          using numbers. Math is all around us and can be found in things like
-          music, sports, and cooking. It's an important and fun subject to
-          learn!
-        </Text> */}
+        <Text color={'gray.600'} fontSize={'xl'}>
+          Reading is an important skill to have because it allows us to learn
+          new things. Reading is also a fun that can take us on adventures and
+          introduce us to new characters and places.
+        </Text>
       </Stack>
 
       <Container maxW={'7xl'} my={5} mx={{ base: 5, md: 0 }}>
