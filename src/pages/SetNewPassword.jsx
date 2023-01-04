@@ -1,3 +1,12 @@
+import {
+  Box,
+  Button,
+  Heading,
+  Stack,
+  useColorModeValue,
+} from '@chakra-ui/react';
+
+import Password from '../components/Password';
 import { ROUTE } from '../constants/Route';
 import { supabase } from '../supabaseClient';
 import { useNavigate } from 'react-router-dom';
@@ -32,37 +41,35 @@ const SetNewPassword = () => {
   };
 
   return (
-    <div className='flex items-center justify-center'>
-      <div className='px-8 py-6 mx-4 mt-4 text-left bg-white shadow-lg md:w-1/2 lg:w-1/2 sm:w-1/2'>
-        <h3 className='text-2xl font-bold text-center'>Password Recovery</h3>
-        <form onSubmit={handleSubmit}>
-          <div className='mt-4'>
-            <div className='mt-4'>
-              <label className='block' htmlFor='newPassword'>
-                New Password
-              </label>
-              <input
-                id='newPassword'
-                type='password'
-                placeholder='enter new password...'
-                className='w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600'
-              />
-              <p className='text-sm text-blue-500 ml-2 mt-1'>
-                *please check your email.
-              </p>
-            </div>
-            <div className='flex'>
-              <button
-                className='w-full px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900'
-                disabled={isFetching}
+    <Stack minW={460} spacing={8} mx={'auto'} maxW={'lg'} px={6} my={5}>
+      <Heading mx={'auto'} fontSize={'4xl'}>
+        Password Recovery
+      </Heading>
+      <form onSubmit={handleSubmit}>
+        <Box
+          rounded={'lg'}
+          bg={useColorModeValue('white', 'gray.700')}
+          boxShadow={'lg'}
+          p={8}
+        >
+          <Stack spacing={4}>
+            <Password set={true} />
+            <Stack spacing={10}>
+              <Button
+                bg={'green.400'}
+                color={'white'}
+                _hover={{
+                  bg: 'green.500',
+                }}
+                isDisabled={isFetching}
               >
-                Set new password
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
+                Send recovery link
+              </Button>
+            </Stack>
+          </Stack>
+        </Box>
+      </form>
+    </Stack>
   );
 };
 
