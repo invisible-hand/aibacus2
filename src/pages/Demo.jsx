@@ -1,4 +1,11 @@
-import { Container, SimpleGrid, Stack, Text, VStack } from '@chakra-ui/react';
+import {
+  Container,
+  SimpleGrid,
+  Stack,
+  Text,
+  VStack,
+  useToast,
+} from '@chakra-ui/react';
 import { GRADE, NUMBER_OF_TASKS } from '../utils/ai/promptChunks';
 
 import AssignmentHeading from '../components/AssignmentHeading';
@@ -19,6 +26,8 @@ const basePrompt = `create a math assignment for a %grade% grader, involving %op
 
 const subject = SUBJECT.MATH;
 const Demo = () => {
+  const toast = useToast();
+
   const [isGenerating, setIsGenerating] = useState(false);
   const [response, setResponse] = useState([]);
   const [operationState, setOperationState] = useState({
@@ -50,7 +59,13 @@ const Demo = () => {
       const aiResponse = await aiRequest(prompt);
       setResponse(aiResponse);
     } catch (error) {
-      alert(error);
+      toast({
+        position: 'top',
+        title: 'Error',
+        description: `${error.description || error.message}`,
+        status: 'error',
+        isClosable: true,
+      });
     } finally {
       setIsGenerating(false);
     }
