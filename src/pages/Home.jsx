@@ -27,7 +27,6 @@ const Home = () => {
             fontSize={{ base: '3xl', sm: '4xl', lg: '5xl' }}
           >
             <Text
-              as={'span'}
               position={'relative'}
               _after={{
                 content: `""`,
@@ -42,10 +41,7 @@ const Home = () => {
             >
               Experience
             </Text>
-            <br />
-            <Text as={'span'} color={'green.400'}>
-              the AI-powered education
-            </Text>
+            <Text color={'green.400'}>the AI-powered education</Text>
           </Heading>
           <Text color={'gray.500'}>
             We help K-12 students to maximize their learning experience.
