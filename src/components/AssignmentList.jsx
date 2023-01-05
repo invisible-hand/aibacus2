@@ -1,4 +1,4 @@
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Text, useToast } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
 
 import AssignmentDelete from './AssignmentDelete';
@@ -8,6 +8,7 @@ import { GRADE } from '../utils/ai/promptChunks';
 import { getAssignments } from '../utils/database/assignments';
 
 const AssignmentList = () => {
+  const toast = useToast();
   const { session } = useContext(AuthContext);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -21,7 +22,13 @@ const AssignmentList = () => {
           const data = await getAssignments(userId);
           setAssignmentList(data);
         } catch (error) {
-          alert(error.message);
+          toast({
+            position: 'top',
+            title: 'Error',
+            description: `${error.description || error.message}`,
+            status: 'error',
+            isClosable: true,
+          });
         }
       };
       handleGetAssignments();
