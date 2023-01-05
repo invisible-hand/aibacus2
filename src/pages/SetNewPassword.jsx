@@ -4,6 +4,7 @@ import {
   Heading,
   Stack,
   useColorModeValue,
+  useToast,
 } from '@chakra-ui/react';
 
 import Password from '../components/Password';
@@ -13,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 const SetNewPassword = () => {
+  const toast = useToast();
   const [isFetching, setIsFetching] = useState(false);
   const navigate = useNavigate();
 
@@ -31,10 +33,21 @@ const SetNewPassword = () => {
       if (error) {
         throw new Error(error);
       }
-      alert('new password is set');
+      toast({
+        position: 'top',
+        description: 'Password changed',
+        status: 'success',
+        isClosable: true,
+      });
       navigate(ROUTE.INDEX);
     } catch (error) {
-      alert('connection problem');
+      toast({
+        position: 'top',
+        title: 'Error',
+        description: `${error.description || error.message}`,
+        status: 'error',
+        isClosable: true,
+      });
     } finally {
       setIsFetching(false);
     }
