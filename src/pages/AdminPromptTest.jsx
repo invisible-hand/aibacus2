@@ -6,12 +6,14 @@ import {
   FormLabel,
   Input,
   Text,
+  useToast,
 } from '@chakra-ui/react';
 
 import { aiRequest } from '../utils/ai/aiRequest';
 import { useState } from 'react';
 
 const AdminPromptTest = () => {
+  const toast = useToast();
   const [response, setResponse] = useState([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [temp, setTemp] = useState(0.1);
@@ -30,7 +32,13 @@ const AdminPromptTest = () => {
       const aiResponse = await aiRequest(prompt);
       setResponse(aiResponse, temp, maxTokens);
     } catch (error) {
-      alert(error);
+      toast({
+        position: 'top',
+        title: 'Error',
+        description: `${error.description || error.message}`,
+        status: 'error',
+        isClosable: true,
+      });
     } finally {
       setIsGenerating(false);
     }
