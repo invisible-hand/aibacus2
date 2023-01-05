@@ -34,7 +34,7 @@ const Math = () => {
     const temp = math.temp;
     const maxTokens = math.maxTokens;
     const prompt = basePrompt
-      .replace('/%grade%/g', GRADE[+grade])
+      .replace(/%grade%/g, GRADE[+grade])
       .replace('%task_amount%', NUMBER_OF_TASKS[+numberOfTasks]);
     try {
       const aiResponse = await aiRequest(prompt, temp, maxTokens);
