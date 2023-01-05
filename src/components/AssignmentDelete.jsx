@@ -1,3 +1,4 @@
+import { Button, useToast } from '@chakra-ui/react';
 import {
   deleteAssignment,
   getAssignments,
@@ -5,9 +6,9 @@ import {
 import { useContext, useState } from 'react';
 
 import { AuthContext } from '../store/AuthContext';
-import { Button } from '@chakra-ui/react';
 
 const AssignmentDelete = ({ assignmentId, setAssignmentList, isDeleting }) => {
+  const toast = useToast();
   const [loading, setLoading] = useState(false);
 
   const { session } = useContext(AuthContext);
@@ -21,7 +22,13 @@ const AssignmentDelete = ({ assignmentId, setAssignmentList, isDeleting }) => {
       const data = await getAssignments(userId);
       setAssignmentList(data);
     } catch (error) {
-      alert(error.message);
+      toast({
+        status: 'error',
+        title: `Error`,
+        description: `${error.description || error.message}`,
+        isClosable: true,
+        position: 'top',
+      });
     } finally {
       setLoading(false);
       isDeleting(false);
