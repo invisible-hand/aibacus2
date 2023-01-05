@@ -3,12 +3,14 @@ import {
   Button,
   Container,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Input,
   Stack,
   Text,
   useToast,
 } from '@chakra-ui/react';
+import { CheckCircleIcon, WarningTwoIcon } from '@chakra-ui/icons';
 import { GRADE, NUMBER_OF_TASKS } from '../utils/ai/promptChunks';
 
 import Generate from '../components/Generate';
@@ -22,11 +24,12 @@ const basePrompt =
   'Please, make sure it is advanced enough for %grade% grade. ' +
   'Reply in form of JSON with shape like this: ' +
   '`{"grade": <grade>, "subject": "math", "assignments": [{ "assignment":{"task": <task>,"answers":[{"number":<number>, "units": <units>},{"numbers":<number>, "units": <units>},...],"solution": <solution>}},{ "assignment":...},...]}`. ' +
-  'It should be parsable with JSON.parse() without errors.  ';
-'Use minimal form of units for examples: "kg", "m³", "m/s²". ' +
+  'It should be parsable with JSON.parse() without errors.  ' +
+  'Use minimal form of units for examples: "kg", "m³", "m/s²". ' +
   'Instead of "^0,^1,^2,^3,^4,^5,^6,^7,^8,^9,^0" etc. use ⁰,¹,²,³,⁴,⁵,⁶,⁷,⁸,⁹ symbols for exponents. Also use them in units. ' +
   'Use "÷" as division sign and "×" as multiplication sign, but use "/" for fractions. ' +
-  'Please be consistent with units.';
+  'If answer is in people or animals it should be a whole number. ' +
+  'Please be consistent with units. ';
 
 export default () => {
   const toast = useToast();
@@ -35,8 +38,8 @@ export default () => {
   const [numberOfTasks, setNumberOfTasks] = useState('3');
 
   const [oks, setOks] = useState(null);
-  const [aiResponse, setAiResponse] = useState();
-  const [aiAnswers, setAiAnswers] = useState();
+  const [aiResponse, setAiResponse] = useState(null);
+  const [aiAnswers, setAiAnswers] = useState(null);
 
   const [checked, setChecked] = useState(false);
 
@@ -45,8 +48,11 @@ export default () => {
 
   const responseHandler = async (_event) => {
     setIsGenerating(true);
+    setAiResponse(null);
     setChecked(false);
     setOks(null);
+    setAiAnswers(null);
+
     // const math = MATH.grade.get(+grade);
     // const basePrompt = math.basePrompt;
     const temp = 0.8;
@@ -60,12 +66,13 @@ export default () => {
       setAiResponse(parsedResponse);
       setAiAnswers(
         parsedResponse.assignments.map(
-          (assignment) => assignment.assignment.answers[0].number
+          (assignment) => +assignment.assignment.answers[0].number
         )
       );
     } catch (error) {
       toast({
-        title: `Error`,
+        position: 'top',
+        title: 'Error',
         description: `${error.description || error.message}`,
         status: 'error',
         isClosable: true,
@@ -82,7 +89,7 @@ export default () => {
 
     let oks = [];
     for (let element of event.currentTarget.elements) {
-      if (element.type === 'text') {
+      if (element.type === 'number') {
         const aiAnswer = aiAnswers[+element.id];
         const givenAnswer = +element.value;
         oks.push(aiAnswer === givenAnswer);
@@ -97,7 +104,7 @@ export default () => {
     <>
       <GradePicker
         defaultOption={grade}
-        options={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]} //TODO!
+        options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]} //TODO!
         onChange={setGrade}
         label={'Grade'}
       />
@@ -114,46 +121,72 @@ export default () => {
         <Container maxW={'7xl'} my={5} mx={{ base: 5, md: 0 }}>
           {aiResponse && (
             <>
-              <Text>Grade: {aiResponse.grade}</Text>
-              <Text>Subject: {aiResponse.subject}</Text>
-              <Stack direction={'column'}>
+              <Stack direction={'column'} spacing={3}>
                 {aiResponse?.assignments.map((asn, index) => (
-                  <Box key={index}>
+                  <Box
+                    key={index}
+                    rounded={'lg'}
+                    bg={'white'}
+                    boxShadow={'lg'}
+                    p={8}
+                  >
                     <Text>Task: {asn.assignment.task}</Text>
-
-                    <FormControl id={`${index}`} isRequired>
-                      <FormLabel>Answer:</FormLabel>
+                    <FormControl
+                      id={`${index}`}
+                      isRequired={!checked}
+                      isReadOnly={checked}
+                    >
+                      <FormLabel>Answer</FormLabel>
                       <Stack direction={'row'} align={'center'}>
                         <Input
                           maxW={150}
-                          type='text'
+                          type='number'
+                          step={0.001}
                           placeholder='enter an answer...'
+                          isInvalid={checked}
+                          errorBorderColor={
+                            oks && oks[index] ? 'green.400' : 'red.300'
+                          }
                         />
                         <Text>{asn.assignment.answers[0].units}</Text>\
                         {oks && (
-                          <Text
-                            color={oks[index] ? 'green.400' : 'red.400'}
-                            ml={1}
-                          >
-                            {oks[index] ? ' correct' : ' incorrect'}
-                          </Text>
+                          <>
+                            {oks[index] ? (
+                              <CheckCircleIcon
+                                boxSize={5}
+                                color={'green.400'}
+                              />
+                            ) : (
+                              <WarningTwoIcon boxSize={5} color={'red.300'} />
+                            )}
+                            <Text
+                              color={oks[index] ? 'green.400' : 'red.400'}
+                              ml={1}
+                            >
+                              {oks[index] ? ' correct' : ' incorrect'}
+                            </Text>
+                          </>
                         )}
                         {/* <Text >
                           {asn.assignment.answers[0].number}
                         </Text> */}
                       </Stack>
+                      {oks && !oks[index] && (
+                        <Text>Correct Solution: {asn.assignment.solution}</Text>
+                      )}
                     </FormControl>
-
-                    {oks && !oks[index] && (
-                      <Text color={'purple.400'}>
-                        Correct Solution: {asn.assignment.solution}
-                      </Text>
-                    )}
                   </Box>
                 ))}
               </Stack>
               {!checked && (
                 <Button
+                  my={4}
+                  bg={'green.400'}
+                  color={'white'}
+                  size={'md'}
+                  _hover={{
+                    bg: 'green.500',
+                  }}
                   type='submit'
                   isLoading={isCalculating}
                   loadingText={'Calculating...'}
