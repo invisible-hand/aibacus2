@@ -1,4 +1,4 @@
-import { Button, Flex } from '@chakra-ui/react';
+import { Button, Flex, useToast } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 
 import { AuthContext } from '../store/AuthContext';
@@ -7,6 +7,7 @@ import { ROUTE } from '../utils/constants/Route';
 import { supabase } from '../supabaseClient';
 
 const Auth = () => {
+  const toast = useToast();
   const [isFetching, setIsFetching] = useState(false);
   const { session } = useContext(AuthContext);
 
@@ -18,7 +19,12 @@ const Auth = () => {
         throw new Error(error);
       }
     } catch (error) {
-      alert('connection problem');
+      toast({
+        title: `Error`,
+        description: `${error.description || error.message}`,
+        status: 'error',
+        isClosable: true,
+      });
     } finally {
       setIsFetching(false);
     }
