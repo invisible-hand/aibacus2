@@ -1,5 +1,12 @@
 import { ARITHMETICS, GRADE, NUMBER_OF_TASKS } from '../utils/ai/promptChunks';
-import { Container, SimpleGrid, Stack, Text, VStack } from '@chakra-ui/react';
+import {
+  Container,
+  SimpleGrid,
+  Stack,
+  Text,
+  VStack,
+  useToast,
+} from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 
 import AssignmentHeading from '../components/AssignmentHeading';
@@ -18,6 +25,7 @@ import { aiRequest } from '../utils/ai/aiRequest';
 import { saveAssignment } from '../utils/database/assignments';
 
 const Arithmetics = () => {
+  const toast = useToast();
   const { session } = useContext(AuthContext);
   const { childrenDB, hasChildren } = useContext(ChildrenContext);
 
@@ -72,7 +80,13 @@ const Arithmetics = () => {
         session.user.id
       );
     } catch (error) {
-      alert(error);
+      toast({
+        position: 'top',
+        title: 'Error',
+        description: `${error.description || error.message}`,
+        status: 'error',
+        isClosable: true,
+      });
     } finally {
       setIsGenerating(false);
     }
