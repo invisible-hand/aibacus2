@@ -5,6 +5,7 @@ import {
   Stack,
   Text,
   useColorModeValue,
+  useToast,
 } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -14,6 +15,7 @@ import { supabase } from '../supabaseClient';
 import { useState } from 'react';
 
 const ResetPassword = () => {
+  const toast = useToast();
   const [isFetching, setIsFetching] = useState(false);
   const navigate = useNavigate();
 
@@ -35,7 +37,13 @@ const ResetPassword = () => {
       }
       navigate(ROUTE.SET_NEW_PASSWORD);
     } catch (error) {
-      alert('connection problem');
+      toast({
+        position: 'top',
+        title: 'Error',
+        description: `${error.description || error.message}`,
+        status: 'error',
+        isClosable: true,
+      });
     } finally {
       setIsFetching(false);
     }
