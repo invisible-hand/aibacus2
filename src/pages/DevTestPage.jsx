@@ -1,65 +1,170 @@
-import { Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  FormLabel,
+  Input,
+  Stack,
+  Text,
+  useToast,
+} from '@chakra-ui/react';
+import { GRADE, NUMBER_OF_TASKS } from '../utils/ai/promptChunks';
+
+import Generate from '../components/Generate';
+import GradePicker from '../components/GradePicker';
+import NumberOfTasks from '../components/NumberOfTasks';
+import { aiRequestMathWordTasks } from '../utils/ai/aiRequest';
 import { useState } from 'react';
 
-const response = `[{ "assignment": {"grade": 7, "task": "A car travels at a speed of 80 km/h for 2 hours. How far did it travel?", "answers": [{"number":160, "units": "km"}], "solution": "Distance = Speed × Time = 80 km/h × 2 h = 160 km"}},
-{ "assignment": {"grade": 7, "task": "A rectangular prism has a length of 10 m, a width of 5 m, and a height of 2 m. What is its volume?", "answers": [{"number":100, "units": "m^3"}], "solution": "Volume = Length × Width × Height = 10 m × 5 m × 2 m = 100 m^3"}},
-{ "assignment": {"grade": 7, "task": "A box has a mass of 10 kg. What is its weight?", "answers": [{"number":98, "units": "N"}], "solution": "Weight = Mass × Acceleration due to gravity = 10 kg × 9.8 m/s^2 = 98 N"}},
-{ "assignment": {"grade": 7, "task": "A rectangular field has a length of 200 m and a width of 100 m. What is its area?", "answers": [{"number":20000, "units": "m^2"}], "solution": "Area = Length × Width = 200 m × 100 m = 20000 m^2"}},
-{ "assignment": {"grade": 7, "task": "A cylinder has a radius of 5 cm and a height of 10 cm. What is its volume?", "answers": [{"number":785, "units": "cm^3"}], "solution": "Volume = π × Radius^2 × Height = 3.14 × 5 cm × 5 cm × 10 cm = 785 cm^3"}}]`;
-
-console.log(response[0]);
-
-let arrValidated = response;
-if (response[0] !== '[') {
-  rrValidated = '[' + response + ']';
-}
-
-const data = JSON.parse(arrValidated);
+const basePrompt =
+  'Generate %task_amount% math assignments for %grade% grade in a form of a word task. With an answer and a solution. ' +
+  'Please, make sure it is advanced enough for %grade% grade. ' +
+  'Reply in form of JSON with shape like this: ' +
+  '`{"grade": <grade>, "subject": "math", "assignments": [{ "assignment":{"task": <task>,"answers":[{"number":<number>, "units": <units>},{"numbers":<number>, "units": <units>},...],"solution": <solution>}},{ "assignment":...},...]}`. ' +
+  'It should be parsable with JSON.parse() without errors.  ';
+'Use minimal form of units for examples: "kg", "m³", "m/s²". ' +
+  'Instead of "^0,^1,^2,^3,^4,^5,^6,^7,^8,^9,^0" etc. use ⁰,¹,²,³,⁴,⁵,⁶,⁷,⁸,⁹ symbols for exponents. Also use them in units. ' +
+  'Use "÷" as division sign and "×" as multiplication sign, but use "/" for fractions. ' +
+  'Please be consistent with units.';
 
 export default () => {
-  const [answers, setAnswers] = useState(data.map((_) => ''));
-  const [oks, setOks] = useState(data.map((_) => ''));
+  const toast = useToast();
+
+  const [grade, setGrade] = useState('7');
+  const [numberOfTasks, setNumberOfTasks] = useState('3');
+
+  const [oks, setOks] = useState(null);
+  const [aiResponse, setAiResponse] = useState();
+  const [aiAnswers, setAiAnswers] = useState();
+
+  const [checked, setChecked] = useState(false);
+
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [isCalculating, setIsCalculating] = useState(false);
+
+  const responseHandler = async (_event) => {
+    setIsGenerating(true);
+    setChecked(false);
+    setOks(null);
+    // const math = MATH.grade.get(+grade);
+    // const basePrompt = math.basePrompt;
+    const temp = 0.8;
+    const maxTokens = 3000;
+    const prompt = basePrompt
+      .replace(/%grade%/g, GRADE[+grade])
+      .replace('%task_amount%', NUMBER_OF_TASKS[+numberOfTasks]);
+    try {
+      const aiResponse = await aiRequestMathWordTasks(prompt, temp, maxTokens);
+      const parsedResponse = JSON.parse(aiResponse);
+      setAiResponse(parsedResponse);
+      setAiAnswers(
+        parsedResponse.assignments.map(
+          (assignment) => assignment.assignment.answers[0].number
+        )
+      );
+    } catch (error) {
+      toast({
+        title: `Error`,
+        description: `${error.description || error.message}`,
+        status: 'error',
+        isClosable: true,
+      });
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    setIsCalculating(true);
+
+    let oks = [];
+    for (let element of event.currentTarget.elements) {
+      if (element.type === 'text') {
+        const aiAnswer = aiAnswers[+element.id];
+        const givenAnswer = +element.value;
+        oks.push(aiAnswer === givenAnswer);
+      }
+    }
+    setOks(oks);
+    setChecked(true);
+    setIsCalculating(false);
+  };
+
   return (
     <>
-      <Text>response</Text>
-      {data.map((asn, index) => (
-        <div key={index}>
-          <p>
-            <span>Grade:</span>
-            <span>{asn.assignment.grade}</span>
-          </p>
-          <p>Task:</p>
-          <p>{asn.assignment.task}</p>
-          <p>Answer:</p>
-          <p>
-            <input
-              type='text'
-              value={answers[index]}
-              onChange={(e) => {
-                setOks((prev) => {
-                  const newVar = [...prev];
-                  newVar[index] =
-                    e.target.value == asn.assignment.answers[0].number;
-                  return newVar;
-                });
-                setAnswers((prev) => {
-                  const newVar = [...prev];
-                  newVar[index] = e.target.value;
-                  return newVar;
-                });
-              }}
-            />
+      <GradePicker
+        defaultOption={grade}
+        options={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]} //TODO!
+        onChange={setGrade}
+        label={'Grade'}
+      />
+      <NumberOfTasks
+        defaultValue={'3'} //TODO!
+        onChange={setNumberOfTasks}
+      />
+      <Generate
+        isLoading={isGenerating}
+        onClick={responseHandler}
+        disabled={isGenerating}
+      />
+      <form onSubmit={!checked ? handleSubmit : undefined}>
+        <Container maxW={'7xl'} my={5} mx={{ base: 5, md: 0 }}>
+          {aiResponse && (
+            <>
+              <Text>Grade: {aiResponse.grade}</Text>
+              <Text>Subject: {aiResponse.subject}</Text>
+              <Stack direction={'column'}>
+                {aiResponse?.assignments.map((asn, index) => (
+                  <Box key={index}>
+                    <Text>Task: {asn.assignment.task}</Text>
 
-            <Text as={'span'} color={oks[index] ? 'green.400' : 'red.400'}>
-              {oks[index] ? 'ok' : 'wrong'}
-            </Text>
-            <span>{asn.assignment.answers[0].units}</span>
-            <span>{asn.assignment.answers[0].number}</span>
-          </p>
-          <p>Solution:</p>
-          <p>{asn.assignment.solution}</p>
-        </div>
-      ))}
+                    <FormControl id={`${index}`} isRequired>
+                      <FormLabel>Answer:</FormLabel>
+                      <Stack direction={'row'} align={'center'}>
+                        <Input
+                          maxW={150}
+                          type='text'
+                          placeholder='enter an answer...'
+                        />
+                        <Text>{asn.assignment.answers[0].units}</Text>\
+                        {oks && (
+                          <Text
+                            color={oks[index] ? 'green.400' : 'red.400'}
+                            ml={1}
+                          >
+                            {oks[index] ? ' correct' : ' incorrect'}
+                          </Text>
+                        )}
+                        {/* <Text >
+                          {asn.assignment.answers[0].number}
+                        </Text> */}
+                      </Stack>
+                    </FormControl>
+
+                    {oks && !oks[index] && (
+                      <Text color={'purple.400'}>
+                        Correct Solution: {asn.assignment.solution}
+                      </Text>
+                    )}
+                  </Box>
+                ))}
+              </Stack>
+              {!checked && (
+                <Button
+                  type='submit'
+                  isLoading={isCalculating}
+                  loadingText={'Calculating...'}
+                >
+                  Check
+                </Button>
+              )}
+            </>
+          )}
+        </Container>
+      </form>
     </>
   );
 };

@@ -31,3 +31,16 @@ export const aiRequest = async (prompt, temp, maxTokens) => {
     .split('\n')
     .filter((str) => str.length > 6);
 };
+
+export const aiRequestMathWordTasks = async (prompt, temp, maxTokens) => {
+  const temperature = temp || requestData.temperature;
+  const max_tokens = maxTokens || requestData.max_tokens;
+  const data = {
+    model: requestData.model,
+    temperature,
+    max_tokens,
+    prompt,
+  };
+  const response = await axios.post(OPEN_AI_URL, data, requestConfig);
+  return response.data.choices[0].text;
+};
