@@ -62,16 +62,12 @@ const MathTests = () => {
     try {
       const aiResponse = await aiRequestMathWordTasks(prompt, temp, maxTokens);
       const parsedResponse = JSON.parse(aiResponse);
-      console.log(parsedResponse);
-      setAiResponse(parsedResponse);
-
       setAiCorrectAnswerIndices(
         parsedResponse.tests.map((test) => +test.test.correctAnswerIndex)
       );
       setGivenAnswers(Array(parsedResponse.tests.length).fill(0));
       setAiResponse(parsedResponse);
     } catch (error) {
-      console.log(error);
       toast({
         position: 'top',
         title: 'Error',
@@ -134,8 +130,6 @@ const MathTests = () => {
                     <RadioGroup
                       value={givenAnswers[testIndex]}
                       onChange={(value) => {
-                        console.log(value);
-                        console.log(givenAnswers);
                         setGivenAnswers((prev) => {
                           const newArr = [...prev];
                           newArr[testIndex] = +value;
@@ -148,15 +142,9 @@ const MathTests = () => {
                         direction={{ base: 'column', md: 'row' }}
                       >
                         {test.test.answerOptions.map((option, index) => (
-                          <>
-                            <Radio
-                              key={index}
-                              colorScheme='green'
-                              value={index}
-                            >
-                              {option.value} {option.units}
-                            </Radio>
-                          </>
+                          <Radio key={index} colorScheme='green' value={index}>
+                            {option.value} {option.units}
+                          </Radio>
                         ))}
                       </Stack>
                       {oks && (
