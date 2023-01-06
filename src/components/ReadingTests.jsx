@@ -16,10 +16,20 @@ import Generate from './Generate';
 import GradePicker from './GradePicker';
 import NumberOfTasks from './NumberOfTasks';
 import { aiRequestMathWordTasks } from '../utils/ai/aiRequest';
+import { array } from 'prop-types';
 import { useState } from 'react';
 
+const words = new Map([
+  [1, '50 - 90'],
+  [2, '90 - 120'],
+  [3, '120 - 170'],
+  [4, '170 - 220'],
+  [5, '220 - 280'],
+  [6, '280 - 350'],
+]);
+
 const basePrompt =
-  'Generate reading tests for %grade% grade in a form of a text (100 - 170 words) and %task_amount% questions to it. Questions in form of a test with four variant of answers. 1 correct answer and 3 incorrect ones. ' +
+  'Generate reading tests for %grade% grade in a form of a text (%words% words) and %task_amount% questions to it. Questions in form of a test with four variant of answers. 1 correct answer and 3 incorrect ones. ' +
   'Please, make sure correct answer are asking about things that are present in the text. ' +
   'Please, make sure incorrect answers are really incorrect, but have strong relation to the text. ' +
   'Please, make sure it is advanced enough for %grade% grade. ' +
@@ -56,9 +66,11 @@ const ReadingTests = () => {
     const maxTokens = 3500;
     const prompt = basePrompt
       .replace(/%grade%/g, GRADE[+grade])
+      .replace('%words%', words.get(+grade))
       .replace('%task_amount%', NUMBER_OF_TASKS[+numberOfTasks]);
     try {
       const aiResponse = await aiRequestMathWordTasks(prompt, temp, maxTokens);
+      console.log(aiResponse);
       const parsedResponse = JSON.parse(aiResponse);
       setAiCorrectAnswerIndices(
         parsedResponse.questions.map((question) => question.correctAnswerIndex)
@@ -100,13 +112,14 @@ const ReadingTests = () => {
       <Text>Reading Test</Text>
       <GradePicker
         defaultOption={grade}
-        options={[1, 2, 3, 4]} //TODO!
+        options={Array.from(words.keys())}
         onChange={setGrade}
         label={'Grade'}
       />
       <NumberOfTasks
         defaultValue={'3'} //TODO!
         onChange={setNumberOfTasks}
+        label='Number of questions'
       />
       <Generate
         isLoading={isGenerating}
