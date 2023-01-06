@@ -1,4 +1,4 @@
-import { Button, Flex, useToast } from '@chakra-ui/react';
+import { Button, Flex, Skeleton, useToast } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 
 import { AuthContext } from '../store/AuthContext';
@@ -9,7 +9,7 @@ import { supabase } from '../supabaseClient';
 const Auth = () => {
   const toast = useToast();
   const [isFetching, setIsFetching] = useState(false);
-  const { session } = useContext(AuthContext);
+  const { session, authLoading } = useContext(AuthContext);
 
   const logout = async (_) => {
     try {
@@ -31,54 +31,56 @@ const Auth = () => {
   };
 
   return (
-    <Flex align={'center'}>
-      {!session ? (
-        <>
-          <Button
-            as={Link}
-            to={ROUTE.LOGIN}
-            bg={'green.400'}
-            color={'white'}
-            w='full'
-            _hover={{
-              bg: 'green.500',
-            }}
-          >
-            Log in
-          </Button>
-          <Button
-            as={Link}
-            to={ROUTE.REGISTER}
-            ml='1'
-            bg={'green.400'}
-            color={'white'}
-            w='full'
-            _hover={{
-              bg: 'green.500',
-            }}
-          >
-            Sign up
-          </Button>
-        </>
-      ) : (
-        <>
-          <Link to={ROUTE.PROFILE}>{session?.user.email}</Link>
-          <Button
-            ml='1'
-            variant='outline'
-            color={'green.400'}
-            w='full'
-            _hover={{
-              color: 'green.500',
-            }}
-            onClick={logout}
-            disabled={isFetching}
-          >
-            Log out
-          </Button>
-        </>
-      )}
-    </Flex>
+    <Skeleton isLoaded={!isFetching && !authLoading}>
+      <Flex align={'center'}>
+        {!session ? (
+          <>
+            <Button
+              as={Link}
+              to={ROUTE.LOGIN}
+              bg={'green.400'}
+              color={'white'}
+              w='full'
+              _hover={{
+                bg: 'green.500',
+              }}
+            >
+              Log in
+            </Button>
+            <Button
+              as={Link}
+              to={ROUTE.REGISTER}
+              ml='1'
+              bg={'green.400'}
+              color={'white'}
+              w='full'
+              _hover={{
+                bg: 'green.500',
+              }}
+            >
+              Sign up
+            </Button>
+          </>
+        ) : (
+          <>
+            <Link to={ROUTE.PROFILE}>{session?.user.email}</Link>
+            <Button
+              ml='1'
+              variant='outline'
+              color={'green.400'}
+              w='full'
+              _hover={{
+                color: 'green.500',
+              }}
+              onClick={logout}
+              disabled={isFetching}
+            >
+              Log out
+            </Button>
+          </>
+        )}
+      </Flex>
+    </Skeleton>
   );
 };
 
