@@ -4,11 +4,12 @@ import {
   Container,
   Radio,
   RadioGroup,
+  SimpleGrid,
   Stack,
   Text,
   useToast,
 } from '@chakra-ui/react';
-import { CheckCircleIcon, StarIcon, WarningTwoIcon } from '@chakra-ui/icons';
+import { CheckCircleIcon, WarningTwoIcon } from '@chakra-ui/icons';
 import { GRADE, NUMBER_OF_TASKS } from '../utils/ai/promptChunks';
 
 import Generate from '../components/Generate';
@@ -18,11 +19,11 @@ import { aiRequestMathWordTasks } from '../utils/ai/aiRequest';
 import { useState } from 'react';
 
 const basePrompt =
-  'Generate %task_amount% math tests for %grade% grade in a form of a word task. With four variant of answers. ' +
+  'Generate %task_amount% math tests for %grade% grade in a form of a word task. With four variant of answers. 1 correct answer and 3 incorrect ones. ' +
   'Please, make sure it is advanced enough for %grade% grade. ' +
   'Reply in form of JSON with shape like this: ' +
-  '`{"grade": <grade>, "subject": "math", "type": "test", "tests": [{ "test":{"problem": <problem_text>,"answerOptions":[{"value":<value>, "units": <units>}, {"value":<value>, "units": <units>}, {"value":<value>, "units": <units>}, {"value":<value>, "units": <units>}],"correctAnswerIndex": <index>}},{ "test":...},...]}`. ' +
-  'It should be parsable with JSON.parse() without errors.  ' +
+  '`{"grade": <grade>, "subject": "math", "type": "test", "tests": [{ "test":{"problem": "<problem_text>", "answerOptions":[{"value": "<value>", "units": "<units>"}, {"value": "<value>", "units": "<units>"}, {"value": "<value>", "units": "<units>"}, {"value": "<value>", "units": "<units>"}], "correctAnswerIndex": <index as integer 0 to 3>}},{ "test":...},...]}`. ' +
+  'It should be parsable with JSON.parse() without errors. ' +
   'Use minimal form of units for examples: "kg", "m³", "m/s²". ' +
   'Instead of "^0,^1,^2,^3,^4,^5,^6,^7,^8,^9,^0" etc. use ⁰,¹,²,³,⁴,⁵,⁶,⁷,⁸,⁹ symbols for exponents. Also use them in units. ' +
   'Use "÷" as division sign and "×" as multiplication sign, but use "/" for fractions. ' +
@@ -84,7 +85,7 @@ const MathTests = () => {
     event.preventDefault();
 
     setIsCalculating(true);
-
+    console.log(aiCorrectAnswerIndices);
     let oks = [];
     aiCorrectAnswerIndices.forEach((aiAnswerIndex, testIndex) => {
       const givenAnswerIndex = givenAnswers[testIndex];
@@ -137,16 +138,13 @@ const MathTests = () => {
                         });
                       }}
                     >
-                      <Stack
-                        spacing={5}
-                        direction={{ base: 'column', md: 'row' }}
-                      >
+                      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={5}>
                         {test.test.answerOptions.map((option, index) => (
                           <Radio key={index} colorScheme='green' value={index}>
                             {option.value} {option.units}
                           </Radio>
                         ))}
-                      </Stack>
+                      </SimpleGrid>
                       {oks && (
                         <Stack direction={'row'}>
                           {oks[testIndex] ? (
