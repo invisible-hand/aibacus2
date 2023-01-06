@@ -111,6 +111,7 @@ const MathWordProblems = () => {
       <NumberOfTasks
         defaultValue={'3'} //TODO!
         onChange={setNumberOfTasks}
+        label='Number of problems'
       />
       <Generate
         isLoading={isGenerating}

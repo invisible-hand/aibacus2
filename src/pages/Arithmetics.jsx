@@ -131,6 +131,7 @@ const Arithmetics = () => {
             <NumberOfTasks
               defaultValue={numberOfTasks}
               onChange={setNumberOfTasks}
+              label='Number of problems'
             />
             <DifficultyRadioPicker onChange={setDifficulty} />
             <Generate

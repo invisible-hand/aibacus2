@@ -108,6 +108,7 @@ const Math = () => {
             <NumberOfTasks
               defaultValue={MATH.grade.get(+grade).defaultTasks}
               onChange={setNumberOfTasks}
+              label='Number of problems'
             />
             <Generate
               isLoading={isGenerating}

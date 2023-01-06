@@ -91,7 +91,11 @@ const Demo = () => {
               disabled={true}
               label={'Grade'}
             />
-            <NumberOfTasks defaultValue={numberOfTasks} disabled={true} />
+            <NumberOfTasks
+              defaultValue={numberOfTasks}
+              disabled={true}
+              label='Number of problems'
+            />
             <MathOperations
               operationState={operationState}
               handleChange={handleChange}

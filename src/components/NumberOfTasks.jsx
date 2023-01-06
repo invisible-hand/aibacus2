@@ -6,7 +6,7 @@ const options = [...new Array(30)]
   .map((_, index) => index)
   .filter((index) => index > 0);
 
-const NumberOfTasks = ({ defaultValue, onChange, disabled }) => {
+const NumberOfTasks = ({ label, defaultValue, onChange, disabled }) => {
   const [selected, setSelected] = useState(defaultValue);
 
   const handleChange = (event) => {
@@ -18,7 +18,7 @@ const NumberOfTasks = ({ defaultValue, onChange, disabled }) => {
   return (
     <FormControl>
       <Stack direction={'row'} align={'center'} isInline={true}>
-        <FormLabel m={0}>Number of tasks:</FormLabel>
+        <FormLabel m={0}>{label || 'Number of tasks'}</FormLabel>
         <Select
           value={selected}
           onChange={handleChange}

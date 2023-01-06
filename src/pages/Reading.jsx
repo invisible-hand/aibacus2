@@ -102,6 +102,7 @@ const Reading = () => {
             <NumberOfTasks
               defaultValue={numberOfTasks}
               onChange={setNumberOfTasks}
+              label='Number of questions'
             />
             <Generate
               isLoading={isGenerating}
