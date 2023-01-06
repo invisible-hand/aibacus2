@@ -86,15 +86,15 @@ const Demo = () => {
       <Container maxW={'7xl'} my={5} mx={{ base: 5, md: 0 }}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <VStack align={'start'}>
-            <NumberOfTasks defaultValue={numberOfTasks} disabled={true} />
-            <MathOperations
-              operationState={operationState}
-              handleChange={handleChange}
-            />
             <GradePicker
               defaultOption={grade}
               disabled={true}
               label={'Grade'}
+            />
+            <NumberOfTasks defaultValue={numberOfTasks} disabled={true} />
+            <MathOperations
+              operationState={operationState}
+              handleChange={handleChange}
             />
             <Generate
               isLoading={isGenerating}
