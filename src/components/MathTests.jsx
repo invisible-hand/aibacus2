@@ -10,10 +10,10 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { CheckCircleIcon, WarningTwoIcon } from '@chakra-ui/icons';
-import { GRADE, NUMBER_OF_TASKS } from '../utils/ai/promptChunks';
 
 import Generate from '../components/Generate';
 import GradePicker from '../components/GradePicker';
+import { MathTests as MathTestsClass } from '../models/MathTests';
 import NumberOfTasks from '../components/NumberOfTasks';
 import { aiRequestMathWordTasks } from '../utils/ai/aiRequest';
 import { useState } from 'react';
@@ -55,18 +55,18 @@ const MathTests = () => {
 
     // const math = MATH.grade.get(+grade);
     // const basePrompt = math.basePrompt;
+
+    const tests = new MathTestsClass(+grade, numberOfTasks, 2);
     const temp = 0.8;
     const maxTokens = 3000;
-    const prompt = basePrompt
-      .replace(/%grade%/g, GRADE[+grade])
-      .replace('%task_amount%', NUMBER_OF_TASKS[+numberOfTasks]);
+    const prompt = tests.prompt;
     try {
       const aiResponse = await aiRequestMathWordTasks(prompt, temp, maxTokens);
       const parsedResponse = JSON.parse(aiResponse);
       setAiCorrectAnswerIndices(
-        parsedResponse.tests.map((test) => +test.test.correctAnswerIndex)
+        parsedResponse.tests.map((test) => +test.correctAnswerIndex)
       );
-      setGivenAnswers(Array(parsedResponse.tests.length).fill(0));
+      setGivenAnswers(new Array(parsedResponse.tests.length).fill(0));
       setAiResponse(parsedResponse);
     } catch (error) {
       toast({
@@ -128,7 +128,7 @@ const MathTests = () => {
                     boxShadow={'lg'}
                     p={8}
                   >
-                    <Text>Problem: {test.test.problem}</Text>
+                    <Text>Problem: {test.problem}</Text>
                     <RadioGroup
                       value={givenAnswers[testIndex]}
                       onChange={(value) => {
@@ -140,7 +140,7 @@ const MathTests = () => {
                       }}
                     >
                       <SimpleGrid columns={{ base: 1, md: 2 }} spacing={5}>
-                        {test.test.answerOptions.map((option, index) => (
+                        {test.answerOptions.map((option, index) => (
                           <Radio key={index} colorScheme='green' value={index}>
                             {option.value} {option.units}
                           </Radio>
