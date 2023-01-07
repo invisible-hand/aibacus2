@@ -18,18 +18,6 @@ import NumberOfTasks from '../components/NumberOfTasks';
 import { aiRequestMathWordTasks } from '../utils/ai/aiRequest';
 import { useState } from 'react';
 
-const basePrompt =
-  'Generate %task_amount% math tests for %grade% grade in a form of a word problem. Each test should have four answers. ' +
-  'Please, make sure it is advanced enough for %grade% grade. ' +
-  'Reply in form of JSON with shape like this: ' +
-  '`{"grade": "<grade>", "subject": "math", "type": "test", "tests": [{ "test": {"problem": "<problem_text>", "answerOptions": [{"value": "<value>", "units": "<units>"}, {"value": "<value>", "units": "<units>"}, {"value": "<value>", "units": "<units>"}, {"value": "<value>", "units": "<units>"}], "correctAnswerIndex": <index of correct answer>}, "solution": "<solution>"},{ "test":...},...]}`. ' +
-  'It should be parsable with JSON.parse() without errors. ' +
-  'Use minimal form of units for examples: "kg", "m³", "m/s²". ' +
-  'Instead of "^0,^1,^2,^3,^4,^5,^6,^7,^8,^9,^0" etc. use ⁰,¹,²,³,⁴,⁵,⁶,⁷,⁸,⁹ symbols for exponents. Also use them in units. ' +
-  'Use "÷" as division sign and "×" as multiplication sign, but use "/" for fractions. ' +
-  'If answer is in people or animals it should be a whole number. ' +
-  'Please be consistent with units. ';
-
 const MathTests = () => {
   const toast = useToast();
 
@@ -52,9 +40,6 @@ const MathTests = () => {
     setChecked(false);
     setOks(null);
     setAiCorrectAnswerIndices(null);
-
-    // const math = MATH.grade.get(+grade);
-    // const basePrompt = math.basePrompt;
 
     const tests = new MathTestsClass(+grade, numberOfTasks, 2);
     const temp = 0.8;
@@ -147,18 +132,24 @@ const MathTests = () => {
                         ))}
                       </SimpleGrid>
                       {oks && (
-                        <Stack direction={'row'}>
-                          {oks[testIndex] ? (
-                            <CheckCircleIcon boxSize={5} color={'green.400'} />
-                          ) : (
-                            <WarningTwoIcon boxSize={5} color={'red.300'} />
-                          )}
-                          <Text
-                            color={oks[testIndex] ? 'green.400' : 'red.400'}
-                            ml={1}
-                          >
-                            {oks[testIndex] ? ' correct' : ' incorrect'}
-                          </Text>
+                        <Stack dicrection='column'>
+                          <Stack direction={'row'}>
+                            {oks[testIndex] ? (
+                              <CheckCircleIcon
+                                boxSize={5}
+                                color={'green.400'}
+                              />
+                            ) : (
+                              <WarningTwoIcon boxSize={5} color={'red.300'} />
+                            )}
+                            <Text
+                              color={oks[testIndex] ? 'green.400' : 'red.400'}
+                              ml={1}
+                            >
+                              {oks[testIndex] ? ' correct' : ' incorrect'}
+                            </Text>
+                          </Stack>
+                          <Text>Solution: {test.solution}</Text>
                         </Stack>
                       )}
                     </RadioGroup>
