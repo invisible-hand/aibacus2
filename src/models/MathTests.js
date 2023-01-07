@@ -48,10 +48,13 @@ export class MathTests extends Assignment {
       }. Each test should have ${this.answersCount} answers. ` +
       `Make sure it is advanced enough for ${GRADE[grade]} grader. ` +
       `Provide a JSON response with the following structure: ` +
+      `It should be possible to derive answer from problem. ` +
       `${generateJSONTemplate()}. ` +
+      `correctAnswerIndex should point to correct answer from zero based answerOptions array. ` +
       `Use abbreviated forms of units for examples: "kg", "m", "m/s". ` +
+      `Use units only in units placeholder. ` +
       `To represent exponents, use the following symbols: ⁰, ¹, ², ³, ⁴, ⁵, ⁶, ⁷, ⁸, ⁹. ` +
-      `Use "÷" as a division sign, use "×" as a multiplication sign, use "/" for fractions. ` +
+      `Use "÷" as a division sign, use "×" as a multiplication sign, use "/" for fractions, use "." for decimals as usual. ` +
       `For answers involving people or animals, the value should be a whole number. ` +
       `Make sure that the units used in the problem and the answer are consistent with each other. `;
   }
