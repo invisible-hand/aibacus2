@@ -2,7 +2,7 @@ import { FormControl, FormLabel, Select, Stack } from '@chakra-ui/react';
 
 import { useState } from 'react';
 
-const options = [...new Array(10)]
+const options = [...new Array(11)]
   .map((_, index) => index)
   .filter((index) => index > 0);
 
