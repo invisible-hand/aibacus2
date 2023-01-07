@@ -32,9 +32,9 @@ export class ReadingTests extends Assignment {
     this.answersCount = difficultyLevel;
 
     const generateJSONTemplate = () => {
-      const answers = new Array(difficultyMap.get(difficultyLevel).value).map(
-        (_, index) => `option${index}`
-      );
+      const answers = [
+        ...new Array(difficultyMap.get(difficultyLevel).value),
+      ].map((_, index) => `<option${index}>`);
       const question = {
         question: '<question>',
         answers,
