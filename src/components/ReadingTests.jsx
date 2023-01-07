@@ -10,13 +10,12 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { CheckCircleIcon, WarningTwoIcon } from '@chakra-ui/icons';
-import { GRADE, NUMBER_OF_TASKS } from '../utils/ai/promptChunks';
 
 import Generate from './Generate';
 import GradePicker from './GradePicker';
 import NumberOfTasks from './NumberOfTasks';
-import { aiRequestMathWordTasks } from '../utils/ai/aiRequest';
-import { array } from 'prop-types';
+import { ReadingTests as ReadingTestsClass } from '../models/RedingTests';
+import { aiRequestMathWordTasks } from '../utils/ai/aiRequest.js';
 import { useState } from 'react';
 
 const words = new Map([
@@ -60,20 +59,16 @@ const ReadingTests = () => {
     setOks(null);
     setAiCorrectAnswerIndices(null);
 
-    // const math = MATH.grade.get(+grade);
-    // const basePrompt = math.basePrompt;
+    const tests = new ReadingTestsClass(+grade, numberOfTasks, 2);
     const temp = 0.8;
     const maxTokens = 3500;
-    const prompt = basePrompt
-      .replace(/%grade%/g, GRADE[+grade])
-      .replace('%words%', words.get(+grade))
-      .replace('%task_amount%', NUMBER_OF_TASKS[+numberOfTasks]);
+    const prompt = tests.prompt;
     try {
       const aiResponse = await aiRequestMathWordTasks(prompt, temp, maxTokens);
       console.log(aiResponse);
       const parsedResponse = JSON.parse(aiResponse);
       setAiCorrectAnswerIndices(
-        parsedResponse.questions.map((question) => question.correctAnswerIndex)
+        parsedResponse.questions.map((question) => +question.correctAnswerIndex)
       );
       setGivenAnswers(Array(parsedResponse.questions.length).fill(0));
       setAiResponse(parsedResponse);
