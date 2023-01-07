@@ -56,7 +56,8 @@ export class MathTests extends Assignment {
       `To represent exponents, use the following symbols: ⁰, ¹, ², ³, ⁴, ⁵, ⁶, ⁷, ⁸, ⁹. ` +
       `Use "÷" as a division sign, use "×" as a multiplication sign, use "/" for fractions, use "." for decimals as usual. ` +
       `For answers involving people or animals, the value should be a whole number. ` +
-      `Make sure that the units used in the problem and the answer are consistent with each other. `;
+      `Make sure that the units used in the problem and the answer are consistent with each other. ` +
+      `Use \\n for newline characters. `;
   }
 
   get answersCount() {

@@ -64,7 +64,8 @@ export class ReadingTests extends Assignment {
       `It should be possible to derive answer from problem. ` +
       `Reply in form of minified JSON with shape like this: ` +
       `${generateJSONTemplate()}. ` +
-      `correctAnswerIndex should point to correct answer from zero based answerOptions array. `;
+      `correctAnswerIndex should point to correct answer from zero based answerOptions array. ` +
+      `Use \\n for newline characters. `;
   }
 
   get answersCount() {
