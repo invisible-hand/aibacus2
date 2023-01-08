@@ -32,7 +32,7 @@ const Reading = () => {
   const [grade, setGrade] = useState(hasChildren ? childrenDB[0].grade : '1');
   const [isGenerating, setIsGenerating] = useState(false);
   const [response, setResponse] = useState([]);
-  const [numberOfTasks, setNumberOfTasks] = useState('15');
+  const [numberOfTasks, setNumberOfTasks] = useState('10');
 
   const responseHandler = async (_event) => {
     setIsGenerating(true);
@@ -40,7 +40,7 @@ const Reading = () => {
       .replace('%grade%', GRADE[+grade])
       .replace('%task_amount%', NUMBER_OF_TASKS[+numberOfTasks]);
     try {
-      const aiResponse = await aiRequest(prompt);
+      const aiResponse = await aiRequest(prompt, READING.temp);
       setResponse(aiResponse);
 
       await saveAssignment(
