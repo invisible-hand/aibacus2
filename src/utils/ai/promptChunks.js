@@ -157,6 +157,7 @@ export const MATH = MATH_;
 export const READING = Object.freeze({
   name: 'Reading',
   grades: [1, 2, 3, 4],
+  temp: 0.5,
   basePrompt:
     'create a reading assignment for a %grade% grader: first, write three paragraphs of text on a random topic, then, ask %task_amount% (questions) on reading comprehension about the text above',
 });
