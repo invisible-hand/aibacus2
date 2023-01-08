@@ -1,9 +1,9 @@
+import { Box, Spinner } from '@chakra-ui/react';
 import { Route, Routes } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
 
-import AdminPromptTest from './pages/AdminPromptTest';
 import Arithmetics from './pages/Arithmetics';
 import Demo from './pages/Demo';
-import DevTestPage from './pages/DevTestPage';
 import Home from './pages/Home';
 import Layout from './components/layout/Layout';
 import Login from './pages/Login';
@@ -16,6 +16,9 @@ import Register from './pages/Register';
 import ResetPassword from './pages/ResetPassword';
 import SetNewPassword from './pages/SetNewPassword';
 import useGAPageView from './components/hooks/useGAPageView';
+
+const AdminPromptTest = lazy(() => import('./pages/AdminPromptTest'));
+const DevTestPage = lazy(() => import('./pages/DevTestPage'));
 
 const App = () => {
   useGAPageView();
@@ -73,7 +76,21 @@ const App = () => {
           path={ROUTE.PROMPT_TEST}
           element={
             <ProtectedRoute>
-              <AdminPromptTest />
+              <Suspense
+                fallback={
+                  <Box justifyContent={'center'} alignItems={'center'}>
+                    <Spinner
+                      thickness='6px'
+                      speed='0.95s'
+                      //emptyColor='gray.100'
+                      color='green.400'
+                      size='xl'
+                    />
+                  </Box>
+                }
+              >
+                <AdminPromptTest />
+              </Suspense>
             </ProtectedRoute>
           }
         />
@@ -81,7 +98,20 @@ const App = () => {
           path={ROUTE.DEV_TEST_PAGE}
           element={
             <ProtectedRoute>
-              <DevTestPage />
+              <Suspense
+                fallback={
+                  <Box justifyContent={'center'} alignItems={'center'}>
+                    <Spinner
+                      thickness='6px'
+                      speed='0.95s'
+                      color='green.400'
+                      size='xl'
+                    />
+                  </Box>
+                }
+              >
+                <DevTestPage />
+              </Suspense>
             </ProtectedRoute>
           }
         />
