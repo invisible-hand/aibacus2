@@ -46,7 +46,8 @@ const ArithmeticsTasks = () => {
       12,
       0,
       1,
-      2
+      2,
+      3
     );
     console.log(generatedProblems);
     setProblems(generatedProblems.map((problem) => problem.text));

@@ -23,7 +23,7 @@ const arrHas = (arr, subArr) => {
   return false;
 };
 
-const generateKPairs = (k = 5, min = 1, max = 12, division = false) => {
+const generateKPairs = (k = 5, min = 1, max = 12) => {
   if (min > max) [min, max] = [max, min];
   if (k > (Math.abs(max - min) + 1) ** 2) {
     k = (Math.abs(max - min) + 1) ** 2;
@@ -33,8 +33,6 @@ const generateKPairs = (k = 5, min = 1, max = 12, division = false) => {
   const result = [];
   while (result.length < k) {
     const pair = [randomInt(min, max), randomInt(min, max)];
-
-    if (division) pair[0] = pair[0] * pair[1];
 
     if (arrHas(result, pair)) {
       continue;
@@ -53,8 +51,10 @@ const multiply = (a, b) => ({ text: `${a} × ${b}`, result: a * b });
 const divide = (a, b) => {
   let min = Math.min(a, b);
   let max = Math.max(a, b);
-  if (Math.min(a, b) === 0) {
+  if (min === 0) {
     [min, max] = [max, min];
+  } else {
+    max = min * max;
   }
   return {
     text: `${max} ÷ ${min}`,
@@ -78,7 +78,7 @@ export const arithmeticsProblems = (
   const pairs = generateKPairs(k, min, max);
   const result = [];
   pairs.forEach((pair) => {
-    const randChoice = randomInt(0, operations.length);
+    const randChoice = randomInt(0, operations.length - 1);
     result.push(OPERATIONS.get(randChoice)(pair[0], pair[1]));
   });
   return result;
