@@ -69,6 +69,53 @@ const grades = {
         maxNumber: 10,
         operations: [2],
       },
+      {
+        id: 3,
+        name: 'comparison (10-100)',
+        minNumber: 10,
+        maxNumber: 100,
+        operations: [4],
+      },
+    ],
+  },
+  3: {
+    topics: [
+      {
+        id: 0,
+        name: 'addition (100-1000)',
+        minNumber: 100,
+        maxNumber: 999,
+        operations: [0],
+      },
+      {
+        id: 1,
+        name: 'addition (1000-10000)',
+        minNumber: 1000,
+        maxNumber: 9999,
+        operations: [0],
+      },
+
+      {
+        id: 2,
+        name: 'subtraction (100-1000)',
+        minNumber: 100,
+        maxNumber: 999,
+        operations: [1],
+      },
+      {
+        id: 3,
+        name: 'subtraction (1000-10000)',
+        minNumber: 1000,
+        maxNumber: 9999,
+        operations: [1],
+      },
+      {
+        id: 4,
+        name: 'multiplication (10-50)',
+        minNumber: 10,
+        maxNumber: 50,
+        operations: [2],
+      },
     ],
   },
 };
@@ -133,7 +180,7 @@ const ArithmeticsTasks = () => {
       <Text>Arithmetics Problems</Text>
       <GradePicker
         defaultOption={grade}
-        options={[1, 2]}
+        options={Object.keys(grades)}
         onChange={setGrade}
         label='Grade'
       />
