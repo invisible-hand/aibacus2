@@ -15,6 +15,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@supabase/supabase-js": "^2.2.2",
+    "@yozora/react-mathjax": "^2.2.2",
     "axios": "^1.2.2",
     "fraction.js": "^4.2.0",
     "framer-motion": "^8.1.4",

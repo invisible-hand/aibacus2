@@ -11,6 +11,7 @@ specifiers:
   '@types/react': ^18.0.26
   '@types/react-dom': ^18.0.9
   '@vitejs/plugin-react': ^3.0.0
+  '@yozora/react-mathjax': ^2.2.2
   axios: ^1.2.2
   fraction.js: ^4.2.0
   framer-motion: ^8.1.4
@@ -31,6 +32,7 @@ dependencies:
   '@emotion/react': 11.10.5_3grbeiqrb6djg67fiejiqngkdi
   '@emotion/styled': 11.10.5_pwtpayi7py7ecifctvjbac33ee
   '@supabase/supabase-js': 2.2.2
+  '@yozora/react-mathjax': 2.2.2_sh5qlbywuemxd2y3xkrw2y2kr4
   axios: 1.2.2
   fraction.js: 4.2.0
   framer-motion: 8.1.4_biqbaboplfbrettd7655fr4n2y
@@ -1680,6 +1682,21 @@ packages:
     dev: true
     optional: true
 
+  /@guanghechen/fast-deep-equal/2.2.3:
+    resolution: {integrity: sha512-H2gtX5UnUBZW0TQI58HGCXgzDN99iFJ57+8PPYlr5IQoV8qoDnRY+pfUGgN3ZwoNInj6d53FLdsg29Rg9CqXHw==}
+    engines: {node: '>= 16.0.0'}
+    dev: false
+
+  /@guanghechen/react-hooks/2.2.3_react@18.2.0:
+    resolution: {integrity: sha512-qWRl15MQkliFRxfVWYquD3/S2elnfiHI4VzA5RrQrXG1qEyZ/am4k4r/u4P5Wyts2cCQeAc2EE4w68fLQRTDFw==}
+    engines: {node: '>= 16.0.0'}
+    peerDependencies:
+      react: '>= 17.0.0'
+    dependencies:
+      '@guanghechen/fast-deep-equal': 2.2.3
+      react: 18.2.0
+    dev: false
+
   /@jridgewell/gen-mapping/0.1.1:
     resolution: {integrity: sha512-sQXCasFk+U8lWYEe66WxRDOE9PjVz4vSM51fTu3Hw+ClTpUSQb718772vH3pyS5pShp6lvQM7SxgIDXXXmOX7w==}
     engines: {node: '>=6.0.0'}
@@ -1880,6 +1897,19 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@yozora/react-mathjax/2.2.2_sh5qlbywuemxd2y3xkrw2y2kr4:
+    resolution: {integrity: sha512-+edn6SFd3QONtoezrlQrFKVIQzcigX2HD61jdKknUi8W9BibClUnK7z6U6iQ8pccetN+v+2AASYrHrqGZ56qNQ==}
+    engines: {node: '>= 16.0.0'}
+    peerDependencies:
+      prop-types: ^15.7.2
+      react: '>= 17.0.0'
+    dependencies:
+      '@guanghechen/react-hooks': 2.2.3_react@18.2.0
+      load-script: 2.0.0
+      prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
 
   /@zag-js/element-size/0.3.0:
     resolution: {integrity: sha512-5/hEI+0c6ZNCx6KHlOS5/WeHsd6+I7gk7Y/b/zATp4Rp3tHirs/tu1frq+iy5BmfaG9hbQtfHfUJTjOcI5jnoQ==}
@@ -2374,6 +2404,10 @@ packages:
 
   /lines-and-columns/1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
+    dev: false
+
+  /load-script/2.0.0:
+    resolution: {integrity: sha512-km6cyoPW4rM22JMGb+SHUKPMZVDpUaMpMAKrv8UHWllIxc/qjgMGHD91nY+5hM+/NFs310OZ2pqQeJKs7HqWPA==}
     dev: false
 
   /lodash.mergewith/4.6.2:
