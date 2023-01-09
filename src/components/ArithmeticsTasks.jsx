@@ -116,6 +116,11 @@ const grades = {
         maxNumber: 50,
         operations: [2],
       },
+      {
+        id: 5,
+        name: 'fraction comparison',
+        operations: [7],
+      },
     ],
   },
 };
@@ -218,7 +223,7 @@ const ArithmeticsTasks = () => {
                     boxShadow={'lg'}
                     p={4}
                   >
-                    <Text alignSelf={'center'} whiteSpace={'nowrap'}>
+                    <Text as='math' alignSelf={'center'} whiteSpace={'nowrap'}>
                       {asn}
                     </Text>
                     <FormControl
