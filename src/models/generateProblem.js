@@ -1,3 +1,5 @@
+import Fraction from 'fraction.js';
+
 const randomInt = (min, max) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
@@ -81,11 +83,53 @@ export const arithmeticsProblems = (
   max = 12,
   ...operations
 ) => {
-  const pairs = generateKPairs(k, min, max);
   const result = [];
+
+  if (operations[0] > 5) {
+    for (let i = 0; i < k; i += 1) {
+      result.push(generateFraction(operations[0] - 5));
+    }
+    return result;
+  }
+
+  const pairs = generateKPairs(k, min, max);
   pairs.forEach((pair) => {
     const randChoice = randomInt(0, operations.length - 1);
     result.push(OPERATIONS.get(operations[randChoice])(pair[0], pair[1]));
   });
   return result;
+};
+
+export const generateFraction = (op) => {
+  let f1 = new Fraction(randomInt(0, 5)).add(
+    new Fraction(randomInt(1, 10), randomInt(1, 12))
+  );
+  let f2 = new Fraction(randomInt(0, 5)).add(
+    new Fraction(randomInt(1, 10), randomInt(1, 12))
+  );
+
+  let text;
+  let result;
+  if (op === 0) {
+    text = `${f1.toFraction()} + ${f2.toFraction()} =`;
+    result = f1.add(f2);
+  } else if (op === 1) {
+    if (f1 < f2) {
+      [f1, f2] = [f2, f1];
+    }
+    text = `${f1.toFraction()} - ${f2.toFraction()} =`;
+    result = f1.sub(f2);
+  } else if (op === 2) {
+    const c = f1.compare(f2);
+    text = `${f1.toLatex()} ? ${f2.toLatex()}`;
+    if (c === 0) {
+      result = '=';
+    } else if (c < 0) {
+      result = '<';
+    } else {
+      result = '>';
+    }
+  }
+
+  return { text, result };
 };
