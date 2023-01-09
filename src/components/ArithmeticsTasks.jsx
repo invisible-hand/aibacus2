@@ -141,9 +141,7 @@ const ArithmeticsTasks = () => {
     setOks(null);
     setAnswers(null);
 
-    console.log(+grade, topic);
     const top = grades[+grade].topics[topic];
-    console.log(top);
     const generatedProblems = arithmeticsProblems(
       +numberOfTasks,
       top.minNumber,
@@ -239,7 +237,7 @@ const ArithmeticsTasks = () => {
                           type='text'
                           maxLength={answers[index].length + 2}
                           // step={0.001}
-                          placeholder='enter an answer...'
+                          // placeholder='enter an answer...'
                           isInvalid={checked}
                           errorBorderColor={
                             oks && oks[index] ? 'green.400' : 'red.300'
