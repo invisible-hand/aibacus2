@@ -221,7 +221,7 @@ const ArithmeticsTasks = () => {
                     p={4}
                   >
                     <Text alignSelf={'center'} whiteSpace={'nowrap'}>
-                      Solve: {asn}
+                      {asn}
                     </Text>
                     <FormControl
                       id={`${index}`}
@@ -235,8 +235,9 @@ const ArithmeticsTasks = () => {
                         justifyContent={'center'}
                       >
                         <Input
-                          maxW={150}
+                          maxW={70}
                           type='text'
+                          maxLength={answers[index].length + 2}
                           // step={0.001}
                           placeholder='enter an answer...'
                           isInvalid={checked}
@@ -256,19 +257,19 @@ const ArithmeticsTasks = () => {
                             )}
                             <Text
                               color={oks[index] ? 'green.400' : 'red.400'}
-                              ml={1}
+                              // ml={1}
                             >
-                              {oks[index] ? ' correct' : ' incorrect'}
+                              {oks[index] ? 'correct' : 'incorrect'}
                             </Text>
                           </>
                         )}
                         {/* <Text >
                           {asn.assignment.answers[0].number}
                         </Text> */}
+                        {oks && !oks[index] && (
+                          <Text>Correct: {answers[index]}</Text>
+                        )}
                       </Stack>
-                      {/* {oks && !oks[index] && (
-                        <Text>Correct Solution: {asn.assignment.solution}</Text>
-                      )} */}
                     </FormControl>
                   </Stack>
                 ))}
