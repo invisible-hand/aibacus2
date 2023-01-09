@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { CheckCircleIcon, WarningTwoIcon } from '@chakra-ui/icons';
 import { GRADE, NUMBER_OF_TASKS } from '../utils/ai/promptChunks';
+import { MathJaxNode, MathJaxProvider } from '@yozora/react-mathjax';
 
 import Generate from '../components/Generate';
 import GradePicker from '../components/GradePicker';
@@ -223,9 +224,15 @@ const ArithmeticsTasks = () => {
                     boxShadow={'lg'}
                     p={4}
                   >
-                    <Text as='math' alignSelf={'center'} whiteSpace={'nowrap'}>
-                      {asn}
-                    </Text>
+                    <MathJaxProvider>
+                      <Text
+                        as={MathJaxNode}
+                        inline={false}
+                        formula={asn}
+                        alignSelf={'center'}
+                        whiteSpace={'nowrap'}
+                      />
+                    </MathJaxProvider>
                     <FormControl
                       id={`${index}`}
                       isRequired={!checked}
