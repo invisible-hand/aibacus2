@@ -1,3 +1,4 @@
+import { Box, Spinner } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 
 import { AuthContext } from '../store/AuthContext';
@@ -8,7 +9,11 @@ const ProtectedRoute = ({ children }) => {
   const { session, authLoading } = useContext(AuthContext);
 
   if (authLoading) {
-    return <p>Loading...</p>; //TODO! Styles
+    return (
+      <Box justifyContent={'center'} alignItems={'center'}>
+        <Spinner thickness='6px' speed='0.95s' color='green.400' size='xl' />
+      </Box>
+    );
   }
 
   const auth = session?.user.aud === 'authenticated';
