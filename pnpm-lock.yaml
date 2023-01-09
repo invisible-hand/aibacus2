@@ -12,6 +12,7 @@ specifiers:
   '@types/react-dom': ^18.0.9
   '@vitejs/plugin-react': ^3.0.0
   axios: ^1.2.2
+  fraction.js: ^4.2.0
   framer-motion: ^8.1.4
   jspdf: ^2.5.1
   npm: ^9.2.0
@@ -31,6 +32,7 @@ dependencies:
   '@emotion/styled': 11.10.5_pwtpayi7py7ecifctvjbac33ee
   '@supabase/supabase-js': 2.2.2
   axios: 1.2.2
+  fraction.js: 4.2.0
   framer-motion: 8.1.4_biqbaboplfbrettd7655fr4n2y
   jspdf: 2.5.1
   prop-types: 15.8.1
@@ -2231,6 +2233,10 @@ packages:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       mime-types: 2.1.35
+    dev: false
+
+  /fraction.js/4.2.0:
+    resolution: {integrity: sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==}
     dev: false
 
   /framer-motion/8.1.4_biqbaboplfbrettd7655fr4n2y:
