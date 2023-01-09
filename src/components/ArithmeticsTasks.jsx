@@ -11,18 +11,72 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { CheckCircleIcon, WarningTwoIcon } from '@chakra-ui/icons';
+import { GRADE, NUMBER_OF_TASKS } from '../utils/ai/promptChunks';
 
 import Generate from '../components/Generate';
-// import GradePicker from '../components/GradePicker';
+import GradePicker from '../components/GradePicker';
 import NumberOfTasks from '../components/NumberOfTasks';
+import Picker from './Picker';
 import { arithmeticsProblems } from '../models/generateProblem';
 import { useState } from 'react';
 
-// import { GRADE, NUMBER_OF_TASKS } from '../utils/ai/promptChunks';
+const grades = {
+  1: {
+    topics: [
+      {
+        id: 0,
+        name: 'addition (1-10)',
+        minNumber: 1,
+        maxNumber: 10,
+        operations: [0],
+      },
+      {
+        id: 1,
+        name: 'subtraction (1-10)',
+        minNumber: 1,
+        maxNumber: 10,
+        operations: [1],
+      },
+      {
+        id: 2,
+        name: 'comparison (1-10)',
+        minNumber: 1,
+        maxNumber: 10,
+        operations: [5, 6, 7],
+      },
+    ],
+  },
+  2: {
+    topics: [
+      {
+        id: 0,
+        name: 'addition (10-100',
+        minNumber: 10,
+        maxNumber: 100,
+        operations: [0],
+      },
+      {
+        id: 1,
+        name: 'subtraction (10-100)',
+        minNumber: 10,
+        maxNumber: 100,
+        operations: [1],
+      },
+      {
+        id: 2,
+        name: 'multiplication (1-10)',
+        minNumber: 1,
+        maxNumber: 10,
+        operations: [2],
+      },
+    ],
+  },
+};
 
 const ArithmeticsTasks = () => {
-  // const [grade, setGrade] = useState('7');
-  const [numberOfTasks, setNumberOfTasks] = useState('3');
+  const [grade, setGrade] = useState('1');
+  const [numberOfTasks, setNumberOfTasks] = useState('10');
+  const [topic, setTopic] = useState(0);
 
   const [oks, setOks] = useState(null);
   const [problems, setProblems] = useState(null);
@@ -40,14 +94,14 @@ const ArithmeticsTasks = () => {
     setOks(null);
     setAnswers(null);
 
+    console.log(+grade, topic);
+    const top = grades[+grade].topics[topic];
+    console.log(top);
     const generatedProblems = arithmeticsProblems(
-      numberOfTasks,
-      1,
-      12,
-      0,
-      1,
-      2,
-      3
+      +numberOfTasks,
+      top.minNumber,
+      top.maxNumber,
+      ...top.operations
     );
     console.log(generatedProblems);
     setProblems(generatedProblems.map((problem) => problem.text));
@@ -77,14 +131,25 @@ const ArithmeticsTasks = () => {
   return (
     <Box align={'center'}>
       <Text>Arithmetics Problems</Text>
-      {/* <GradePicker
+      <GradePicker
         defaultOption={grade}
-        options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]} //TODO!
+        options={[1, 2]}
         onChange={setGrade}
-        label={'Grade'}
-      /> */}
+        label='Grade'
+      />
+      <Picker
+        value={topic.id}
+        options={grades[+grade].topics.map((topic) => ({
+          id: topic.id,
+          value: topic.name,
+        }))}
+        onChange={(e) => {
+          setTopic(+e.target.value);
+        }}
+        label='Topic:'
+      />
       <NumberOfTasks
-        defaultValue={'3'} //TODO!
+        defaultValue={numberOfTasks}
         onChange={setNumberOfTasks}
         label='Number of problems'
       />
@@ -93,6 +158,7 @@ const ArithmeticsTasks = () => {
         onClick={responseHandler}
         disabled={isGenerating}
       />
+
       <form onSubmit={!checked ? handleSubmit : undefined}>
         <Container maxW={'7xl'} my={5} mx={{ base: 5, md: 0 }}>
           {problems && (
