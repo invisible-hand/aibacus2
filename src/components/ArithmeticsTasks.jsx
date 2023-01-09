@@ -42,7 +42,7 @@ const grades = {
         name: 'comparison (1-10)',
         minNumber: 1,
         maxNumber: 10,
-        operations: [5, 6, 7],
+        operations: [4],
       },
     ],
   },
@@ -117,9 +117,9 @@ const ArithmeticsTasks = () => {
 
     let oks = [];
     for (let element of event.currentTarget.elements) {
-      if (element.type === 'number') {
+      if (element.type === 'text') {
         const answer = answers[+element.id];
-        const givenAnswer = +element.value;
+        const givenAnswer = element.value;
         oks.push(answer === givenAnswer);
       }
     }
@@ -189,8 +189,8 @@ const ArithmeticsTasks = () => {
                       >
                         <Input
                           maxW={150}
-                          type='number'
-                          step={0.001}
+                          type='text'
+                          // step={0.001}
                           placeholder='enter an answer...'
                           isInvalid={checked}
                           errorBorderColor={
