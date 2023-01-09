@@ -79,7 +79,7 @@ export const arithmeticsProblems = (
   const result = [];
   pairs.forEach((pair) => {
     const randChoice = randomInt(0, operations.length - 1);
-    result.push(OPERATIONS.get(randChoice)(pair[0], pair[1]));
+    result.push(OPERATIONS.get(operations[randChoice])(pair[0], pair[1]));
   });
   return result;
 };
