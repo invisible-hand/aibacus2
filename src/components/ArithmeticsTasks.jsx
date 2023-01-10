@@ -218,10 +218,12 @@ const ArithmeticsTasks = () => {
       />
       <Picker
         label='Number of problems'
-        options={[...new Array(11)].map((_, index) => ({
-          id: index,
-          value: index,
-        }))}
+        options={[...new Array(11)]
+          .map((_, index) => ({
+            id: index,
+            value: index,
+          }))
+          .filter((obj) => obj.id !== 0)}
         value={numberOfProblems}
         onChange={(e) => setNumberOfProblems(+e.target.value)}
       />
