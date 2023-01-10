@@ -124,11 +124,25 @@ const grades = {
       },
     ],
   },
+  5: {
+    topics: [
+      {
+        id: 0,
+        name: 'fraction addition',
+        operations: [5],
+      },
+      {
+        id: 1,
+        name: 'fraction subtraction',
+        operations: [6],
+      },
+    ],
+  },
 };
 
 const ArithmeticsTasks = () => {
   const [grade, setGrade] = useState('1');
-  const [numberOfTasks, setNumberOfTasks] = useState('10');
+  const [numberOfTasks, setNumberOfTasks] = useState(10);
   const [topic, setTopic] = useState(0);
 
   const [oks, setOks] = useState(null);
@@ -182,27 +196,40 @@ const ArithmeticsTasks = () => {
   return (
     <Box align={'center'}>
       <Text>Arithmetics Problems</Text>
-      <GradePicker
+      {/* <GradePicker
         defaultOption={grade}
         options={Object.keys(grades)}
         onChange={setGrade}
         label='Grade'
+      /> */}
+      <Picker
+        label='Grade'
+        options={Object.keys(grades).map((grade) => ({
+          id: grade,
+          value: grade,
+        }))}
+        value={grade}
+        onChange={(e) => setGrade(+e.target.value)}
       />
       <Picker
-        value={topic.id}
+        label='Topic:'
         options={grades[+grade].topics.map((topic) => ({
           id: topic.id,
           value: topic.name,
         }))}
+        value={topic.id}
         onChange={(e) => {
           setTopic(+e.target.value);
         }}
-        label='Topic:'
       />
-      <NumberOfTasks
-        defaultValue={numberOfTasks}
-        onChange={setNumberOfTasks}
+      <Picker
         label='Number of problems'
+        options={[...new Array(11)].map((_, index) => ({
+          id: index,
+          value: index,
+        }))}
+        value={numberOfTasks}
+        onChange={(e) => setNumberOfTasks(+e.target.value)}
       />
       <Generate
         isLoading={isGenerating}
