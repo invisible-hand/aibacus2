@@ -1,6 +1,6 @@
 import { Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
 
-import GradePicker from './GradePicker';
+import Picker from './Picker';
 import { useState } from 'react';
 
 const Child = ({ id, name, grade, onClick, disabled }) => {
@@ -12,7 +12,7 @@ const Child = ({ id, name, grade, onClick, disabled }) => {
       <FormControl id='email' isRequired>
         <FormLabel>Name</FormLabel>
         <Input
-          type='email'
+          type='text'
           value={nameState}
           onChange={(e) => {
             setNameState(e.target.value);
@@ -20,13 +20,17 @@ const Child = ({ id, name, grade, onClick, disabled }) => {
           placeholder='enter name...'
         />
       </FormControl>
-
-      <GradePicker
-        defaultOption={gradeState}
-        onChange={setGradeState}
-        label={'Grade'}
+      <Picker
+        label='Grade'
+        options={[...new Array(13)]
+          .map((_, index) => ({
+            id: index,
+            value: index,
+          }))
+          .filter((obj) => obj.id !== 0)}
+        value={gradeState}
+        onChange={(e) => setGradeState(e.target.value)}
       />
-
       <Button
         bg={'green.400'}
         color={'white'}
