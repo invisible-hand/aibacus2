@@ -136,7 +136,7 @@ const grades = {
 };
 
 const ArithmeticsTasks = () => {
-  const [grade, setGrade] = useState('1');
+  const [grade, setGrade] = useState(1);
   const [numberOfTasks, setNumberOfTasks] = useState(10);
   const [topic, setTopic] = useState(0);
 
