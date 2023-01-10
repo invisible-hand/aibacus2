@@ -101,12 +101,16 @@ export const arithmeticsProblems = (
 };
 
 export const generateFraction = (op) => {
-  let f1 = new Fraction(randomInt(0, 5)).add(
-    new Fraction(randomInt(1, 10), randomInt(1, 12))
-  );
-  let f2 = new Fraction(randomInt(0, 5)).add(
-    new Fraction(randomInt(1, 10), randomInt(1, 12))
-  );
+  const whole = randomInt(0, 1);
+  let nominator = randomInt(1, 10);
+  let denominator = randomInt(2, 11);
+  if (nominator % denominator === 0) nominator += 1;
+  let f1 = new Fraction(whole).add(new Fraction(nominator, denominator));
+
+  nominator = randomInt(1, 10);
+  denominator = randomInt(2, 11);
+  if (nominator % denominator === 0) nominator += 1;
+  let f2 = new Fraction(whole).add(new Fraction(nominator, denominator));
 
   let text;
   let result;
