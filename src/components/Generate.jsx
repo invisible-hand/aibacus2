@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react';
 
-const Generate = ({ isLoading, onClick, disabled }) => {
+const Generate = ({ ...args }) => {
   return (
     <Button
       ml='1'
@@ -10,10 +10,8 @@ const Generate = ({ isLoading, onClick, disabled }) => {
       _hover={{
         bg: 'green.500',
       }}
-      isLoading={isLoading}
       loadingText='Generating...'
-      onClick={onClick}
-      disabled={disabled}
+      {...args}
     >
       Generate
     </Button>
