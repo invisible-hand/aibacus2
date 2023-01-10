@@ -11,7 +11,9 @@ const Picker = ({
         align={args.align || 'center'}
         isInline={args.isInline || true}
       >
-        <FormLabel m={0}>{args.label}</FormLabel>
+        <FormLabel m={0} whiteSpace={args.whiteSpace || 'nowrap'}>
+          {args.label}
+        </FormLabel>
         <Select
           placeholder={args.placeholder}
           value={args.value}
