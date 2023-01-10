@@ -85,7 +85,7 @@ export const arithmeticsProblems = (
 ) => {
   const result = [];
 
-  if (operations[0] > 5) {
+  if (operations[0] > 4) {
     for (let i = 0; i < k; i += 1) {
       result.push(generateFraction(operations[0] - 5));
     }
@@ -111,13 +111,13 @@ export const generateFraction = (op) => {
   let text;
   let result;
   if (op === 0) {
-    text = `${f1.toFraction()} + ${f2.toFraction()} =`;
+    text = `${f1.toLatex()} + ${f2.toLatex()} =`;
     result = f1.add(f2);
   } else if (op === 1) {
     if (f1 < f2) {
       [f1, f2] = [f2, f1];
     }
-    text = `${f1.toFraction()} - ${f2.toFraction()} =`;
+    text = `${f1.toLatex()} - ${f2.toLatex()} =`;
     result = f1.sub(f2);
   } else if (op === 2) {
     const c = f1.compare(f2);
