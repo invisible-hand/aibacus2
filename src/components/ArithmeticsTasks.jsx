@@ -2,22 +2,17 @@ import {
   Box,
   Button,
   Container,
-  FormControl,
-  FormLabel,
-  Input,
   SimpleGrid,
   Stack,
   Text,
   useToast,
 } from '@chakra-ui/react';
-import { CheckCircleIcon, WarningTwoIcon } from '@chakra-ui/icons';
 import { GRADE, NUMBER_OF_TASKS } from '../utils/ai/promptChunks';
 import { MathJaxNode, MathJaxProvider } from '@yozora/react-mathjax';
 
 import Generate from '../components/Generate';
-import GradePicker from '../components/GradePicker';
-import NumberOfTasks from '../components/NumberOfTasks';
 import Picker from './Picker';
+import SimpleResultInput from './SimpleResultInput';
 import { arithmeticsProblems } from '../models/generateProblem';
 import { useState } from 'react';
 
@@ -145,11 +140,10 @@ const ArithmeticsTasks = () => {
   const [numberOfTasks, setNumberOfTasks] = useState(10);
   const [topic, setTopic] = useState(0);
 
-  const [oks, setOks] = useState(null);
   const [problems, setProblems] = useState(null);
   const [answers, setAnswers] = useState(null);
 
-  const [checked, setChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
   const [isGenerating, setIsGenerating] = useState(false);
   const [isCalculating, setIsCalculating] = useState(false);
@@ -157,8 +151,7 @@ const ArithmeticsTasks = () => {
   const responseHandler = async (_event) => {
     setIsGenerating(true);
     setProblems(null);
-    setChecked(false);
-    setOks(null);
+    setIsChecked(false);
     setAnswers(null);
 
     const top = grades[+grade].topics[topic];
@@ -188,20 +181,13 @@ const ArithmeticsTasks = () => {
         oks.push(answer === givenAnswer);
       }
     }
-    setOks(oks);
-    setChecked(true);
+    setIsChecked(true);
     setIsCalculating(false);
   };
 
   return (
-    <Box align={'center'}>
+    <Box align={'center'} minW={'3xl'}>
       <Text>Arithmetics Problems</Text>
-      {/* <GradePicker
-        defaultOption={grade}
-        options={Object.keys(grades)}
-        onChange={setGrade}
-        label='Grade'
-      /> */}
       <Picker
         label='Grade'
         options={Object.keys(grades).map((grade) => ({
@@ -237,18 +223,18 @@ const ArithmeticsTasks = () => {
         disabled={isGenerating}
       />
 
-      <form onSubmit={!checked ? handleSubmit : undefined}>
+      <form onSubmit={!isChecked ? handleSubmit : undefined}>
         <Container maxW={'7xl'} my={5} mx={{ base: 5, md: 0 }}>
           {problems && (
             <>
               <SimpleGrid columns={{ base: 1, md: 2 }} spacing={2}>
                 {problems?.map((asn, index) => (
                   <Stack
-                    direction={'row'}
+                    direction='row'
                     key={index}
-                    rounded={'lg'}
-                    bg={'white'}
-                    boxShadow={'lg'}
+                    rounded='lg'
+                    boxShadow='lg'
+                    align='center'
                     p={4}
                   >
                     <MathJaxProvider>
@@ -256,73 +242,30 @@ const ArithmeticsTasks = () => {
                         as={MathJaxNode}
                         inline={false}
                         formula={asn}
-                        alignSelf={'center'}
-                        whiteSpace={'nowrap'}
+                        alignSelf='center'
+                        whiteSpace='nowrap'
                       />
                     </MathJaxProvider>
-                    <FormControl
-                      id={`${index}`}
-                      isRequired={!checked}
-                      isReadOnly={checked}
-                    >
-                      {/* <FormLabel>Your answer</FormLabel> */}
-                      <Stack
-                        direction={'row'}
-                        align={'center'}
-                        justifyContent={'center'}
-                      >
-                        <Input
-                          maxW={70}
-                          type='text'
-                          maxLength={answers[index].length + 2}
-                          // step={0.001}
-                          // placeholder='enter an answer...'
-                          isInvalid={checked}
-                          errorBorderColor={
-                            oks && oks[index] ? 'green.400' : 'red.300'
-                          }
-                        />
-                        {oks && (
-                          <>
-                            {oks[index] ? (
-                              <CheckCircleIcon
-                                boxSize={5}
-                                color={'green.400'}
-                              />
-                            ) : (
-                              <WarningTwoIcon boxSize={5} color={'red.300'} />
-                            )}
-                            <Text
-                              color={oks[index] ? 'green.400' : 'red.400'}
-                              // ml={1}
-                            >
-                              {oks[index] ? 'correct' : 'incorrect'}
-                            </Text>
-                          </>
-                        )}
-                        {/* <Text >
-                          {asn.assignment.answers[0].number}
-                        </Text> */}
-                        {oks && !oks[index] && (
-                          <Text>Correct: {answers[index]}</Text>
-                        )}
-                      </Stack>
-                    </FormControl>
+                    <SimpleResultInput
+                      id={index}
+                      isReadOnly={isChecked}
+                      correctAnswer={answers[index]}
+                    />
                   </Stack>
                 ))}
               </SimpleGrid>
-              {!checked && (
+              {!isChecked && (
                 <Button
                   my={4}
-                  bg={'green.400'}
-                  color={'white'}
-                  size={'md'}
+                  bg='green.400'
+                  color='white'
+                  size='md'
                   _hover={{
                     bg: 'green.500',
                   }}
                   type='submit'
                   isLoading={isCalculating}
-                  loadingText={'Calculating...'}
+                  loadingText='Calculating...'
                 >
                   Check
                 </Button>
