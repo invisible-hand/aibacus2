@@ -10,6 +10,8 @@ import {
 import { GRADE, NUMBER_OF_TASKS } from '../utils/ai/promptChunks';
 import { MathJaxNode, MathJaxProvider } from '@yozora/react-mathjax';
 
+import Fraction from 'fraction.js';
+import FractionResultInput from '../components/FractionResultInput';
 import Generate from '../components/Generate';
 import Picker from './Picker';
 import SimpleResultInput from './SimpleResultInput';
@@ -115,6 +117,8 @@ const grades = {
       {
         id: 5,
         name: 'fraction comparison',
+        minNumber: 0,
+        maxNumber: 0,
         operations: [7],
       },
     ],
@@ -125,10 +129,14 @@ const grades = {
         id: 0,
         name: 'fraction addition',
         operations: [5],
+        minNumber: 0,
+        maxNumber: 0,
       },
       {
         id: 1,
         name: 'fraction subtraction',
+        minNumber: 0,
+        maxNumber: 0,
         operations: [6],
       },
     ],
@@ -137,7 +145,7 @@ const grades = {
 
 const ArithmeticsTasks = () => {
   const [grade, setGrade] = useState(1);
-  const [numberOfTasks, setNumberOfTasks] = useState(10);
+  const [numberOfProblems, setNumberOfProblems] = useState(6);
   const [topic, setTopic] = useState(0);
 
   const [problems, setProblems] = useState(null);
@@ -156,7 +164,7 @@ const ArithmeticsTasks = () => {
 
     const top = grades[+grade].topics[topic];
     const generatedProblems = arithmeticsProblems(
-      +numberOfTasks,
+      +numberOfProblems,
       top.minNumber,
       top.maxNumber,
       ...top.operations
@@ -214,10 +222,11 @@ const ArithmeticsTasks = () => {
           id: index,
           value: index,
         }))}
-        value={numberOfTasks}
-        onChange={(e) => setNumberOfTasks(+e.target.value)}
+        value={numberOfProblems}
+        onChange={(e) => setNumberOfProblems(+e.target.value)}
       />
       <Generate
+        my={3}
         isLoading={isGenerating}
         onClick={responseHandler}
         disabled={isGenerating}
@@ -246,11 +255,19 @@ const ArithmeticsTasks = () => {
                         whiteSpace='nowrap'
                       />
                     </MathJaxProvider>
-                    <SimpleResultInput
-                      id={index}
-                      isReadOnly={isChecked}
-                      correctAnswer={answers[index]}
-                    />
+                    {answers[0] instanceof Fraction ? (
+                      <FractionResultInput
+                        id={index}
+                        isReadOnly={isChecked}
+                        correctAnswer={answers[index]}
+                      />
+                    ) : (
+                      <SimpleResultInput
+                        id={index}
+                        isReadOnly={isChecked}
+                        correctAnswer={answers[index]}
+                      />
+                    )}
                   </Stack>
                 ))}
               </SimpleGrid>
