@@ -33,7 +33,7 @@ const Arithmetics = () => {
   const [difficulty, setDifficulty] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [response, setResponse] = useState([]);
-  const [numberOfTasks, setNumberOfTasks] = useState('15');
+  const [numberOfTasks, setNumberOfTasks] = useState(10);
 
   const responseHandler = async (_event) => {
     setIsGenerating(true);
