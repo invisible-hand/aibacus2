@@ -1,7 +1,7 @@
 import { CheckCircleIcon, WarningTwoIcon } from '@chakra-ui/icons';
 import { Divider, FormControl, Input, Stack, Text } from '@chakra-ui/react';
 import { MathJaxNode, MathJaxProvider } from '@yozora/react-mathjax';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Fraction from 'fraction.js';
 
@@ -17,6 +17,11 @@ const SimpleResultInput = ({ id, isReadOnly, correctAnswer }) => {
 
   const visibility = isReadOnly ? 'visible' : 'hidden';
   const color = isCorrect ? 'green.400' : 'red.400';
+
+  useEffect(() => {
+    setIsCorrect(false);
+    setValue(defaultFraction);
+  }, [correctAnswer]);
 
   const handleChange = (value, key) => {
     const currentAnswer = { ...answer, [key]: value };

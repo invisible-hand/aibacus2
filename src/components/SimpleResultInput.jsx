@@ -1,6 +1,6 @@
 import { CheckCircleIcon, WarningTwoIcon } from '@chakra-ui/icons';
 import { FormControl, Input, Stack, Text } from '@chakra-ui/react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const SimpleResultInput = ({ id, isReadOnly, correctAnswer }) => {
   const inputRef = useRef(null);
@@ -10,6 +10,11 @@ const SimpleResultInput = ({ id, isReadOnly, correctAnswer }) => {
 
   const visibility = isReadOnly ? 'visible' : 'hidden';
   const color = isCorrect ? 'green.400' : 'red.400';
+
+  useEffect(() => {
+    setIsCorrect(false);
+    setValue('');
+  }, [correctAnswer]);
 
   const handleChange = (e) => {
     setValue(e.target.value);
