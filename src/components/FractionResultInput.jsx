@@ -1,20 +1,22 @@
 import { CheckCircleIcon, WarningTwoIcon } from '@chakra-ui/icons';
 import { Divider, FormControl, Input, Stack, Text } from '@chakra-ui/react';
 import { MathJaxNode, MathJaxProvider } from '@yozora/react-mathjax';
+import { useRef, useState } from 'react';
 
 import Fraction from 'fraction.js';
-import { useState } from 'react';
 
 const defaultFraction = { w: 0, n: 1, d: 1 };
 
 const SimpleResultInput = ({ id, isReadOnly, correctAnswer }) => {
+  const inputRefW = useRef(null);
+  const inputRefN = useRef(null);
+  const inputRefD = useRef(null);
+
   const [answer, setAnswer] = useState(defaultFraction);
   const [isCorrect, setIsCorrect] = useState(false);
 
   const visibility = isReadOnly ? 'visible' : 'hidden';
   const color = isCorrect ? 'green.400' : 'red.400';
-
-  console.log(answer);
 
   const handleChange = (value, key) => {
     const currentAnswer = { ...answer, [key]: value };
@@ -36,6 +38,9 @@ const SimpleResultInput = ({ id, isReadOnly, correctAnswer }) => {
       <Stack direction={'row'} align={'center'}>
         <Stack direction={'row'} align={'center'}>
           <Input
+            ref={inputRefW}
+            onFocus={() => inputRefW.current.select()}
+            autoComplete='off'
             maxW={50}
             type='text'
             maxLength={1}
@@ -46,6 +51,9 @@ const SimpleResultInput = ({ id, isReadOnly, correctAnswer }) => {
           />
           <Stack direction={'column'} align={'center'}>
             <Input
+              ref={inputRefN}
+              onFocus={() => inputRefN.current.select()}
+              autoComplete='off'
               maxW={70}
               type='text'
               maxLength={3}
@@ -56,6 +64,9 @@ const SimpleResultInput = ({ id, isReadOnly, correctAnswer }) => {
             />
             <Divider orientation='horizontal' color='black' />
             <Input
+              ref={inputRefD}
+              onFocus={() => inputRefD.current.select()}
+              autoComplete='off'
               maxW={70}
               type='text'
               maxLength={3}

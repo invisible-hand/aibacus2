@@ -1,9 +1,10 @@
 import { CheckCircleIcon, WarningTwoIcon } from '@chakra-ui/icons';
 import { FormControl, Input, Stack, Text } from '@chakra-ui/react';
-
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 const SimpleResultInput = ({ id, isReadOnly, correctAnswer }) => {
+  const inputRef = useRef(null);
+
   const [value, setValue] = useState('');
   const [isCorrect, setIsCorrect] = useState(false);
 
@@ -23,6 +24,9 @@ const SimpleResultInput = ({ id, isReadOnly, correctAnswer }) => {
     <FormControl id={id} isRequired={!isReadOnly} isReadOnly={isReadOnly}>
       <Stack direction={'row'} align={'center'}>
         <Input
+          ref={inputRef}
+          onFocus={() => inputRef.current.select()}
+          autoComplete='off'
           maxW={70}
           type='text'
           maxLength={correctAnswer.length + 2}
