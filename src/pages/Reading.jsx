@@ -14,11 +14,9 @@ import { AuthContext } from '../store/AuthContext';
 import { ChildrenContext } from '../store/ChildrenContext';
 import DownloadPDF from '../components/DownloadPDF';
 import Generate from '../components/Generate';
-import GradePicker from '../components/GradePicker';
 import { Link } from 'react-router-dom';
-import NamePicker from '../components/NamePicker';
-import NumberOfTasks from '../components/NumberOfTasks';
 import PDFDocument from '../components/PDFDocument';
+import Picker from '../components/Picker';
 import { ROUTE } from '../utils/constants/Route';
 import { aiRequest } from '../utils/ai/aiRequest';
 import { saveAssignment } from '../utils/database/assignments';
@@ -32,13 +30,13 @@ const Reading = () => {
   const [grade, setGrade] = useState(hasChildren ? childrenDB[0].grade : '1');
   const [isGenerating, setIsGenerating] = useState(false);
   const [response, setResponse] = useState([]);
-  const [numberOfTasks, setNumberOfTasks] = useState('10');
+  const [numberOfQuestions, setNumberOfQuestions] = useState(10);
 
   const responseHandler = async (_event) => {
     setIsGenerating(true);
     const prompt = READING.basePrompt
       .replace('%grade%', GRADE[+grade])
-      .replace('%task_amount%', NUMBER_OF_TASKS[+numberOfTasks]);
+      .replace('%task_amount%', NUMBER_OF_TASKS[+numberOfQuestions]);
     try {
       const aiResponse = await aiRequest(prompt, READING.temp);
       setResponse(aiResponse);
@@ -79,18 +77,23 @@ const Reading = () => {
           <VStack align={'start'}>
             {hasChildren ? (
               <>
-                <NamePicker
-                  defaultOption={name}
-                  options={
-                    hasChildren ? childrenDB.map((child) => child.name) : []
-                  }
-                  onChange={setName}
+                <Picker
+                  label='Name'
+                  options={childrenDB.map((child) => ({
+                    id: child.name,
+                    value: child.name,
+                  }))}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
-                <GradePicker
-                  defaultOption={grade}
-                  options={READING.grades}
-                  onChange={setGrade}
-                  label={'Grade'}
+                <Picker
+                  label='Grade'
+                  options={READING.grades.map((grade) => ({
+                    id: grade,
+                    value: grade,
+                  }))}
+                  value={grade}
+                  onChange={(e) => setGrade(+e.target.value)}
                 />
               </>
             ) : (
@@ -99,10 +102,16 @@ const Reading = () => {
                 <Link to={ROUTE.PROFILE}>Add a child</Link>
               </>
             )}
-            <NumberOfTasks
-              defaultValue={numberOfTasks}
-              onChange={setNumberOfTasks}
+            <Picker
               label='Number of questions'
+              options={[...new Array(11)]
+                .map((_, index) => ({
+                  id: index,
+                  value: index,
+                }))
+                .filter((obj) => obj.id !== 0)}
+              value={numberOfQuestions}
+              onChange={(e) => setNumberOfQuestions(+e.target.value)}
             />
             <Generate
               isLoading={isGenerating}
