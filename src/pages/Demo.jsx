@@ -11,10 +11,9 @@ import { GRADE, NUMBER_OF_TASKS } from '../utils/ai/promptChunks';
 import AssignmentHeading from '../components/AssignmentHeading';
 import DownloadPDF from '../components/DownloadPDF';
 import Generate from '../components/Generate';
-import GradePicker from '../components/GradePicker';
 import MathOperations from '../components/MathOperations';
-import NumberOfTasks from '../components/NumberOfTasks';
 import PDFDocument from '../components/PDFDocument';
+import Picker from '../components/Picker';
 import { SUBJECT } from '../utils/constants/Subject';
 import { aiRequest } from '../utils/ai/aiRequest';
 import { useState } from 'react';
@@ -41,10 +40,10 @@ const Demo = () => {
     .map((key) => key.toLowerCase())
     .join(', ');
   const handleChange = (event) => {
-    const { name, checked } = event.target;
+    const { value, checked } = event.target;
     setOperationState((prevState) => ({
       ...prevState,
-      [name]: checked,
+      [value]: checked,
     }));
   };
   const responseHandler = async (_event) => {
@@ -86,19 +85,33 @@ const Demo = () => {
       <Container maxW={'7xl'} my={5} mx={{ base: 5, md: 0 }}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <VStack align={'start'}>
-            <GradePicker
-              defaultOption={grade}
-              disabled={true}
-              label={'Grade'}
+            <Picker
+              label='Grade'
+              options={[...new Array(12 + 1)]
+                .map((_, index) => ({
+                  id: index,
+                  value: index,
+                }))
+                .filter((obj) => obj.id !== 0)}
+              value={grade}
+              onChange={(e) => setGrade(e.target.value)}
+              isDisabled={true}
             />
-            <NumberOfTasks
-              defaultValue={numberOfTasks}
-              disabled={true}
+            <Picker
               label='Number of problems'
+              options={[...new Array(11)]
+                .map((_, index) => ({
+                  id: index,
+                  value: index,
+                }))
+                .filter((obj) => obj.id !== 0)}
+              value={numberOfTasks}
+              onChange={(e) => setNumberOfTasks(+e.target.value)}
+              isDisabled={true}
             />
             <MathOperations
               operationState={operationState}
-              handleChange={handleChange}
+              onChange={handleChange}
             />
             <Generate
               isLoading={isGenerating}
