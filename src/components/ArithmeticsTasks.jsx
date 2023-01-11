@@ -123,17 +123,35 @@ const grades = {
       },
     ],
   },
+  4: {
+    topics: [
+      {
+        id: 0,
+        name: 'division',
+        minNumber: 1,
+        maxNumber: 9,
+        operations: [3],
+      },
+    ],
+  },
   5: {
     topics: [
       {
         id: 0,
+        name: 'division',
+        minNumber: 10,
+        maxNumber: 50,
+        operations: [3],
+      },
+      {
+        id: 1,
         name: 'fraction addition',
         operations: [5],
         minNumber: 0,
         maxNumber: 0,
       },
       {
-        id: 1,
+        id: 2,
         name: 'fraction subtraction',
         minNumber: 0,
         maxNumber: 0,
