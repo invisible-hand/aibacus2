@@ -1,3 +1,5 @@
+import * as Yup from 'yup';
+
 import {
   Box,
   Button,
@@ -7,6 +9,7 @@ import {
   useColorModeValue,
   useToast,
 } from '@chakra-ui/react';
+import { Field, Form, Formik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Email from '../components/Email';
@@ -21,14 +24,12 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const validationSchema = Yup.object({
+    email: Yup.string().email('Invalid email format').required('Required'),
+    password: Yup.string().min(6).required('Required'),
+  });
 
-    const form = event.currentTarget;
-    const formElements = form.elements;
-    const email = formElements.email.value;
-    const password = formElements.password.value;
-
+  const handleSubmit = async ({ email, password }) => {
     try {
       setIsFetching(true);
       const { error } = await supabase.auth.signInWithPassword({
@@ -57,59 +58,71 @@ const Login = () => {
       <Heading mx={'auto'} fontSize={'4xl'}>
         Log in to your account
       </Heading>
-      <form onSubmit={handleSubmit}>
-        <Box
-          rounded={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
-          boxShadow={'lg'}
-          p={8}
-        >
-          <Stack spacing={4}>
-            <Email />
-            <Password />
-            <Stack spacing={10}>
-              <Button
-                bg={'green.400'}
-                color={'white'}
-                _hover={{
-                  bg: 'green.500',
-                }}
-                type='submit'
-                isDisabled={isFetching}
-              >
-                Log in
-              </Button>
-              <Stack
-                direction={'column'}
-                align={'start'}
-                justify={'space-between'}
-              >
-                <Button
-                  as={Link}
-                  variant={'link'}
-                  to={ROUTE.RESET_PASSWORD}
-                  color={'green.400'}
-                >
-                  Forgot Password?
-                </Button>
-                <Box>
-                  <Text as='span'>Don't have an account?</Text>
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {(props) => (
+          <Form>
+            <Box
+              rounded={'lg'}
+              bg={useColorModeValue('white', 'gray.700')}
+              boxShadow={'lg'}
+              p={8}
+            >
+              <Stack spacing={4}>
+                <Field name='email'>
+                  {({ field, form }) => <Email field={field} form={form} />}
+                </Field>
+                <Field name='password'>
+                  {({ field, form }) => <Password field={field} form={form} />}
+                </Field>
+                <Stack spacing={10}>
                   <Button
-                    ml={1}
-                    variant={'link'}
-                    display={'inline'}
-                    as={Link}
-                    to={ROUTE.REGISTER}
-                    color={'green.400'}
+                    bg={'green.400'}
+                    color={'white'}
+                    _hover={{
+                      bg: 'green.500',
+                    }}
+                    type='submit'
+                    isDisabled={isFetching}
                   >
-                    Register
+                    Log in
                   </Button>
-                </Box>
+                  <Stack
+                    direction={'column'}
+                    align={'start'}
+                    justify={'space-between'}
+                  >
+                    <Button
+                      as={Link}
+                      variant={'link'}
+                      to={ROUTE.RESET_PASSWORD}
+                      color={'green.400'}
+                    >
+                      Forgot Password?
+                    </Button>
+                    <Box>
+                      <Text as='span'>Don't have an account?</Text>
+                      <Button
+                        ml={1}
+                        variant={'link'}
+                        display={'inline'}
+                        as={Link}
+                        to={ROUTE.REGISTER}
+                        color={'green.400'}
+                      >
+                        Register
+                      </Button>
+                    </Box>
+                  </Stack>
+                </Stack>
               </Stack>
-            </Stack>
-          </Stack>
-        </Box>
-      </form>
+            </Box>
+          </Form>
+        )}
+      </Formik>
     </Stack>
   );
 };

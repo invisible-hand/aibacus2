@@ -1,3 +1,5 @@
+import * as Yup from 'yup';
+
 import {
   Box,
   Button,
@@ -7,6 +9,7 @@ import {
   useColorModeValue,
   useToast,
 } from '@chakra-ui/react';
+import { Field, Form, Formik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Email from '../components/Email';
@@ -21,13 +24,12 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const validationSchema = Yup.object({
+    email: Yup.string().email('Invalid email format').required('Required'),
+    password: Yup.string().min(6).required('Required'),
+  });
 
-    const { elements } = event.currentTarget;
-    const email = elements.email.value;
-    const password = elements.password.value;
-
+  const handleSubmit = async ({ email, password }) => {
     try {
       setIsFetching(true);
       const { error } = await supabase.auth.signUp({
@@ -56,51 +58,63 @@ const Register = () => {
       <Heading mx={'auto'} fontSize={'4xl'}>
         Register
       </Heading>
-      <form onSubmit={handleSubmit}>
-        <Box
-          rounded={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
-          boxShadow={'lg'}
-          p={8}
-        >
-          <Stack spacing={4}>
-            <Email />
-            <Password />
-            <Stack spacing={10}>
-              <Button
-                bg={'green.400'}
-                color={'white'}
-                _hover={{
-                  bg: 'green.500',
-                }}
-                isDisabled={isFetching}
-                type='submit'
-              >
-                Sign up
-              </Button>
-              <Stack
-                direction={'column'}
-                align={'start'}
-                justify={'space-between'}
-              >
-                <Box>
-                  <Text as='span'>Already have an account?</Text>
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {(props) => (
+          <Form>
+            <Box
+              rounded={'lg'}
+              bg={useColorModeValue('white', 'gray.700')}
+              boxShadow={'lg'}
+              p={8}
+            >
+              <Stack spacing={4}>
+                <Field name='email'>
+                  {({ field, form }) => <Email field={field} form={form} />}
+                </Field>
+                <Field name='password'>
+                  {({ field, form }) => <Password field={field} form={form} />}
+                </Field>
+                <Stack spacing={10}>
                   <Button
-                    ml={1}
-                    variant={'link'}
-                    display={'inline'}
-                    as={Link}
-                    to={ROUTE.LOGIN}
-                    color={'green.400'}
+                    bg={'green.400'}
+                    color={'white'}
+                    _hover={{
+                      bg: 'green.500',
+                    }}
+                    isDisabled={isFetching}
+                    type='submit'
                   >
-                    Log in
+                    Sign up
                   </Button>
-                </Box>
+                  <Stack
+                    direction={'column'}
+                    align={'start'}
+                    justify={'space-between'}
+                  >
+                    <Box>
+                      <Text as='span'>Already have an account?</Text>
+                      <Button
+                        ml={1}
+                        variant={'link'}
+                        display={'inline'}
+                        as={Link}
+                        to={ROUTE.LOGIN}
+                        color={'green.400'}
+                      >
+                        Log in
+                      </Button>
+                    </Box>
+                  </Stack>
+                </Stack>
               </Stack>
-            </Stack>
-          </Stack>
-        </Box>
-      </form>
+            </Box>
+          </Form>
+        )}
+      </Formik>
     </Stack>
   );
 };

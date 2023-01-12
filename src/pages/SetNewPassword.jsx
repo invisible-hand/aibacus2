@@ -1,3 +1,5 @@
+import * as Yup from 'yup';
+
 import {
   Box,
   Button,
@@ -6,6 +8,7 @@ import {
   useColorModeValue,
   useToast,
 } from '@chakra-ui/react';
+import { Field, Form, Formik } from 'formik';
 
 import Password from '../components/Password';
 import { ROUTE } from '../utils/constants/Route';
@@ -18,17 +21,15 @@ const SetNewPassword = () => {
   const [isFetching, setIsFetching] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const validationSchema = Yup.object({
+    password: Yup.string().min(6).required('Required'),
+  });
 
-    const form = event.currentTarget;
-    const formElements = form.elements;
-    const newPassword = formElements.newPassword.value;
-
+  const handleSubmit = async ({ password }) => {
     try {
       setIsFetching(true);
       const { error } = await supabase.auth.updateUser({
-        password: newPassword,
+        password,
       });
       if (error) {
         throw new Error(error);
@@ -58,31 +59,43 @@ const SetNewPassword = () => {
       <Heading mx={'auto'} fontSize={'4xl'}>
         Password Recovery
       </Heading>
-      <form onSubmit={handleSubmit}>
-        <Box
-          rounded={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
-          boxShadow={'lg'}
-          p={8}
-        >
-          <Stack spacing={4}>
-            <Password set={true} />
-            <Stack spacing={10}>
-              <Button
-                bg={'green.400'}
-                color={'white'}
-                _hover={{
-                  bg: 'green.500',
-                }}
-                isDisabled={isFetching}
-                type='submit'
-              >
-                Send recovery link
-              </Button>
-            </Stack>
-          </Stack>
-        </Box>
-      </form>
+      <Formik
+        initialValues={{ password: '' }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {(props) => (
+          <Form>
+            <Box
+              rounded={'lg'}
+              bg={useColorModeValue('white', 'gray.700')}
+              boxShadow={'lg'}
+              p={8}
+            >
+              <Stack spacing={4}>
+                <Field name='password'>
+                  {({ field, form }) => (
+                    <Password set={true} field={field} form={form} />
+                  )}
+                </Field>
+                <Stack spacing={10}>
+                  <Button
+                    bg={'green.400'}
+                    color={'white'}
+                    _hover={{
+                      bg: 'green.500',
+                    }}
+                    isDisabled={isFetching}
+                    type='submit'
+                  >
+                    Set new password
+                  </Button>
+                </Stack>
+              </Stack>
+            </Box>
+          </Form>
+        )}
+      </Formik>
     </Stack>
   );
 };

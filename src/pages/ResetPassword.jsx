@@ -1,3 +1,5 @@
+import * as Yup from 'yup';
+
 import {
   Box,
   Button,
@@ -7,6 +9,7 @@ import {
   useColorModeValue,
   useToast,
 } from '@chakra-ui/react';
+import { Field, Form, Formik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Email from '../components/Email';
@@ -17,15 +20,14 @@ import { useState } from 'react';
 const ResetPassword = () => {
   const toast = useToast();
   const [isFetching, setIsFetching] = useState(false);
+
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const validationSchema = Yup.object({
+    email: Yup.string().email('Invalid email format').required('Required'),
+  });
 
-    const form = event.currentTarget;
-    const formElements = form.elements;
-    const email = formElements.email.value;
-
+  const handleSubmit = async ({ email }) => {
     try {
       setIsFetching(true);
 
@@ -54,44 +56,54 @@ const ResetPassword = () => {
       <Heading mx={'auto'} fontSize={'4xl'}>
         Password Recovery
       </Heading>
-      <form onSubmit={handleSubmit}>
-        <Box
-          rounded={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
-          boxShadow={'lg'}
-          p={8}
-        >
-          <Stack spacing={4}>
-            <Email />
-            <Stack spacing={10}>
-              <Button
-                bg={'green.400'}
-                color={'white'}
-                _hover={{
-                  bg: 'green.500',
-                }}
-                isDisabled={isFetching}
-                type='submit'
-              >
-                Send recovery link
-              </Button>
-              <Box>
-                <Text as='span'>Don't have an account?</Text>
-                <Button
-                  ml={1}
-                  variant={'link'}
-                  display={'inline'}
-                  as={Link}
-                  to={ROUTE.REGISTER}
-                  color={'green.400'}
-                >
-                  Register
-                </Button>
-              </Box>
-            </Stack>
-          </Stack>
-        </Box>
-      </form>
+      <Formik
+        initialValues={{ email: '' }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {(props) => (
+          <Form>
+            <Box
+              rounded={'lg'}
+              bg={useColorModeValue('white', 'gray.700')}
+              boxShadow={'lg'}
+              p={8}
+            >
+              <Stack spacing={4}>
+                <Field name='email'>
+                  {({ field, form }) => <Email field={field} form={form} />}
+                </Field>
+                <Stack spacing={10}>
+                  <Button
+                    bg={'green.400'}
+                    color={'white'}
+                    _hover={{
+                      bg: 'green.500',
+                    }}
+                    isDisabled={isFetching}
+                    type='submit'
+                  >
+                    Send recovery link
+                  </Button>
+                  <Box>
+                    <Text as='span'>Don't have an account?</Text>
+                    <Button
+                      ml={1}
+                      variant={'link'}
+                      display={'inline'}
+                      as={Link}
+                      to={ROUTE.REGISTER}
+                      color={'green.400'}
+                    >
+                      Register
+                    </Button>
+                  </Box>
+                </Stack>
+              </Stack>
+            </Box>
+          </Form>
+        )}
+      </Formik>
     </Stack>
   );
 };
