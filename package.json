@@ -17,6 +17,7 @@
     "@supabase/supabase-js": "^2.2.2",
     "@yozora/react-mathjax": "^2.2.2",
     "axios": "^1.2.2",
+    "formik": "^2.2.9",
     "fraction.js": "^4.2.0",
     "framer-motion": "^8.1.4",
     "jspdf": "^2.5.1",
@@ -24,7 +25,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-ga4": "^1.4.1",
-    "react-router-dom": "^6.6.1"
+    "react-router-dom": "^6.6.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.20.7",
