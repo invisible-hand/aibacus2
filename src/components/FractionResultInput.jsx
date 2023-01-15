@@ -1,9 +1,18 @@
+import * as yup from 'yup';
+
 import { CheckCircleIcon, WarningTwoIcon } from '@chakra-ui/icons';
 import { Divider, FormControl, Input, Stack, Text } from '@chakra-ui/react';
 import { MathJaxNode, MathJaxProvider } from '@yozora/react-mathjax';
 import { useEffect, useRef, useState } from 'react';
 
 import Fraction from 'fraction.js';
+
+const validationSchema = yup.object().shape({
+  inputValue: yup
+    .string()
+    .matches(/^(\d+|)$/, 'Input must be in the format of "number"'),
+  // .required('Input is required'),
+});
 
 const defaultFraction = { w: 0, n: 1, d: 1 };
 
@@ -20,22 +29,23 @@ const SimpleResultInput = ({ id, isReadOnly, correctAnswer }) => {
 
   useEffect(() => {
     setIsCorrect(false);
-    setValue(defaultFraction);
-  }, [correctAnswer]);
+    setAnswer(defaultFraction);
+  }, []);
 
   const handleChange = (value, key) => {
     const currentAnswer = { ...answer, [key]: value };
-    const newFraction = new Fraction(
-      currentAnswer.w * currentAnswer.d + currentAnswer.n,
-      currentAnswer.d
-    );
-    if (newFraction.equals(correctAnswer)) {
-      setIsCorrect(true);
-    } else {
-      setIsCorrect(false);
-    }
+    try {
+      validationSchema.validateSync({ inputValue: value });
+      const newFraction = new Fraction(
+        currentAnswer.w * currentAnswer.d + currentAnswer.n,
+        currentAnswer.d
+      );
+      setIsCorrect(newFraction.equals(correctAnswer));
 
-    setAnswer(currentAnswer);
+      setAnswer(currentAnswer);
+    } catch (err) {
+      // do not update fraction
+    }
   };
 
   return (
