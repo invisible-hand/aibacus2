@@ -1,6 +1,18 @@
+import * as yup from 'yup';
+
 import { CheckCircleIcon, WarningTwoIcon } from '@chakra-ui/icons';
 import { FormControl, Input, Stack, Text } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
+
+const validationSchema = yup.object().shape({
+  inputValue: yup
+    .string()
+    .matches(
+      /^(>|<|=|\d+|)$/,
+      'Input must be in the format of "number", ">", "<", or "="'
+    ),
+  // .required('Input is required'),
+});
 
 const SimpleResultInput = ({ id, isReadOnly, correctAnswer }) => {
   const inputRef = useRef(null);
@@ -17,11 +29,14 @@ const SimpleResultInput = ({ id, isReadOnly, correctAnswer }) => {
   }, [correctAnswer]);
 
   const handleChange = (e) => {
-    setValue(e.target.value);
-    if (e.target.value === correctAnswer) {
-      setIsCorrect(true);
-    } else {
-      setIsCorrect(false);
+    const { value } = e.target;
+    try {
+      validationSchema.validateSync({ inputValue: value });
+      setValue(value);
+
+      setIsCorrect(value === correctAnswer);
+    } catch (err) {
+      // do not update value
     }
   };
 
